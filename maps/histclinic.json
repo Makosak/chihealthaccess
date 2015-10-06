@@ -1,0 +1,509 @@
+histclinic = {
+  "meta" : {
+    "view" : {
+      "id" : "mw69-m6xi",
+      "name" : "Neighborhood Health Clinics - Historical",
+      "attribution" : "City of Chicago",
+      "attributionLink" : "http://www.cityofchicago.org",
+      "averageRating" : 0,
+      "category" : "Health & Human Services",
+      "createdAt" : 1293053236,
+      "description" : "Former neighborhood health clinic locations, hours of operation and contact information. These clinics were closed or transferred to private management in July 2012.",
+      "downloadCount" : 1339,
+      "indexUpdatedAt" : 1414517690,
+      "newBackend" : false,
+      "numberOfComments" : 0,
+      "oid" : 4593076,
+      "publicationAppendEnabled" : false,
+      "publicationDate" : 1374607230,
+      "publicationGroup" : 220751,
+      "publicationStage" : "published",
+      "rowClass" : "",
+      "rowsUpdatedAt" : 1374607108,
+      "rowsUpdatedBy" : "vewm-vupz",
+      "tableId" : 994646,
+      "totalTimesRated" : 0,
+      "viewCount" : 28458,
+      "viewLastModified" : 1374607230,
+      "viewType" : "tabular",
+      "columns" : [ {
+        "id" : -1,
+        "name" : "sid",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":sid",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { }
+      }, {
+        "id" : -1,
+        "name" : "id",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":id",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { }
+      }, {
+        "id" : -1,
+        "name" : "position",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":position",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { }
+      }, {
+        "id" : -1,
+        "name" : "created_at",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":created_at",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { }
+      }, {
+        "id" : -1,
+        "name" : "created_meta",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":created_meta",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { }
+      }, {
+        "id" : -1,
+        "name" : "updated_at",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":updated_at",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { }
+      }, {
+        "id" : -1,
+        "name" : "updated_meta",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":updated_meta",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { }
+      }, {
+        "id" : -1,
+        "name" : "meta",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":meta",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { }
+      }, {
+        "id" : 83945018,
+        "name" : "SITE NAME",
+        "dataTypeName" : "text",
+        "fieldName" : "site_name",
+        "position" : 1,
+        "renderTypeName" : "text",
+        "tableColumnId" : 1424851,
+        "width" : 178,
+        "cachedContents" : {
+          "non_null" : 7,
+          "smallest" : "Englewood Neighborhood Health Clinic",
+          "null" : 0,
+          "largest" : "West Town Neighborhood Health Center",
+          "top" : [ {
+            "count" : 20,
+            "item" : "Englewood Neighborhood Health Clinic"
+          }, {
+            "count" : 19,
+            "item" : "Lower West Neighborhood Health Clinic"
+          }, {
+            "count" : 18,
+            "item" : "Roseland Neighborhood Health Clinic"
+          }, {
+            "count" : 17,
+            "item" : "South Chicago Women & Children Health Center"
+          }, {
+            "count" : 16,
+            "item" : "South Lawndale Women & Children Health Center"
+          }, {
+            "count" : 15,
+            "item" : "Uptown Neighborhood Health Center"
+          }, {
+            "count" : 14,
+            "item" : "West Town Neighborhood Health Center"
+          } ]
+        },
+        "format" : { }
+      }, {
+        "id" : 83945019,
+        "name" : "HOURS OF OPERATION",
+        "dataTypeName" : "text",
+        "fieldName" : "hours_of_operation",
+        "position" : 2,
+        "renderTypeName" : "text",
+        "tableColumnId" : 1424858,
+        "width" : 202,
+        "cachedContents" : {
+          "non_null" : 7,
+          "smallest" : "Mon, Wed, Fri: 8:00 am – 4:00 pm; Tue, and Thurs: 10:00 am - 6:00pm",
+          "null" : 0,
+          "largest" : "Mon - Fri: 8:00 am – 4:00 pm.",
+          "top" : [ {
+            "count" : 20,
+            "item" : "Mon, Wed, Fri: 8:00 am – 4:00 pm; Tue, and Thurs: 10:00 am - 6:00pm"
+          }, {
+            "count" : 19,
+            "item" : "Mon - Fri: 8:00 am – 4:00 pm."
+          }, {
+            "count" : 18,
+            "item" : "Mon, Wed, Fri: 8:00 am – 4:00 pm; Tue, and Thurs: 9:00 am - 5:00pm\n"
+          }, {
+            "count" : 17,
+            "item" : "Mon, Wed, Fri: 8:00 am – 4:00 pm; Tue, and Thurs: 10:00 am - 6:00pm\n"
+          } ]
+        },
+        "format" : { }
+      }, {
+        "id" : 83945020,
+        "name" : "ADDRESS",
+        "dataTypeName" : "text",
+        "fieldName" : "address",
+        "position" : 3,
+        "renderTypeName" : "text",
+        "tableColumnId" : 1424852,
+        "width" : 154,
+        "cachedContents" : {
+          "non_null" : 7,
+          "smallest" : "1713 S. Ashland Ave.",
+          "null" : 0,
+          "largest" : "845 W. Wilson Ave.",
+          "top" : [ {
+            "count" : 20,
+            "item" : "641 W. 63rd St."
+          }, {
+            "count" : 19,
+            "item" : "1713 S. Ashland Ave."
+          }, {
+            "count" : 18,
+            "item" : "200 E. 115th St."
+          }, {
+            "count" : 17,
+            "item" : "2938 E. 89th St."
+          }, {
+            "count" : 16,
+            "item" : "3059 W. 26th St."
+          }, {
+            "count" : 15,
+            "item" : "845 W. Wilson Ave."
+          }, {
+            "count" : 14,
+            "item" : "2418 W. Division St."
+          } ]
+        },
+        "format" : { }
+      }, {
+        "id" : 83945021,
+        "name" : "CITY",
+        "dataTypeName" : "text",
+        "fieldName" : "city",
+        "position" : 4,
+        "renderTypeName" : "text",
+        "tableColumnId" : 1424853,
+        "width" : 60,
+        "cachedContents" : {
+          "non_null" : 7,
+          "smallest" : "Chicago",
+          "null" : 0,
+          "largest" : "Chicago",
+          "top" : [ {
+            "count" : 20,
+            "item" : "Chicago"
+          } ]
+        },
+        "format" : { }
+      }, {
+        "id" : 83945022,
+        "name" : "STATE",
+        "dataTypeName" : "text",
+        "fieldName" : "state",
+        "position" : 5,
+        "renderTypeName" : "text",
+        "tableColumnId" : 1424854,
+        "width" : 50,
+        "cachedContents" : {
+          "non_null" : 7,
+          "smallest" : "IL",
+          "null" : 0,
+          "largest" : "IL",
+          "top" : [ {
+            "count" : 20,
+            "item" : "IL"
+          } ]
+        },
+        "format" : { }
+      }, {
+        "id" : 83945023,
+        "name" : "ZIP",
+        "dataTypeName" : "text",
+        "fieldName" : "zip",
+        "position" : 6,
+        "renderTypeName" : "text",
+        "tableColumnId" : 1424860,
+        "width" : 50,
+        "cachedContents" : {
+          "non_null" : 7,
+          "smallest" : "60608",
+          "null" : 0,
+          "largest" : "60640",
+          "top" : [ {
+            "count" : 20,
+            "item" : "60621"
+          }, {
+            "count" : 19,
+            "item" : "60608"
+          }, {
+            "count" : 18,
+            "item" : "60628"
+          }, {
+            "count" : 17,
+            "item" : "60617"
+          }, {
+            "count" : 16,
+            "item" : "60623"
+          }, {
+            "count" : 15,
+            "item" : "60640"
+          }, {
+            "count" : 14,
+            "item" : "60622"
+          } ]
+        },
+        "format" : {
+          "align" : "right",
+          "precisionStyle" : "standard"
+        }
+      }, {
+        "id" : 83945024,
+        "name" : "PHONE",
+        "dataTypeName" : "text",
+        "fieldName" : "phone",
+        "position" : 7,
+        "renderTypeName" : "text",
+        "tableColumnId" : 1424856,
+        "width" : 98,
+        "cachedContents" : {
+          "non_null" : 7,
+          "smallest" : "312-744-0943",
+          "null" : 0,
+          "largest" : "312-747-9500",
+          "top" : [ {
+            "count" : 20,
+            "item" : "312-747-7831"
+          }, {
+            "count" : 19,
+            "item" : "312-746-5157"
+          }, {
+            "count" : 18,
+            "item" : "312-747-9500"
+          }, {
+            "count" : 17,
+            "item" : "312-747-5285"
+          }, {
+            "count" : 16,
+            "item" : "312-747-0066"
+          }, {
+            "count" : 15,
+            "item" : "312-744-1938"
+          }, {
+            "count" : 14,
+            "item" : "312-744-0943"
+          } ]
+        },
+        "format" : { }
+      }, {
+        "id" : 83945025,
+        "name" : "WEBSITE",
+        "dataTypeName" : "url",
+        "fieldName" : "website",
+        "position" : 8,
+        "renderTypeName" : "url",
+        "tableColumnId" : 1424857,
+        "width" : 154,
+        "cachedContents" : {
+          "non_null" : 7,
+          "smallest" : {
+            "url" : "http://www.cityofchicago.org/city/en/depts/cdph/supp_info/clinical_health/community_healthclinics.html"
+          },
+          "null" : 0,
+          "largest" : {
+            "url" : "http://www.cityofchicago.org/city/en/depts/cdph/supp_info/clinical_health/community_healthclinics.html"
+          },
+          "top" : [ {
+            "count" : 20,
+            "item" : {
+              "url" : "http://www.cityofchicago.org/city/en/depts/cdph/supp_info/clinical_health/community_healthclinics.html"
+            }
+          } ]
+        },
+        "format" : { },
+        "subColumnTypes" : [ "url", "description" ]
+      }, {
+        "id" : 83945026,
+        "name" : "SERVICES",
+        "dataTypeName" : "text",
+        "fieldName" : "services",
+        "position" : 9,
+        "renderTypeName" : "text",
+        "tableColumnId" : 1424859,
+        "width" : 519,
+        "cachedContents" : {
+          "non_null" : 7,
+          "smallest" : "Adult, Children, Family Case Management, Immigration Physicals, Medication Assistance, Pregnancy Testing, Pregnant Women, Refugee, Women seeking Birth Control",
+          "null" : 0,
+          "largest" : "Children, Family Case Management, Pregnancy Testing, Pregnant Women, Women seeking Birth Control",
+          "top" : [ {
+            "count" : 20,
+            "item" : "Adults, Children, Family Case Management, Medication Assistance, Pregnancy Testing, Pregnant Women, Women seeking Birth Control"
+          }, {
+            "count" : 19,
+            "item" : "Adults, Children, Family Case Management, Immigration Physicals, Medication Assistance, Pregnancy Testing, Pregnant Women, Women seeking Birth Control"
+          }, {
+            "count" : 18,
+            "item" : "Adults, Family Case Management, Medication Assistance"
+          }, {
+            "count" : 17,
+            "item" : "Children, Family Case Management, Pregnancy Testing, Pregnant Women, Women seeking Birth Control"
+          }, {
+            "count" : 16,
+            "item" : "Adult, Children, Family Case Management, Immigration Physicals, Medication Assistance, Pregnancy Testing, Pregnant Women, Refugee, Women seeking Birth Control"
+          }, {
+            "count" : 15,
+            "item" : "Adult, Children, Family Case Management, Immigration Physicals, Medication Assistance, Pregnancy Testing, Pregnant Women, Women seeking Birth Control"
+          } ]
+        },
+        "format" : { }
+      }, {
+        "id" : 83945027,
+        "name" : "LOCATION",
+        "dataTypeName" : "location",
+        "fieldName" : "location",
+        "position" : 11,
+        "renderTypeName" : "location",
+        "tableColumnId" : 1427662,
+        "width" : 100,
+        "cachedContents" : {
+          "non_null" : 7,
+          "smallest" : {
+            "longitude" : "-87.6660674613758",
+            "latitude" : "41.85859418201153",
+            "human_address" : "{\"address\":\"1713 S. Ashland Ave.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60608\"}"
+          },
+          "null" : 0,
+          "largest" : {
+            "longitude" : "-87.65107031162161",
+            "latitude" : "41.96548927279645",
+            "human_address" : "{\"address\":\"845 W. Wilson Ave.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60640\"}"
+          },
+          "top" : [ {
+            "count" : 20,
+            "item" : {
+              "longitude" : "-87.64157740963851",
+              "latitude" : "41.779780316087795",
+              "human_address" : "{\"address\":\"641 W. 63rd St.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60621\"}"
+            }
+          }, {
+            "count" : 19,
+            "item" : {
+              "longitude" : "-87.6660674613758",
+              "latitude" : "41.85859418201153",
+              "human_address" : "{\"address\":\"1713 S. Ashland Ave.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60608\"}"
+            }
+          }, {
+            "count" : 18,
+            "item" : {
+              "longitude" : "-87.61804579760663",
+              "latitude" : "41.68540464454324",
+              "human_address" : "{\"address\":\"200 E. 115th St.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60628\"}"
+            }
+          }, {
+            "count" : 17,
+            "item" : {
+              "longitude" : "-87.55257057910126",
+              "latitude" : "41.733735602176786",
+              "human_address" : "{\"address\":\"2938 E. 89th St.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60617\"}"
+            }
+          }, {
+            "count" : 16,
+            "item" : {
+              "longitude" : "-87.7019192211315",
+              "latitude" : "41.84364547069314",
+              "human_address" : "{\"address\":\"3059 W. 26th St.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60623\"}"
+            }
+          }, {
+            "count" : 15,
+            "item" : {
+              "longitude" : "-87.65107031162161",
+              "latitude" : "41.96548927279645",
+              "human_address" : "{\"address\":\"845 W. Wilson Ave.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60640\"}"
+            }
+          }, {
+            "count" : 14,
+            "item" : {
+              "longitude" : "-87.68771892628885",
+              "latitude" : "41.90336045343866",
+              "human_address" : "{\"address\":\"2418 W. Division St.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60622\"}"
+            }
+          } ]
+        },
+        "format" : { },
+        "subColumnTypes" : [ "human_address", "latitude", "longitude", "machine_address", "needs_recoding" ]
+      } ],
+      "grants" : [ {
+        "inherited" : false,
+        "type" : "viewer",
+        "flags" : [ "public" ]
+      } ],
+      "metadata" : {
+        "custom_fields" : {
+          "Metadata" : {
+            "Last Updated Date via Automated Load" : "",
+            "Data Owner" : "Public Health",
+            "Time Period" : "",
+            "Frequency" : ""
+          }
+        },
+        "rdfSubject" : "0",
+        "rowIdentifier" : "0",
+        "rdfClass" : ""
+      },
+      "owner" : {
+        "id" : "scy9-9wg4",
+        "displayName" : "cocadmin",
+        "privilegesDisabled" : false,
+        "profileImageUrlLarge" : "/api/users/scy9-9wg4/profile_images/LARGE",
+        "profileImageUrlMedium" : "/api/users/scy9-9wg4/profile_images/THUMB",
+        "profileImageUrlSmall" : "/api/users/scy9-9wg4/profile_images/TINY",
+        "roleName" : "administrator",
+        "screenName" : "cocadmin",
+        "rights" : [ "create_datasets", "edit_others_datasets", "edit_sdp", "edit_site_theme", "moderate_comments", "manage_users", "chown_datasets", "edit_nominations", "approve_nominations", "feature_items", "federations", "manage_stories", "manage_approval", "change_configurations", "view_domain", "view_others_datasets", "edit_pages", "create_pages", "view_goals", "view_dashboards", "edit_goals", "edit_dashboards", "create_dashboards" ]
+      },
+      "query" : { },
+      "rights" : [ "read" ],
+      "tableAuthor" : {
+        "id" : "scy9-9wg4",
+        "displayName" : "cocadmin",
+        "privilegesDisabled" : false,
+        "profileImageUrlLarge" : "/api/users/scy9-9wg4/profile_images/LARGE",
+        "profileImageUrlMedium" : "/api/users/scy9-9wg4/profile_images/THUMB",
+        "profileImageUrlSmall" : "/api/users/scy9-9wg4/profile_images/TINY",
+        "roleName" : "administrator",
+        "screenName" : "cocadmin",
+        "rights" : [ "create_datasets", "edit_others_datasets", "edit_sdp", "edit_site_theme", "moderate_comments", "manage_users", "chown_datasets", "edit_nominations", "approve_nominations", "feature_items", "federations", "manage_stories", "manage_approval", "change_configurations", "view_domain", "view_others_datasets", "edit_pages", "create_pages", "view_goals", "view_dashboards", "edit_goals", "edit_dashboards", "create_dashboards" ]
+      },
+      "tags" : [ "facilities", "gis", "historical" ],
+      "flags" : [ "default" ]
+    }
+  },
+  "data" : [ [ 1, "3E0FC06E-008E-4522-9975-BECF07AB4679", 1, 1293053237, "386464", 1294154092, "386464", null, "Englewood Neighborhood Health Clinic", "Mon, Wed, Fri: 8:00 am – 4:00 pm; Tue, and Thurs: 10:00 am - 6:00pm", "641 W. 63rd St.", "Chicago", "IL", "60621", "312-747-7831", [ "http://www.cityofchicago.org/city/en/depts/cdph/supp_info/clinical_health/community_healthclinics.html", null ], "Adults, Children, Family Case Management, Medication Assistance, Pregnancy Testing, Pregnant Women, Women seeking Birth Control", [ "{\"address\":\"641 W. 63rd St.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60621\"}", "41.779780316087795", "-87.64157740963851", null, false ] ]
+, [ 2, "806782AF-3232-4252-83A2-AD68962EA705", 2, 1293053237, "386464", 1294154092, "386464", null, "Lower West Neighborhood Health Clinic", "Mon - Fri: 8:00 am – 4:00 pm.", "1713 S. Ashland Ave.", "Chicago", "IL", "60608", "312-746-5157", [ "http://www.cityofchicago.org/city/en/depts/cdph/supp_info/clinical_health/community_healthclinics.html", null ], "Adults, Children, Family Case Management, Immigration Physicals, Medication Assistance, Pregnancy Testing, Pregnant Women, Women seeking Birth Control", [ "{\"address\":\"1713 S. Ashland Ave.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60608\"}", "41.85859418201153", "-87.6660674613758", null, false ] ]
+, [ 3, "295804AD-F0FE-448D-97AA-05BDAA9C354F", 3, 1293053237, "386464", 1294154092, "386464", null, "Roseland Neighborhood Health Clinic", "Mon, Wed, Fri: 8:00 am – 4:00 pm; Tue, and Thurs: 9:00 am - 5:00pm\n", "200 E. 115th St.", "Chicago", "IL", "60628", "312-747-9500", [ "http://www.cityofchicago.org/city/en/depts/cdph/supp_info/clinical_health/community_healthclinics.html", null ], "Adults, Family Case Management, Medication Assistance", [ "{\"address\":\"200 E. 115th St.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60628\"}", "41.68540464454324", "-87.61804579760663", null, false ] ]
+, [ 4, "8A1D1CAC-9EE6-4B3B-B598-ABB64F04F520", 4, 1293053237, "386464", 1294154092, "386464", null, "South Chicago Women & Children Health Center", "Mon - Fri: 8:00 am – 4:00 pm.", "2938 E. 89th St.", "Chicago", "IL", "60617", "312-747-5285", [ "http://www.cityofchicago.org/city/en/depts/cdph/supp_info/clinical_health/community_healthclinics.html", null ], "Children, Family Case Management, Pregnancy Testing, Pregnant Women, Women seeking Birth Control", [ "{\"address\":\"2938 E. 89th St.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60617\"}", "41.733735602176786", "-87.55257057910126", null, false ] ]
+, [ 5, "FAABB39F-8F56-42D4-8ADD-2ECC0ACF324D", 5, 1293053237, "386464", 1294154092, "386464", null, "South Lawndale Women & Children Health Center", "Mon - Fri: 8:00 am – 4:00 pm.", "3059 W. 26th St.", "Chicago", "IL", "60623", "312-747-0066", [ "http://www.cityofchicago.org/city/en/depts/cdph/supp_info/clinical_health/community_healthclinics.html", null ], "Children, Family Case Management, Pregnancy Testing, Pregnant Women, Women seeking Birth Control", [ "{\"address\":\"3059 W. 26th St.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60623\"}", "41.84364547069314", "-87.7019192211315", null, false ] ]
+, [ 6, "5EE67E40-707B-4BCE-B8F8-04372BF48F66", 6, 1293053237, "386464", 1294154092, "386464", null, "Uptown Neighborhood Health Center", "Mon, Wed, Fri: 8:00 am – 4:00 pm; Tue, and Thurs: 10:00 am - 6:00pm", "845 W. Wilson Ave.", "Chicago", "IL", "60640", "312-744-1938", [ "http://www.cityofchicago.org/city/en/depts/cdph/supp_info/clinical_health/community_healthclinics.html", null ], "Adult, Children, Family Case Management, Immigration Physicals, Medication Assistance, Pregnancy Testing, Pregnant Women, Refugee, Women seeking Birth Control", [ "{\"address\":\"845 W. Wilson Ave.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60640\"}", "41.96548927279645", "-87.65107031162161", null, false ] ]
+, [ 7, "6D7E8692-0BC3-4262-9F90-B00366117F45", 7, 1293053237, "386464", 1294154092, "386464", null, "West Town Neighborhood Health Center", "Mon, Wed, Fri: 8:00 am – 4:00 pm; Tue, and Thurs: 10:00 am - 6:00pm\n", "2418 W. Division St.", "Chicago", "IL", "60622", "312-744-0943", [ "http://www.cityofchicago.org/city/en/depts/cdph/supp_info/clinical_health/community_healthclinics.html", null ], "Adult, Children, Family Case Management, Immigration Physicals, Medication Assistance, Pregnancy Testing, Pregnant Women, Women seeking Birth Control", [ "{\"address\":\"2418 W. Division St.\",\"city\":\"Chicago\",\"state\":\"IL\",\"zip\":\"60622\"}", "41.90336045343866", "-87.68771892628885", null, false ] ]
+ ]
+}
