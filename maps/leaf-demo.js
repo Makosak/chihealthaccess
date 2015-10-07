@@ -1,7 +1,7 @@
 var map = L.map( 'map', {
     center: [41.879250, -87.631219],
     minZoom: 2,
-    zoom: 2
+    zoom: 12
 });
 
 L.tileLayer( 'http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
