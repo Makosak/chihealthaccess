@@ -25,3 +25,42 @@ for ( var i=0; i < markers.length; ++i )
       .bindPopup( '<a href="' + markers[i].url + '" target="_blank">' + markers[i].name + '</a>' )
       .addTo( map );
 }
+
+var geo = L.geoJson({features:[]},{onEachFeature:function popUp(f,l){
+        var out = [];
+        if (f.properties){
+            for(var key in f.properties){
+              out.push(key+": "+f.properties[key]);
+        }
+        l.bindPopup(out.join("<br />"));
+    }
+}}).addTo(map);
+
+shp("./data/Parks_Aug2012").then(function(geojson){
+        //do something with your geojson
+  geo.addData(geojson);
+
+});
+//var url = "./data/files/pandr"
+/*var url = "./data/Parks_Aug2012";
+shp(url).then(function(data){
+  console.log(data);
+  data.features.forEach(function(feature, i){
+    // Add a marker to the map
+    feature.marker = new google.maps.Marker({
+      position:new google.maps.LatLng(
+        feature.geometry.coordinates[1],
+        feature.geometry.coordinates[0]
+      ),
+      title:feature.properties.TOWN
+    });
+    feature.marker.setMap(map);
+
+    console.log(feature.geometry.coordinates[1]+ ", " + feature.geometry.coordinates[0]);
+    // Create the info window
+    //console.log(feature.properties);
+    var out = [];
+    
+  });
+});*/
+

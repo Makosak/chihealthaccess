@@ -163,9 +163,9 @@
         
           $('#map_canvas').css('height', (h - offsetTop));
         }).resize();
-        
+        var myMap;
         $(function() {
-          var myMap = new MapsLib({
+          myMap = new MapsLib({
             fusionTableId:      "1IXp-iouilj7yqoEyqNcHMnIX8xeUM_OuH56q9Ss9",
             googleApiKey:       "AIzaSyDklrwbaqFnj1Ft-UyWkWnKWZr7IOMNYDY",
             locationColumn:     "Geometry",
