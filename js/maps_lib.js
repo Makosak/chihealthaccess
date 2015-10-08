@@ -168,24 +168,9 @@
         //-----custom filters-----
         
         //Customized search by checkbox, connected with index.html
-        var type_column = "'Type'";
-        var searchType = type_column + " IN (-1,";
-        if ( $("#cbType1").is(':checked')) searchType += "1,";
-        if ( $("#cbType2").is(':checked')) searchType += "2,";
-        if ( $("#cbType3").is(':checked')) searchType += "3,";
-        if ( $("#cbType4").is(':checked')) searchType += "4,";
-
-        self.whereClause += " AND " + searchType.slice(0, searchType.length - 1) + ")";
 
 
         //Customized search by text, connected with index.html and custom initializaters.
-        var text_search = $("#text_search").val().replace("'", "\\'");
-        if (text_search != '')
-          self.whereClause += " AND 'Organization' contains ignoring case '" + text_search + "'";
-
-        var text_search2 = $("#text_search2").val().replace("'", "\\'");
-        if (text_search2 != '')
-          self.whereClause += " AND 'Service(s)' contains ignoring case '" + text_search2 + "'";
 
         //-----end of custom filters-----
 
