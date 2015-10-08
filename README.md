@@ -35,3 +35,8 @@ Healthy Regions:
 <li> Mortality index (aggregated or adjusted) blobs </li>
 <li> Cheat: add pre-made Blobs </li>
 
+## Done
+
+Healthy Access:
+<li> Wireframe complete </li>
+

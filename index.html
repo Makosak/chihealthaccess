@@ -37,7 +37,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li class='active'><a href="index.html">Healthy Access</a></li>
-            <li><a href="serviceloc.html">Healthy Living</a></li>
+            <li><a href="services.html">Healthy Living</a></li>
             <li><a href="blobs.html">Healthy Regions</a></li>
             <li><a href="about.html">About</a></li>
           </ul>
@@ -94,21 +94,31 @@
             <br />
 
             <h4>
-            Address <small>(<a id='find_me' href='#'>find me</a>)</small>
+            Service Areas
             </h4>
             <p>
-              <input class='form-control' id='search_address' placeholder='Enter an address or an intersection' type='text' />
+              Show me service areas for selected health providers by distance or travel time <b>[[test only: in development]]</b>:
             </p>
             <p>
               <label>
                 within
                 <select id='search_radius'>
-                  <option value='400'>2 blocks</option>
-                  <option value='805'>1/2 mile</option>
                   <option value='1610'>1 mile</option>
-                  <option value='3220'>2 miles</option>
+                  <option value='4830'>3 miles</option>
+                  <option value='8050'>5 miles</option>
+                  <option value='805'>15 minutes</option>
+                  <option value='1610'>30 minutes</option>
+                  <option value='3220'>1 hour+</option>
                 </select>
               </label>
+            </p>
+            <br />
+
+            <h4>
+            Summary Statistics</small>
+            </h4>
+            <p>
+            For the selected service area, show me a breakdown of the demographic and socioeconomic characteristics for the population served. <b>[[test only: in development]]</b>:
             </p>
             <br />
 
@@ -157,8 +167,8 @@
           var myMap = new MapsLib({
             fusionTableId:      "1mYz7EnrWR78BQgRivuHAQTedUc2ymntN7oI450SX",
             googleApiKey:       "AIzaSyDklrwbaqFnj1Ft-UyWkWnKWZr7IOMNYDY",
-            locationColumn:     "Geometry",
-            map_center:         [41.904993, -87.701773],
+            locationColumn:     "Location",
+            map_center:         [41.880784, -87.628472],
             locationScope:      "chicago"
           });
 
