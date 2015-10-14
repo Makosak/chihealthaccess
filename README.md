@@ -6,9 +6,6 @@
 
 ## Hot List
 
-General:
-<li> Add server (Github or Heroku) </li>
-
 Healthy Access:
 <li> Connect Fusion table </li>
 <li> Add OSM streets </li>
@@ -36,6 +33,9 @@ Healthy Regions:
 <li> Cheat: add pre-made Blobs </li>
 
 ## Done
+
+General:
+<li> Add server (Github or Heroku) </li>
 
 Healthy Access:
 <li> Wireframe complete </li>
