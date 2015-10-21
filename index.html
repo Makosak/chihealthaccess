@@ -94,21 +94,29 @@
             </ul>
             <br />
 
+            
             <h4>
-            Service Areas
+            Organization Search
+            </h4>
+            <input class='form-control' id='text_search' placeholder="Enter a organization name" type='text' />
+                        
+            <br />
+
+            <h4>
+            Address <small>(<a id='find_me' href='#'>find me</a>)</small>
             </h4>
             <p>
-              Show me service areas for selected health providers by distance or travel time: 
+              <input class='form-control' id='search_address' placeholder='Enter an address or an intersection' type='text' />
             </p>
+            
+            <p>
               <label>
                 within
                 <select id='search_radius'>
+                  <option value='400'>2 blocks</option>
+                  <option value='805'>1/2 mile</option>
                   <option value='1610'>1 mile</option>
-                  <option value='4830'>3 miles</option>
-                  <option value='8050'>5 miles</option>
-                  <option value='805'>15 minutes</option>
-                  <option value='1610'>30 minutes</option>
-                  <option value='3220'>1 hour+</option>
+                  <option value='3220'>2 miles</option>
                 </select>
               </label>
             </p>
@@ -128,7 +136,28 @@
         </div>
 
         <div class='col-md-3'>
-          <h3> Tables and Graphs </h3>
+
+          <h4>
+            Service Areas
+            </h4>
+            <p>
+              Show me service areas for selected health providers by distance or travel time: 
+            </p>
+              <label>
+                within
+                <select id='search_radius'>
+                  <option value='1610'>1 mile</option>
+                  <option value='4830'>3 miles</option>
+                  <option value='8050'>5 miles</option>
+                  <option value='805'>15 minutes</option>
+                  <option value='1610'>30 minutes</option>
+                  <option value='3220'>1 hour+</option>
+                </select>
+              </label>
+            </p>
+            <br />
+
+          <h4> Tables and Graphs </h4>
             <p>For the selected service area, show me a breakdown of the demographic and socioeconomic characteristics for the population served. 
               <br>
               <b>[[test only: in development]]</b>:
