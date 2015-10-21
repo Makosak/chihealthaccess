@@ -39,6 +39,9 @@ var geo = L.geoJson({features:[]},{onEachFeature:function popUp(f,l){
               out.push(key+": "+f.properties[key]);
         }
         l.bindPopup(out.join("<br />"));
+        //
+        console.log(l);
+        l.on('mouseclick', function(){console.log(out)});
     }
 }}).addTo(map);
 

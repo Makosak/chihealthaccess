@@ -43,7 +43,7 @@
     	$("#result_count").html("");
         
         this.myOptions = {
-            zoom: 14,
+            zoom: 11,
             center: this.map_centroid,
             mapTypeId: google.maps.MapTypeId.TERRAIN
         };
