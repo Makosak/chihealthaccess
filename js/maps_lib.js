@@ -181,6 +181,12 @@
     
         //Customized search by text, connected with index.html and custom initializaters.
 
+        var text_search = $("#text_search").val().replace("'", "\\'");
+        if (text_search != '')
+          self.whereClause += " AND 'Facility' contains ignoring case '" + text_search + "'";
+
+
+
 
         //-----end of custom filters-----
 
