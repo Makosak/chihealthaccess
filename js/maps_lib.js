@@ -52,6 +52,7 @@
         this.geocoder = new google.maps.Geocoder();
         this.map = new google.maps.Map($("#map_canvas")[0], this.myOptions);
         
+
         // maintains map centerpoint for responsive design
         google.maps.event.addDomListener(self.map, 'idle', function () {
             self.calculateCenter();
@@ -84,6 +85,9 @@
     };
 
     //-----custom functions-----
+
+    
+
     //-----end of custom functions-----
 
     MapsLib.prototype.submitSearch = function (whereClause, map) {
