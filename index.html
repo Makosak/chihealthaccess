@@ -206,13 +206,15 @@
             locationScope:      "chicago"
           });
 
+          shp("./data/Parks_Aug2012").then(function(geojson){
+        //do something with your geojson
+          geo.addData(geojson);
+
+});
+
           var autocomplete = new google.maps.places.Autocomplete(document.getElementById('search_address'));
       
           $(':checkbox').click(function(){
-            myMap.doSearch();
-          });
-
-          $(':radio').click(function(){
             myMap.doSearch();
           });
           

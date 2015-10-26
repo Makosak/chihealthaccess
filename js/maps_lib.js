@@ -1,5 +1,7 @@
 (function (window, undefined) {
     var MapsLib = function (options) {
+
+        
         var self = this;
 
         options = options || {};
@@ -238,7 +240,7 @@
             strokeOpacity: 0.3,
             strokeWeight: 1,
             fillColor: "#4b58a6",
-            fillOpacity: 0.05,
+            fillOpacity: 0.10,
             map: self.map,
             center: point,
             clickable: false,

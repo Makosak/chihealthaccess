@@ -49,13 +49,27 @@
         <div class='col-md-4'>
           <div class='well'>
         <h1> Healthy Regions </h1>
-        </div>  </div>
+
+        <div id="arrayStrContainer"></div>
+
+
+        <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button">
+          Select Index
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#">Socioeconomic Vulnerability Index</a></li>
+          <li><a href="#">Childhood Opportunity Index</a></li>
+          <li><a href="#">All Crime (in 2011) by Tract</a></li>
+          <li><a href="#">Another Index</a></li>
+        </ul>
+      </div>
+        </div>  
+      </div>
+
         <div class='col-md-8'>
-
-      
         <div id="map" style="height: 700px; border: 1px solid #AAA;"></div>
-
-        <script type='text/javascript' src='maps/markers.json'></script>
         <script type="text/javascript" src='maps/shp.js'></script>
          <script type='text/javascript' src='maps/leaf-demo.js'></script>
         </div>

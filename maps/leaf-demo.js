@@ -4,16 +4,21 @@ var map = L.map( 'map', {
     zoom: 12
 });
 
-var CartoDB_Positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+//var CartoDB_Positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+//  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+//  subdomains: 'abcd',
+//  maxZoom: 19
+// });
+
+
+// Add BaseMap style
+var Stamen_Toner = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}', {
+  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   subdomains: 'abcd',
-  maxZoom: 19
+  minZoom: 0,
+  maxZoom: 20,
+  ext: 'png'
 }).addTo( map );
-
-
-
-//var tileUrl = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-//    layer = new L.TileLayer(tileUrl, {maxZoom: 18}).;
 
 var myURL = jQuery( 'script[src$="leaf-demo.js"]' ).attr( 'src' ).replace( 'leaf-demo.js', '' );
  
@@ -25,12 +30,6 @@ var myIcon = L.icon({
     popupAnchor: [0, -14]
 });
  
-for ( var i=0; i < markers.length; ++i ) 
-{
-   L.marker( [markers[i].lat, markers[i].lng], {icon: myIcon} )
-      .bindPopup( '<a href="' + markers[i].url + '" target="_blank">' + markers[i].name + '</a>' )
-      .addTo( map );
-}
 
 var geo = L.geoJson({features:[]},{onEachFeature:function popUp(f,l){
         var out = [];
@@ -46,6 +45,10 @@ var geo = L.geoJson({features:[]},{onEachFeature:function popUp(f,l){
 shp("./data/Parks_Aug2012").then(function(geojson){
         //do something with your geojson
   geo.addData(geojson);
+
+//shp("./data/City_Boundary").then(function(geojson){
+        //do something with your geojson
+//  geo.addData(geojson);
 
 });
 //var url = "./data/files/pandr"
