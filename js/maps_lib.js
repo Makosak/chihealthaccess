@@ -84,11 +84,9 @@
         // https://developers.google.com/maps/documentation/javascript/datalayer
         var parkMap;
         function initMap() {
-        MapsLib.parks = new google.maps.Map(document.getElementById('parkMap'), {
-                zoom: 11,
-              });
+        MapsLib.parks = new google.maps.Map(document.getElementById('parkMap'));
 
-       shp("./data/Parks_Aug2012").then(function(geojson){
+        shp("./data/Parks_Aug2012").then(function(geojson){
               map.data.loadGeoJson(geojson)}
             );
 
