@@ -229,13 +229,16 @@
             googleApiKey:       "AIzaSyBlElNqMWCzO_psyf0zwhumBViK6gRiMfY",
             locationColumn:     "Geometry",
             map_center:         [41.880784, -87.628472],
-            locationScope:      "chicago"
-          });
+            locationScope:      "chicago",
+          
+          }); 
 
+
+          // Test GeoJSON layer
           shp("./data/Parks_Aug2012").then(function(geojson){
-          map.data.loadGeoJson(geojson)
+          map.data.addGeoJson(geojson)
           });
-
+          
 
 
           var autocomplete = new google.maps.places.Autocomplete(document.getElementById('search_address'));
