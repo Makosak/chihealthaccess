@@ -80,20 +80,28 @@
         
         $("#text_search").val("");
 
+        //////////////////////////////////////////////////////////////////////
         // Test GeoJSON layer
         // https://developers.google.com/maps/documentation/javascript/datalayer
-        var parkMap;
-        function initMap() {
-        MapsLib.parks = new google.maps.Map(document.getElementById('parkMap'));
-
-        shp("./data/Parks_Aug2012").then(function(geojson){
-              map.data.loadGeoJson(geojson)}
-            );
-
+        // Array reading in de-bugging console, but not visualizing. 
+        //////////////////////////////////////////////////////////////////////
+        
+        MapsLib.parks = new google.maps.Map(shp("./data/Parks_Aug2012").then(function(geojson)
+        {
+        //do something with your geojson
+        console.log(geojson);   // DEBUGGING
+        map.data.addData(geojson)
         }
+            ));
 
+            //map.data.loadData(geojson); 
+
+        
+        //////////////////////////////////////////////////////////////////////
         // Test KML/Fusion Layer
         // Using a poverty table -- WORKS but the points don't layer on top!!
+        // Must also turn on MapsLib.povertyTableID at beginning
+        //////////////////////////////////////////////////////////////////////
         //MapsLib.poverty = new google.maps.FusionTablesLayer({
         //query: {from:   MapsLib.povertyTableId, select: "geometry"}
         //});
