@@ -12,11 +12,13 @@
         this.searchRadius = options.searchRadius || 805; //in meters ~ 1/2 mile
 
         // the encrypted Table ID of your Fusion Table (found under File => About)
-        this.fusionTableId = options.fusionTableId || "",
+        this.fusionTableId = options.fusionTableId || "1S0RxiJ4dgV728CEOKGW-ZmCCoLxZAjGLq0tGkke4",
+        //this.fusionTableId = options.povertyTableId || "15FyZq0hRcxUg9uCO_2DZm6vLvxKGpEwaMHs00lw",
+
 
         // Found at https://console.developers.google.com/
         // Important! this key is for demonstration purposes. please register your own.
-        this.googleApiKey = options.googleApiKey || "",
+        this.googleApiKey = options.googleApiKey || "AIzaSyBlElNqMWCzO_psyf0zwhumBViK6gRiMfY",
         
         // name of the location column in your Fusion Table.
         // NOTE: if your location column name has spaces in it, surround it with single quotes
@@ -75,8 +77,30 @@
         $("#result_box").hide();
 
         //-----custom initializers-----
-
+        
         $("#text_search").val("");
+
+        // Test GeoJSON layer
+        // https://developers.google.com/maps/documentation/javascript/datalayer
+        var parkMap;
+        function initMap() {
+        MapsLib.parks = new google.maps.Map(document.getElementById('parkMap'), {
+                zoom: 11,
+              });
+
+       shp("./data/Parks_Aug2012").then(function(geojson){
+              map.data.loadGeoJson(geojson)}
+            );
+
+        }
+
+        // Test KML/Fusion Layer
+        // Using a poverty table -- WORKS but the points don't layer on top!!
+        //MapsLib.poverty = new google.maps.FusionTablesLayer({
+        //query: {from:   MapsLib.povertyTableId, select: "geometry"}
+        //});
+
+
 
         //-----end of custom initializers-----
 
@@ -187,6 +211,7 @@
         self.whereClause += " AND " + searchType.slice(0, searchType.length - 1) + ")";
     
         //Customized search by text, connected with index.html and custom initializaters.
+
 
         var text_search = $("#text_search").val().replace("'", "\\'");
         if (text_search != '')
