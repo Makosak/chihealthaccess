@@ -86,13 +86,48 @@
         // Array reading in de-bugging console, but not visualizing. 
         //////////////////////////////////////////////////////////////////////
         
-        MapsLib.parks = new google.maps.Map(shp("./data/Parks_Aug2012").then(function(geojson)
-        {
-        //do something with your geojson
-        console.log(geojson);   // DEBUGGING
-        map.data.addData(geojson)
-        }
-            ));
+        shp("./data/Parks_Aug2012").then(function(geojson) {
+            //do something with your geojson
+            console.log(geojson);   // DEBUGGING
+            // google map do not support multipolygon directly, so we need to 
+            // hack the features 
+            var count = {};
+
+            function buildPolygon(coordinates) {
+                var geometry = [];
+                for(var index in coordinates) {
+                    geometry.push([]);
+                    for(var k in coordinates[index]) {
+                        geometry[index].push(new google.maps.LatLng(coordinates[index][k][1], coordinates[index][k][0]));
+                    }
+                }
+                return new google.maps.Data.Polygon(geometry);
+            }
+            function buildMultiPolygon(coordinates) {
+                var geometry = [];
+                for(var index in coordinates) {
+                    geometry.push(buildPolygon(coordinates[i]));
+                }
+                return new google.maps.Data.MultiPolygon(geometry);
+            }
+            for(var i in geojson.features) {
+                var d = geojson.features[i];
+                var geometry = null;
+                switch(d.geometry.type) {
+                case "Polygon":
+                    geometry = buildPolygon(d.geometry.coordinates);
+                    break;
+                case "MultiPolygon":
+                    geometry = buildMultiPolygon(d.geometry.coordinates);
+                    break;
+                }
+                self.map.data.add(new google.maps.Data.Feature({
+                    geometry: geometry,
+                    id: d.properties.PARK_NO,
+                    properties: d.properties
+                }));
+            }
+        });
 
             //map.data.loadData(geojson); 
 
