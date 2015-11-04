@@ -1,0 +1,79 @@
+diff --git a/js/.maps_lib.js.swp b/js/.maps_lib.js.swp
+deleted file mode 100644
+index 58fd4f8..0000000
+Binary files a/js/.maps_lib.js.swp and /dev/null differ
+diff --git a/js/maps_lib.js b/js/maps_lib.js
+old mode 100644
+new mode 100755
+index 8ac73c9..810941c
+--- a/js/maps_lib.js
++++ b/js/maps_lib.js
+@@ -86,48 +86,13 @@
+         // Array reading in de-bugging console, but not visualizing. 
+         //////////////////////////////////////////////////////////////////////
+         
+-        shp("./data/Parks_Aug2012").then(function(geojson) {
+-            //do something with your geojson
+-            console.log(geojson);   // DEBUGGING
+-            // google map do not support multipolygon directly, so we need to 
+-            // hack the features 
+-            var count = {};
+-
+-            function buildPolygon(coordinates) {
+-                var geometry = [];
+-                for(var index in coordinates) {
+-                    geometry.push([]);
+-                    for(var k in coordinates[index]) {
+-                        geometry[index].push(new google.maps.LatLng(coordinates[index][k][1], coordinates[index][k][0]));
+-                    }
+-                }
+-                return new google.maps.Data.Polygon(geometry);
+-            }
+-            function buildMultiPolygon(coordinates) {
+-                var geometry = [];
+-                for(var index in coordinates) {
+-                    geometry.push(buildPolygon(coordinates[i]));
+-                }
+-                return new google.maps.Data.MultiPolygon(geometry);
+-            }
+-            for(var i in geojson.features) {
+-                var d = geojson.features[i];
+-                var geometry = null;
+-                switch(d.geometry.type) {
+-                case "Polygon":
+-                    geometry = buildPolygon(d.geometry.coordinates);
+-                    break;
+-                case "MultiPolygon":
+-                    geometry = buildMultiPolygon(d.geometry.coordinates);
+-                    break;
+-                }
+-                self.map.data.add(new google.maps.Data.Feature({
+-                    geometry: geometry,
+-                    id: d.properties.PARK_NO,
+-                    properties: d.properties
+-                }));
+-            }
+-        });
++        MapsLib.parks = new google.maps.Map(shp("./data/Parks_Aug2012").then(function(geojson)
++        {
++        //do something with your geojson
++        console.log(geojson);   // DEBUGGING
++        map.data.addData(geojson)
++        }
++            ));
+ 
+             //map.data.loadData(geojson); 
+ 
+@@ -468,4 +433,4 @@
+         window.MapsLib = MapsLib;
+     }
+ 
+-})(window);
++})(window);
+\ No newline at end of file
+diff --git a/maps/.leaf-demo.js.swp b/maps/.leaf-demo.js.swp
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/maps/.shp.js.swp b/maps/.shp.js.swp
+deleted file mode 100644
+index e69de29..0000000

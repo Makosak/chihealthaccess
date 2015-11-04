@@ -91,42 +91,33 @@
             console.log(geojson);   // DEBUGGING
             // google map do not support multipolygon directly, so we need to 
             // hack the features 
-            var count = {};
-
-            function buildPolygon(coordinates) {
-                var geometry = [];
-                for(var index in coordinates) {
-                    geometry.push([]);
-                    for(var k in coordinates[index]) {
-                        geometry[index].push(new google.maps.LatLng(coordinates[index][k][1], coordinates[index][k][0]));
-                    }
-                }
-                return new google.maps.Data.Polygon(geometry);
-            }
-            function buildMultiPolygon(coordinates) {
-                var geometry = [];
-                for(var index in coordinates) {
-                    geometry.push(buildPolygon(coordinates[i]));
-                }
-                return new google.maps.Data.MultiPolygon(geometry);
-            }
+            var expandedGeoJson = {
+                type: geojson.type,
+                features: []
+            };
             for(var i in geojson.features) {
-                var d = geojson.features[i];
-                var geometry = null;
-                switch(d.geometry.type) {
+                var feature = geojson.features[i];
+                switch(feature.geometry.type) {
                 case "Polygon":
-                    geometry = buildPolygon(d.geometry.coordinates);
+                    expandedGeoJson.features.push(feature);
                     break;
                 case "MultiPolygon":
-                    geometry = buildMultiPolygon(d.geometry.coordinates);
+                    for(var k in feature.geometry.coordinates) {
+                        var polygon = {
+                            type: "Feature",
+                            properties: feature.properties,
+                            geometry: {
+                                type: "Polygon",
+                                coordinates: feature.geometry.coordinates[k]
+                            },
+                            bbox: feature.geometry.bbox
+                        };
+                        expandedGeoJson.features.push(polygon);
+                    }
                     break;
                 }
-                self.map.data.add(new google.maps.Data.Feature({
-                    geometry: geometry,
-                    id: d.properties.PARK_NO,
-                    properties: d.properties
-                }));
             }
+            self.map.data.addGeoJson(expandedGeoJson);
         });
 
             //map.data.loadData(geojson); 
