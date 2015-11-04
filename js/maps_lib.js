@@ -86,7 +86,7 @@
         // Array reading in de-bugging console, but not visualizing. 
         //////////////////////////////////////////////////////////////////////
         
-        shp("./data/Parks_Aug2012").then(function(geojson) {
+        shp("./data/City_Boundary").then(function(geojson) {
             //do something with your geojson
             console.log(geojson);   // DEBUGGING
             // google map do not support multipolygon directly, so we need to 

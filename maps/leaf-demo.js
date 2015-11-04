@@ -47,6 +47,10 @@ shp("./data/Parks_Aug2012").then(function(geojson){
   geo.addData(geojson);
 });
 
+shp("./data/City_Boundary").then(function(geojson){
+        //do something with your geojson
+  geo.addData(geojson);
+});
 
 //var url = "./data/files/pandr"
 /*var url = "./data/Parks_Aug2012";
