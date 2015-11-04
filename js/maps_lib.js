@@ -86,13 +86,39 @@
         // Array reading in de-bugging console, but not visualizing. 
         //////////////////////////////////////////////////////////////////////
         
-        MapsLib.parks = new google.maps.Map(shp("./data/Parks_Aug2012").then(function(geojson)
-        {
-        //do something with your geojson
-        console.log(geojson);   // DEBUGGING
-        map.data.addData(geojson)
-        }
-            ));
+        shp("./data/Parks_Aug2012").then(function(geojson) {
+            //do something with your geojson
+            console.log(geojson);   // DEBUGGING
+            // google map do not support multipolygon directly, so we need to 
+            // hack the features 
+            var expandedGeoJson = {
+                type: geojson.type,
+                features: []
+            };
+            for(var i in geojson.features) {
+                var feature = geojson.features[i];
+                switch(feature.geometry.type) {
+                case "Polygon":
+                    expandedGeoJson.features.push(feature);
+                    break;
+                case "MultiPolygon":
+                    for(var k in feature.geometry.coordinates) {
+                        var polygon = {
+                            type: "Feature",
+                            properties: feature.properties,
+                            geometry: {
+                                type: "Polygon",
+                                coordinates: feature.geometry.coordinates[k]
+                            },
+                            bbox: feature.geometry.bbox
+                        };
+                        expandedGeoJson.features.push(polygon);
+                    }
+                    break;
+                }
+            }
+            self.map.data.addGeoJson(expandedGeoJson);
+        });
 
             //map.data.loadData(geojson); 
 
