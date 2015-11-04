@@ -78,7 +78,7 @@
 
         //-----custom initializers-----
         
-        $("#text_search").val("");
+
 
         //////////////////////////////////////////////////////////////////////
         // Test GeoJSON layer
@@ -122,6 +122,7 @@
 
             //map.data.loadData(geojson); 
 
+          $("#text_search").val("");
         
         //////////////////////////////////////////////////////////////////////
         // Test KML/Fusion Layer
