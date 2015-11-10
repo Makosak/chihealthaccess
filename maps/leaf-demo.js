@@ -20,122 +20,76 @@ var Stamen_Toner = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{
   ext: 'png'
 }).addTo( map );
 
-var myURL = jQuery( 'script[src$="leaf-demo.js"]' ).attr( 'src' ).replace( 'leaf-demo.js', '' );
- 
-var myIcon = L.icon({
-    iconUrl: myURL + 'images/pin24.png',
-    iconRetinaUrl: myURL + 'images/pin48.png',
-    iconSize: [29, 24],
-    iconAnchor: [9, 21],
-    popupAnchor: [0, -14]
+////////////////////////////////////////////////////////
+// Base layer is always on: City of Chicago Boundary
+////////////////////////////////////////////////////////
+var cityBoundary
+shp("./data/City_Boundary").then(function(geojson){
+  L.geoJson(geojson, {
+    style: myStyle1
+}).addTo(map);
+  cityBoundary = geojson;
 });
- 
 
-var geo = L.geoJson({features:[]},{onEachFeature:function popUp(f,l){
-        var out = [];
-        if (f.properties){
-            for(var key in f.properties){
-              out.push(key+": "+f.properties[key]);
-        }
-        //l.bindPopup(out.join("<br />"));
-        l.on('click', function(){console.log(out)});
-    }
-}}).addTo(map);
+
+// Style of layers
+var myStyle1 = {  // base layer of Chicago boundary - always on
+    "color": "#a6bddb",
+    "opacity": 0.3
+};
+
+var myStyle2 = { // basic layer with each unit defined
+    "color": "#1c9099",
+    "weight": 5,
+    "opacity": 0.8
+};
+
+////////////////////////////////////////////////////////
+// Parks Layer
+////////////////////////////////////////////////////////
 
 /*$('#parks').click(function(){
   loadParks();
 })*/
 
-var myStyle = {
-    "color": "#ff7800",
-    "weight": 5,
-    "opacity": 0.01
-};
-
-var parks, cityBoundary
+var parks = {},
 parksLoaded = [false, false]; //[init(button click at all), on/off]
 
 function loadParks(){
   if(!parksLoaded[0]){
     shp("./data/Parks_Aug2012").then(function(geojson){
-            //do something with your geojson
-      geo.addData(geojson);
-      parks = geojson;
+      parks.layer = L.geoJson(geojson, {
+          style: myStyle2 }).addTo(map);
+      parks.geojson = geojson;
       parksLoaded = [true, true];
     });
   }
   else{
     if(parksLoaded[1]){
-      reloadExistingLayers();
+      reloadExistingLayers(parks);
       parksLoaded[1] = false;
     }
     else{
-      geo.addData(parks);
+      parks.layer.addTo(map);
       parksLoaded[1] = true;
     }
   }
 
 }
 
-shp("./data/City_Boundary").then(function(geojson){
-        //do something with your geojson
-  L.geoJson(geojson, {
-    style: myStyle
-}).addTo(map);
-  cityBoundary = geojson;
-});
 
-function reloadExistingLayers(){
-  geo.clearLayers();
+////////////////////////////////////////////////////////
+// Reset: take off active layer and show base map layer
+////////////////////////////////////////////////////////
 
-  geo.addData(cityBoundary);
+function reloadExistingLayers(geojson){
+/*  lcontrol = L.control.layers(cityBoundary, parks).addTo(map);
+  lcontrol.removeLayer(geojson);
+  cityBoundary = geojson;*/
+  map.removeLayer(geojson.layer);
+  //geo.clearLayers();
+  //L.geoJson(cityBoundary).addTo(map);
 }
-
-
-
-
-
-
-
-
-var TractIndices, cityBoundary
-tractsLoaded = [false, false]; //[init(button click at all), on/off]
-
-function loadTracts(){
-  if(!tractsLoaded[0]){
-    shp("./data/CensusTractsTIGER2010").then(function(geojson){
-            //do something with your geojson
-      geo.addData(geojson);
-      tracts = geojson;
-      tractsLoaded = [true, true];
-    });
-  }
-  else{
-    if(tractsLoaded[1]){
-      reloadExistingLayers();
-      tractsLoaded[1] = false;
-    }
-    else{
-      geo.addData(tracts);
-      tractsLoaded[1] = true;
-    }
-  }
-
-}
-
-function reloadExistingLayers(){
-  geo.clearLayers();
-
-  geo.addData(cityBoundary);
-}
-
-
-
-
-
-
-
-
 
 
 //var url = "./data/files/pandr"
