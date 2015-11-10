@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+    <title>CensusTractsTIGER2010</title>
+    <layers>
+        <layer>
+            <datasource>
+                <type>ESRI Shapefile</type>
+                <path>CensusTracts.shp</path>
+            </datasource>
+            <layername>CensusTractsTIGER2010</layername>
+            <title/>
+            <variable_order>
+                <time_ids>
+                    <id>time 0</id>
+                </time_ids>
+                <var>STATEFP10</var>
+                <var>COUNTYFP10</var>
+                <var>TRACTCE10</var>
+                <var>GEOID10</var>
+                <var>NAME10</var>
+                <var>NAMELSAD10</var>
+                <var>COMMAREA</var>
+                <var>COMMAREA_N</var>
+                <var>NOTES</var>
+            </variable_order>
+            <custom_classifications/>
+            <spatial_weights/>
+            <default_vars/>
+        </layer>
+    </layers>
+</project>

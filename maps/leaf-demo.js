@@ -1,7 +1,7 @@
 var map = L.map( 'map', {
-    center: [41.879250, -87.631219],
+    center: [41.854501, -87.715496],
     minZoom: 2,
-    zoom: 12
+    zoom: 11
 });
 
 //var CartoDB_Positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
@@ -42,15 +42,101 @@ var geo = L.geoJson({features:[]},{onEachFeature:function popUp(f,l){
     }
 }}).addTo(map);
 
-shp("./data/Parks_Aug2012").then(function(geojson){
-        //do something with your geojson
-  geo.addData(geojson);
-});
+/*$('#parks').click(function(){
+  loadParks();
+})*/
+
+var myStyle = {
+    "color": "#ff7800",
+    "weight": 5,
+    "opacity": 0.01
+};
+
+var parks, cityBoundary
+parksLoaded = [false, false]; //[init(button click at all), on/off]
+
+function loadParks(){
+  if(!parksLoaded[0]){
+    shp("./data/Parks_Aug2012").then(function(geojson){
+            //do something with your geojson
+      geo.addData(geojson);
+      parks = geojson;
+      parksLoaded = [true, true];
+    });
+  }
+  else{
+    if(parksLoaded[1]){
+      reloadExistingLayers();
+      parksLoaded[1] = false;
+    }
+    else{
+      geo.addData(parks);
+      parksLoaded[1] = true;
+    }
+  }
+
+}
 
 shp("./data/City_Boundary").then(function(geojson){
         //do something with your geojson
-  geo.addData(geojson);
+  L.geoJson(geojson, {
+    style: myStyle
+}).addTo(map);
+  cityBoundary = geojson;
 });
+
+function reloadExistingLayers(){
+  geo.clearLayers();
+
+  geo.addData(cityBoundary);
+}
+
+
+
+
+
+
+
+
+var TractIndices, cityBoundary
+tractsLoaded = [false, false]; //[init(button click at all), on/off]
+
+function loadTracts(){
+  if(!tractsLoaded[0]){
+    shp("./data/CensusTractsTIGER2010").then(function(geojson){
+            //do something with your geojson
+      geo.addData(geojson);
+      tracts = geojson;
+      tractsLoaded = [true, true];
+    });
+  }
+  else{
+    if(tractsLoaded[1]){
+      reloadExistingLayers();
+      tractsLoaded[1] = false;
+    }
+    else{
+      geo.addData(tracts);
+      tractsLoaded[1] = true;
+    }
+  }
+
+}
+
+function reloadExistingLayers(){
+  geo.clearLayers();
+
+  geo.addData(cityBoundary);
+}
+
+
+
+
+
+
+
+
+
 
 //var url = "./data/files/pandr"
 /*var url = "./data/Parks_Aug2012";
