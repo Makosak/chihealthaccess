@@ -1,0 +1,43 @@
+<!DOTTYPE html>
+<html lang="en">
+  <head>
+    <title>WebGL roadmap example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    
+  </head>
+  <body>
+    <div id="map" style="width:100%; height:100%"></div>
+
+    <script id="2d-vertex-shader" type="x-shader/x-vertex">
+    attribute vec2 vertex_position;
+    attribute vec4 vertex_color;
+
+    varying vec4 vColor;
+
+    void main() {
+        gl_PointSize = 7.;
+        gl_Position = vec4(vertex_position, 0, 1);
+        vColor = vertex_color;
+    }
+    </script>
+    <script id="2d-fragment-shader-gradient" type="x-shader/x-fragment">
+    precision highp float;
+    varying vec4 vColor;
+
+    void main() {
+        gl_FragColor = vColor;
+    }
+    </script>
+    <script src='http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js'></script>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="js/webgl-utils.js"></script>
+    <script src="maps/chicago_map.js"></script>
+    <script src="map_example.js"></script>
+
+  </body>
+</html>
