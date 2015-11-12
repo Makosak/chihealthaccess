@@ -44,8 +44,8 @@
         else
             this.addrMarkerImage = "images/blue-pushpin.png"
 
-    	this.currentPinpoint = null;
-    	$("#result_count").html("");
+        this.currentPinpoint = null;
+        $("#result_count").html("");
         
         this.myOptions = {
             zoom: 11,
