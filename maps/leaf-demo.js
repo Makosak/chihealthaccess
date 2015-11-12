@@ -367,7 +367,7 @@
             });
         } else {
             alert("Geolocation API is not supported in your browser.");
-=======
+
 var map = L.map( 'map', {
     center: [41.854501, -87.715496],
     minZoom: 2,
