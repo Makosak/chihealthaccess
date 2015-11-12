@@ -1,5 +1,7 @@
 (function (window, undefined) {
     var MapsLib = function (options) {
+
+        
         var self = this;
 
         options = options || {};
@@ -50,6 +52,7 @@
         this.geocoder = new google.maps.Geocoder();
         this.map = new google.maps.Map($("#map_canvas")[0], this.myOptions);
         
+
         // maintains map centerpoint for responsive design
         google.maps.event.addDomListener(self.map, 'idle', function () {
             self.calculateCenter();
@@ -82,6 +85,9 @@
     };
 
     //-----custom functions-----
+
+    
+
     //-----end of custom functions-----
 
     MapsLib.prototype.submitSearch = function (whereClause, map) {
@@ -238,7 +244,7 @@
             strokeOpacity: 0.3,
             strokeWeight: 1,
             fillColor: "#4b58a6",
-            fillOpacity: 0.05,
+            fillOpacity: 0.10,
             map: self.map,
             center: point,
             clickable: false,
