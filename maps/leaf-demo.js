@@ -40,9 +40,82 @@ var myStyle1 = {  // base layer of Chicago boundary - always on
 
 var myStyle2 = { // basic layer with each unit defined
     "color": "#1c9099",
-    "weight": 5,
+    "weight": 1,
     "opacity": 0.8
 };
+
+function getColor(a) { //Parks with more acres have darker color
+    return a > 500  ? '#006837' :
+           a > 100  ? '#31a354' :
+           a > 10   ? '#78c679' :
+           a > 1   ? '#c2e699' :
+           a > 0   ? '#ffffcc' :
+                      '#FFEDA0';
+}
+
+function style(feature) {
+    return {
+        fillColor: getColor(feature.properties.ACRES),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        dashArray: '1',
+        fillOpacity: 0.7
+    };
+}
+
+function highlightFeature(e) {
+    var layer = e.target;
+
+    info.update(layer.feature.properties);
+
+    layer.setStyle({
+        weight: 2,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+        
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera) {
+        layer.bringToFront();
+    }
+}
+
+function resetHighlight(e) {
+    geojson.resetStyle(e.target);
+    info.update();
+}
+
+function zoomToFeature(e) {
+    map.fitBounds(e.target.getBounds());
+}
+
+function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: zoomToFeature
+    });
+}
+
+var info = L.control();
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+    this._div.innerHTML = '<h4>Size of Park</h4>' +  (props ?
+        '<b>' + props.ACRES + ' acres'
+        : 'Hover over a state');
+};
+
+info.addTo(map);
+
 
 ////////////////////////////////////////////////////////
 // Parks Layer
@@ -58,8 +131,12 @@ parksLoaded = [false, false]; //[init(button click at all), on/off]
 function loadParks(){
   if(!parksLoaded[0]){
     shp("./data/Parks_Aug2012").then(function(geojson){
-      parks.layer = L.geoJson(geojson, {
-          style: myStyle2 }).addTo(map);
+      parks.layer = L.geoJson(geojson, 
+      {
+          style: style, 
+          onEachFeature: onEachFeature
+
+      }).addTo(map);
       parks.geojson = geojson;
       parksLoaded = [true, true];
     });
@@ -77,6 +154,33 @@ function loadParks(){
 
 }
 
+var tracts = {},
+tractsLoaded = [false, false]; //[init(button click at all), on/off]
+
+function loadTracts(){
+  if(!tractsLoaded[0]){
+    shp("./data/CensusTractsTIGER2010").then(function(geojson){
+      tracts.layer = L.geoJson(geojson, 
+      {
+          style: myStyle2, 
+
+      }).addTo(map);
+      tracts.geojson = geojson;
+      tractsLoaded = [true, true];
+    });
+  }
+  else{
+    if(tractsLoaded[1]){
+      reloadExistingLayers(tracts);
+      tractsLoaded[1] = false;
+    }
+    else{
+      tracts.layer.addTo(map);
+      tractsLoaded[1] = true;
+    }
+  }
+
+}
 
 ////////////////////////////////////////////////////////
 // Reset: take off active layer and show base map layer
@@ -91,27 +195,4 @@ function reloadExistingLayers(geojson){
   //L.geoJson(cityBoundary).addTo(map);
 }
 
-
-//var url = "./data/files/pandr"
-/*var url = "./data/Parks_Aug2012";
-shp(url).then(function(data){
-  console.log(data);
-  data.features.forEach(function(feature, i){
-    // Add a marker to the map
-    feature.marker = new google.maps.Marker({
-      position:new google.maps.LatLng(
-        feature.geometry.coordinates[1],
-        feature.geometry.coordinates[0]
-      ),
-      title:feature.properties.TOWN
-    });
-    feature.marker.setMap(map);
-
-    console.log(feature.geometry.coordinates[1]+ ", " + feature.geometry.coordinates[0]);
-    // Create the info window
-    //console.log(feature.properties);
-    var out = [];
-    
-  });
-});*/
 
