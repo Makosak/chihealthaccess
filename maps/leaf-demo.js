@@ -23,6 +23,8 @@ var Stamen_Toner = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{
 ////////////////////////////////////////////////////////
 // Base layer is always on: City of Chicago Boundary
 ////////////////////////////////////////////////////////
+
+
 var cityBoundary
 shp("./data/City_Boundary").then(function(geojson){
   L.geoJson(geojson, {
@@ -34,8 +36,15 @@ shp("./data/City_Boundary").then(function(geojson){
 
 // Style of layers
 var myStyle1 = {  // base layer of Chicago boundary - always on
-    "color": "#a6bddb",
-    "opacity": 0.3
+    "color": "#f03b20",
+    "fill": false
+};
+
+var commAreasStyle = {  // base layer of Chicago boundary - always on
+    "color": "#636363",
+    "weight": 4,
+    "dashArray": true,
+    "opacity": 10
 };
 
 var myStyle2 = { // basic layer with each unit defined
@@ -45,6 +54,7 @@ var myStyle2 = { // basic layer with each unit defined
 };
 
 function getColor(a) { //Parks with more acres have darker color
+    
     return a > 500  ? '#006837' :
            a > 100  ? '#31a354' :
            a > 10   ? '#78c679' :
@@ -53,7 +63,7 @@ function getColor(a) { //Parks with more acres have darker color
                       '#FFEDA0';
 }
 
-function style(feature) {
+function acreStyle(feature) { //Parks with more acres have darker color
     return {
         fillColor: getColor(feature.properties.ACRES),
         weight: 1,
@@ -63,6 +73,50 @@ function style(feature) {
         fillOpacity: 0.7
     };
 }
+
+function hisStyle(feature) { //Parks with more acres have darker color
+    return {
+        fillColor: hisColor(feature.properties.HIS_ct),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        dashArray: '1',
+        fillOpacity: 0.7
+    };
+}
+
+function hisColor(a) { //Parks with more acres have darker color
+    
+    return a > 60  ? '#006837' :
+           a > 45  ? '#31a354' :
+           a > 30   ? '#78c679' :
+           a > 15   ? '#c2e699' :
+           a > 0   ? '#ffffcc' :
+                      '#FFEDA0';
+}
+
+
+function coiStyle(feature) { //Parks with more acres have darker color
+    return {
+        fillColor: coiColor(feature.properties.COI_ct),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        dashArray: '1',
+        fillOpacity: 0.7
+    };
+}
+
+function coiColor(a) { //Parks with more acres have darker color
+    
+    return a > 0.63  ? '#016c59' :
+           a > 0.08  ? '#1c9099' :
+           a > (-0.45)   ? '#67a9cf' :
+           a > (-0.99)   ? '#bdc9e1' :
+           a > (-1.54)   ? '#f6eff7' :
+                      '#FFEDA0';
+}
+
 
 function highlightFeature(e) {
     var layer = e.target;
@@ -83,8 +137,9 @@ function highlightFeature(e) {
 }
 
 function resetHighlight(e) {
-    geojson.resetStyle(e.target);
+    commAreas.layer.resetStyle(e.target);
     info.update();
+    console.log("resetHighlight");
 }
 
 function zoomToFeature(e) {
@@ -95,7 +150,7 @@ function onEachFeature(feature, layer) {
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
-        click: zoomToFeature
+        doubleclick: zoomToFeature
     });
 }
 
@@ -109,9 +164,9 @@ info.onAdd = function (map) {
 
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
-    this._div.innerHTML = '<h4>Size of Park</h4>' +  (props ?
-        '<b>' + props.ACRES + ' acres'
-        : 'Hover over a state');
+    this._div.innerHTML = '<h4>Community Area</h4>' +  (props ?
+        '<b>' + props.COMMUNITY + ' (ID: ' + props.AREA_NUMBE + ')'
+        : 'Hover over an area');
 };
 
 info.addTo(map);
@@ -120,6 +175,7 @@ info.addTo(map);
 ////////////////////////////////////////////////////////
 // Parks Layer
 ////////////////////////////////////////////////////////
+
 
 /*$('#parks').click(function(){
   loadParks();
@@ -133,8 +189,8 @@ function loadParks(){
     shp("./data/Parks_Aug2012").then(function(geojson){
       parks.layer = L.geoJson(geojson, 
       {
-          style: style, 
-          onEachFeature: onEachFeature
+          style: acreStyle, 
+          
 
       }).addTo(map);
       parks.geojson = geojson;
@@ -154,29 +210,87 @@ function loadParks(){
 
 }
 
-var tracts = {},
-tractsLoaded = [false, false]; //[init(button click at all), on/off]
 
-function loadTracts(){
-  if(!tractsLoaded[0]){
-    shp("./data/CensusTractsTIGER2010").then(function(geojson){
-      tracts.layer = L.geoJson(geojson, 
+var commAreas = {},
+commAreasLoaded = [false, false]; //[init(button click at all), on/off]
+
+function loadCommAreas(){
+  if(!commAreasLoaded[0]){
+    shp("./data/CommAreas").then(function(geojson){
+      commAreas.layer = L.geoJson(geojson, 
       {
-          style: myStyle2, 
+          style: commAreasStyle, 
+          onEachFeature: onEachFeature
 
       }).addTo(map);
-      tracts.geojson = geojson;
-      tractsLoaded = [true, true];
+      commAreas.geojson = geojson;
+      commAreasLoaded = [true, true];
     });
   }
   else{
-    if(tractsLoaded[1]){
-      reloadExistingLayers(tracts);
-      tractsLoaded[1] = false;
+    if(commAreasLoaded[1]){
+      reloadExistingLayers(commAreas);
+      commAreasLoaded[1] = false;
     }
     else{
-      tracts.layer.addTo(map);
-      tractsLoaded[1] = true;
+      commAreas.layer.addTo(map);
+     commAreasLoaded[1] = true;
+    }
+  }
+
+}
+
+var HIStracts = {},
+HIStractsLoaded = [false, false]; //[init(button click at all), on/off]
+
+function loadHIS(){
+  if(!HIStractsLoaded[0]){
+    shp("./data/CDPHTractsFinal_Clipped").then(function(geojson){
+      HIStracts.layer = L.geoJson(geojson, 
+      {
+          style: hisStyle, 
+
+      }).addTo(map);
+      HIStracts.geojson = geojson;
+      HIStractsLoaded = [true, true];
+    });
+  }
+  else{
+    if(HIStractsLoaded[1]){
+      reloadExistingLayers(HIStracts);
+      HIStractsLoaded[1] = false;
+    }
+    else{
+      HIStracts.layer.addTo(map);
+      HIStractsLoaded[1] = true;
+    }
+  }
+
+}
+
+var COItracts = {},
+COItractsLoaded = [false, false]; //[init(button click at all), on/off]
+
+function loadCOI(){
+  if(!COItractsLoaded[0]){
+    shp("./data/CDPHTractsFinal_Clipped").then(function(geojson){
+      COItracts.layer = L.geoJson(geojson, 
+      {
+          style: coiStyle, 
+
+      }).addTo(map);
+      COItracts.geojson = geojson;
+      COItractsLoaded = [true, true];
+    });
+  }
+  else{
+    if(COItractsLoaded[1]){
+      reloadExistingLayers(COItracts);
+      COItractsLoaded[1] = false;
+    }
+    else{
+      COItracts.layer.addTo(map);
+      COItractsLoaded[1] = true;
     }
   }
 
