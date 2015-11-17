@@ -44,8 +44,8 @@
         else
             this.addrMarkerImage = "images/blue-pushpin.png"
 
-    	this.currentPinpoint = null;
-    	$("#result_count").html("");
+        this.currentPinpoint = null;
+        $("#result_count").html("");
         
         this.myOptions = {
             zoom: 11,
@@ -118,6 +118,22 @@
                 }
             }
             self.map.data.addGeoJson(expandedGeoJson);
+            self.map.data.setStyle(function(feature) {
+                /*var color = 'gray';
+                if (feature.getProperty('isColorful')) {
+                  color = feature.getProperty('color');
+                }
+                //@type {google.maps.Data.StyleOptions}
+                return                
+                ({
+                  fillColor: color,
+                  strokeColor: color,
+                  strokeWeight: 2
+                });*/
+                return ({ zIndex: -1});
+
+          });
+
         });
 
             //map.data.loadData(geojson); 
@@ -160,6 +176,14 @@
                 select: self.locationColumn,
                 where: whereClause
             },
+            styles:[{
+                markerOptions: {
+                    zIndex: 100,
+                    label: "blah",
+                    title: "blah",
+                    fillColor: "blue"
+                }
+            }],
             styleId: 2,
             templateId: 2
         });
