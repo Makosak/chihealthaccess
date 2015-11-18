@@ -21,7 +21,7 @@ var rgbStringToFloatArray = function(a) {
 };
 
 var determineGLColor = function(data, result) {
-    var color = 'rgb(0, 0, 255)';
+    var color = 'rgb(140,150,198)';
     var array = rgbStringToFloatArray(color);
     var node_num = result.length / 4;
     for(i=0; i<node_num; ++i) {
@@ -216,7 +216,7 @@ var determineGLColor = function(data, result) {
             }
 
             var canvas = canvasLayer.canvas;
-            var gl = canvas.getContext("webgl", {depth:false, alpha:true, antialias: false});
+            var gl = canvas.getContext("experimental-webgl", {depth:false, alpha:true, antialias: false});
             var vertexShader = createShaderFromScriptElement(gl, "2d-vertex-shader");
             var fragmentShader = createShaderFromScriptElement(gl, "2d-fragment-shader-gradient");
 
@@ -258,8 +258,12 @@ var determineGLColor = function(data, result) {
             // hack the features 
             var expandedGeoJson = {
                 type: geojson.type,
+
                 features: []
             };
+
+
+
             for(var i in geojson.features) {
                 var feature = geojson.features[i];
                 switch(feature.geometry.type) {
@@ -271,33 +275,40 @@ var determineGLColor = function(data, result) {
                         var polygon = {
                             type: "Feature",
                             properties: feature.properties,
+
                             geometry: {
                                 type: "Polygon",
                                 coordinates: feature.geometry.coordinates[k]
                             },
                             bbox: feature.geometry.bbox
                         };
+
+
                         expandedGeoJson.features.push(polygon);
                     }
                     break;
                 }
             }
+
             self.map.data.addGeoJson(expandedGeoJson);
             self.map.data.setStyle(function(feature) {
-                /*var color = 'gray';
-                if (feature.getProperty('isColorful')) {
-                  color = feature.getProperty('color');
-                }
-                //@type {google.maps.Data.StyleOptions}
-                return                
-                ({
-                  fillColor: color,
-                  strokeColor: color,
-                  strokeWeight: 2
-                });*/
-                return ({ zIndex: -1});
-
+            var color = 'gray';
+            var zIndex = 100;
+            if (feature.getProperty('isColorful')) {
+              color = feature.getProperty('color');
+            }
+            return /** @type {google.maps.Data.StyleOptions} */({
+              fillColor: color,
+              strokeColor: color,
+              strokeWeight: 2
+            });
           });
+
+          // When the user clicks, set 'isColorful', changing the color of the letters.
+          map.data.addListener('click', function(event) {
+            event.feature.setProperty('isColorful', true);
+          });
+
 
         });
 
@@ -697,7 +708,7 @@ var determineGLColor = function(data, result) {
                 for(var i in categories) {
                     coordinates[i] = [];
                 }
-                for(var i = 0; i<data.rows.length; ++i) {
+                for(var i = 0; i<50; ++i) {
                     var str = data.rows[i][1];
                     var type = data.rows[i][2];
                     var typeIndex = 0;
