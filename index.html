@@ -17,7 +17,10 @@
     <script type="text/javascript" src="js/jquery.address.js"></script>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
     <script type="text/javascript" src='maps/shp.js'></script>
+    <script type="text/javascript" src="js/GoogleCanvasLayer.js"></script>
     <script type="text/javascript" src="js/maps_lib.js"></script>
+    <script src="lib/webgl-utils.js"></script>
+    <script src="chicago_map.js"></script>
     
     
     <!-- Styles -->
@@ -257,7 +260,26 @@
         });
       //]]>
     </script>
+    <script id="2d-vertex-shader" type="x-shader/x-vertex">
+    attribute vec2 vertex_position;
+    attribute vec4 vertex_color;
 
+    varying vec4 vColor;
+
+    void main() {
+        gl_PointSize = 7.;
+        gl_Position = vec4(vertex_position, 0, 1);
+        vColor = vertex_color;
+    }
+    </script>
+    <script id="2d-fragment-shader-gradient" type="x-shader/x-fragment">
+    precision highp float;
+    varying vec4 vColor;
+
+    void main() {
+        gl_FragColor = vColor;
+    }
+    </script>
 
   </body>
 </html>

@@ -78,6 +78,128 @@
 
         //-----custom initializers-----
         
+        // initialize the WebGL layer on Google Maps
+        {
+            update = function() {
+                console.log("update");
+                width = this.canvas.width;
+                height = this.canvas.height;
+                nodes = this.nodes;
+                edges = this.edges;
+                proj = this.getProjection();
+                glNodes = this.glNodes;
+                gl = this.gl;
+                bounds = this.map.getBounds();
+                
+                // pixel positions
+                for(var i=0; i<nodes.length; ++i) {
+                    if(bounds.contains(nodes[i])) {
+                        point = proj.fromLatLngToContainerPixel(nodes[i]);
+                        x = point.x;
+                        y = height - point.y;
+                        x = (x * 2.0 - width) / width;
+                       y = (y * 2.0 - height) / height;
+                       glNodes[i] = [x,y];
+                    } else {
+                       glNodes[i] = [-2, -2];
+                    }
+                }
+
+                lineWidth = [3.0, 2.0];
+                
+//                gl = this.canvas.getContext("webgl", {depth:false, alpha:true, antialias: false});
+                gl.viewport(0, 0, width, height);
+                gl.clear(gl.COLOR_BUFFER_BIT);
+
+                for(i=0; i<2; ++i) {
+                    vertex = [];
+                    color = [];
+                    for(k=0; k<edges[i].length; k+=2) {
+                        start = edges[i][k];
+                        end = edges[i][k+1];
+                        if(glNodes[start][0] < -1 || glNodes[end][0] < -1) {
+                            continue;
+                        }
+
+                        vertex.push(glNodes[start][0]);
+                        vertex.push(glNodes[start][1]);
+                        vertex.push(glNodes[end][0]);
+                        vertex.push(glNodes[end][1]);
+
+                        color.push(1);
+                        color.push(0);
+                        color.push(0);
+                        color.push(1);
+                        color.push(1);
+                        color.push(0);
+                        color.push(0);
+                        color.push(1);
+                    }
+
+                    gl.bindBuffer(gl.ARRAY_BUFFER, gl.vertexBuffer[i]);
+                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertex), gl.DYNAMIC_DRAW);
+                    gl.enableVertexAttribArray(gl.positionLocation);
+                    gl.vertexAttribPointer(gl.positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+                    gl.bindBuffer(gl.ARRAY_BUFFER, gl.colorBuffer[i]);
+                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(color), gl.DYNAMIC_DRAW);
+                    gl.enableVertexAttribArray(gl.colorLocation);
+                    gl.vertexAttribPointer(gl.colorLocation, 4, gl.FLOAT, false, 0, 0);
+
+                    gl.lineWidth(lineWidth[i]);
+                    gl.drawArrays(gl.LINES, 0, vertex.length / 2);
+                }
+            }
+            canvasLayerOptions = {
+                map: self.map,
+                resizeHandler: null,
+                animate: false,
+                updateHandler: update,
+                resolutionScale: window.devicePixelRatio || 1
+            };
+
+            canvasLayer = new GoogleCanvasLayer(canvasLayerOptions);
+            // initialize the roads
+            {
+                edges = [];
+                nodes = [];
+                for(var i in roads.nodes) {
+                    nodes[i] = new google.maps.LatLng(roads.nodes[i][0], roads.nodes[i][1]);
+                }
+                edges[0] = [];
+                edges[1] = [];
+                for(var i in roads.edges) { 
+                    edge = roads.edges[i];
+                    edges[edge[2]].push(edge[0]);
+                    edges[edge[2]].push(edge[1]);
+                }
+                canvasLayer.edges = edges;
+                canvasLayer.nodes = nodes;
+                canvasLayer.glNodes = [];
+            }
+
+            canvas = canvasLayer.canvas;
+            gl = canvas.getContext("webgl", {depth:false, alpha:true, antialias: false});
+            vertexShader = createShaderFromScriptElement(gl, "2d-vertex-shader");
+            fragmentShader = createShaderFromScriptElement(gl, "2d-fragment-shader-gradient");
+
+            program = createProgram(gl, [vertexShader, fragmentShader]);
+            gl.useProgram(program);
+
+            gl.positionLocation = gl.getAttribLocation(program, "vertex_position");
+            gl.colorLocation = gl.getAttribLocation(program, "vertex_color");
+            gl.vertexBuffer = [];
+            gl.colorBuffer = [];
+
+            for(i=0; i<2; ++i) {
+                gl.vertexBuffer[i] = gl.createBuffer();
+                gl.colorBuffer[i] = gl.createBuffer();
+            }
+
+            canvasLayer.enabledNodes = [];
+            canvasLayer.gl = gl;
+            self.roadnetworkLayer = canvasLayer;
+        }
 
 
         //////////////////////////////////////////////////////////////////////

@@ -694,4 +694,36 @@ window.requestAnimFrame = window.requestAnimationFrame;       // just to stay ba
 window.cancelRequestAnimFrame = window.cancelAnimationFrame;  // just to stay backward compatible.
 
 //}());
+//
+// functions to determine colors
+// Feng Wang 2015
+function rgbStringToFloatArray(a) {
+        var array = a.match(/\d+/g);
+        var red = parseInt(array[0]);
+        var green = parseInt(array[1]);
+        var blue = parseInt(array[2]);
+        
+        var result = [];
+        result[0] = red / 255.0;
+        result[1] = green / 255.0;
+        result[2] = blue / 255.0;
+        
+        if((red | green | blue) == 0) {
+            result[3] = 0;
+        } else {
+            result[3] = 1.0;
+        }
+        
+        return result;
+    }
 
+    
+    function determineGLColor(data, result) {
+        for(var i=0; i<node_num; ++i) {
+            var color = data[i] == 1 ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 0)';
+            var array = rgbStringToFloatArray(color);
+            for(var k=0; k<4; ++k) {
+                result[i*4+k] = array[k];
+            }
+        }
+    }
