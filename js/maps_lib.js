@@ -1,3 +1,40 @@
+// functions to determine colors
+// Feng Wang 2015
+var rgbStringToFloatArray = function(a) {
+    var array = a.match(/\d+/g);
+    var red = parseInt(array[0]);
+    var green = parseInt(array[1]);
+    var blue = parseInt(array[2]);
+    
+    var result = [];
+    result[0] = red / 255.0;
+    result[1] = green / 255.0;
+    result[2] = blue / 255.0;
+    
+    if((red | green | blue) == 0) {
+        result[3] = 0;
+    } else {
+        result[3] = 1.0;
+    }
+    
+    return result;
+};
+
+var determineGLColor = function(data, result) {
+    var color = 'rgb(0, 0, 255)';
+    var array = rgbStringToFloatArray(color);
+    var node_num = result.length / 4;
+    for(i=0; i<node_num; ++i) {
+        for(k=0; k<4; ++k) {
+            result[i*4+k] = 0;
+        }
+    }
+    for(i in data) {
+        for(k=0; k<4; ++k) {
+            result[data[i] *4+ k] = array[k];
+        }
+    }
+};
 
 (function (window, undefined) {
     var MapsLib = function (options) {
@@ -80,24 +117,24 @@
         
         // initialize the WebGL layer on Google Maps
         {
-            update = function() {
-                console.log("update");
-                width = this.canvas.width;
-                height = this.canvas.height;
-                nodes = this.nodes;
-                edges = this.edges;
-                proj = this.getProjection();
-                glNodes = this.glNodes;
-                gl = this.gl;
-                bounds = this.map.getBounds();
+            var update = function() {
+                var width = this.canvas.width;
+                var height = this.canvas.height;
+                var nodes = this.nodes;
+                var edges = this.edges;
+                var proj = this.getProjection();
+                var glNodes = this.glNodes;
+                var gl = this.gl;
+                var bounds = this.map.getBounds();
+                var self = this;
                 
                 // pixel positions
                 for(var i=0; i<nodes.length; ++i) {
                     if(bounds.contains(nodes[i])) {
-                        point = proj.fromLatLngToContainerPixel(nodes[i]);
-                        x = point.x;
-                        y = height - point.y;
-                        x = (x * 2.0 - width) / width;
+                       var point = proj.fromLatLngToContainerPixel(nodes[i]);
+                       var x = point.x;
+                       var y = height - point.y;
+                       x = (x * 2.0 - width) / width;
                        y = (y * 2.0 - height) / height;
                        glNodes[i] = [x,y];
                     } else {
@@ -105,18 +142,18 @@
                     }
                 }
 
-                lineWidth = [3.0, 2.0];
+                var lineWidth = [3.0, 2.0];
                 
-//                gl = this.canvas.getContext("webgl", {depth:false, alpha:true, antialias: false});
                 gl.viewport(0, 0, width, height);
                 gl.clear(gl.COLOR_BUFFER_BIT);
+                determineGLColor(self.enabledNodes, gl.nodeColorArray);
 
-                for(i=0; i<2; ++i) {
-                    vertex = [];
-                    color = [];
+                for(var i=0; i<2; ++i) {
+                    var vertex = [];
+                    var color = [];
                     for(k=0; k<edges[i].length; k+=2) {
-                        start = edges[i][k];
-                        end = edges[i][k+1];
+                        var start = edges[i][k];
+                        var end = edges[i][k+1];
                         if(glNodes[start][0] < -1 || glNodes[end][0] < -1) {
                             continue;
                         }
@@ -126,14 +163,14 @@
                         vertex.push(glNodes[end][0]);
                         vertex.push(glNodes[end][1]);
 
-                        color.push(1);
-                        color.push(0);
-                        color.push(0);
-                        color.push(1);
-                        color.push(1);
-                        color.push(0);
-                        color.push(0);
-                        color.push(1);
+                        color.push(gl.nodeColorArray[start*4+0]);
+                        color.push(gl.nodeColorArray[start*4+1]);
+                        color.push(gl.nodeColorArray[start*4+2]);
+                        color.push(gl.nodeColorArray[start*4+3]);
+                        color.push(gl.nodeColorArray[end*4+0]);
+                        color.push(gl.nodeColorArray[end*4+1]);
+                        color.push(gl.nodeColorArray[end*4+2]);
+                        color.push(gl.nodeColorArray[end*4+3]);
                     }
 
                     gl.bindBuffer(gl.ARRAY_BUFFER, gl.vertexBuffer[i]);
@@ -150,7 +187,7 @@
                     gl.drawArrays(gl.LINES, 0, vertex.length / 2);
                 }
             }
-            canvasLayerOptions = {
+            var canvasLayerOptions = {
                 map: self.map,
                 resizeHandler: null,
                 animate: false,
@@ -158,11 +195,11 @@
                 resolutionScale: window.devicePixelRatio || 1
             };
 
-            canvasLayer = new GoogleCanvasLayer(canvasLayerOptions);
+            var canvasLayer = new GoogleCanvasLayer(canvasLayerOptions);
             // initialize the roads
             {
-                edges = [];
-                nodes = [];
+                var edges = [];
+                var nodes = [];
                 for(var i in roads.nodes) {
                     nodes[i] = new google.maps.LatLng(roads.nodes[i][0], roads.nodes[i][1]);
                 }
@@ -178,12 +215,12 @@
                 canvasLayer.glNodes = [];
             }
 
-            canvas = canvasLayer.canvas;
-            gl = canvas.getContext("webgl", {depth:false, alpha:true, antialias: false});
-            vertexShader = createShaderFromScriptElement(gl, "2d-vertex-shader");
-            fragmentShader = createShaderFromScriptElement(gl, "2d-fragment-shader-gradient");
+            var canvas = canvasLayer.canvas;
+            var gl = canvas.getContext("webgl", {depth:false, alpha:true, antialias: false});
+            var vertexShader = createShaderFromScriptElement(gl, "2d-vertex-shader");
+            var fragmentShader = createShaderFromScriptElement(gl, "2d-fragment-shader-gradient");
 
-            program = createProgram(gl, [vertexShader, fragmentShader]);
+            var program = createProgram(gl, [vertexShader, fragmentShader]);
             gl.useProgram(program);
 
             gl.positionLocation = gl.getAttribLocation(program, "vertex_position");
@@ -191,12 +228,18 @@
             gl.vertexBuffer = [];
             gl.colorBuffer = [];
 
-            for(i=0; i<2; ++i) {
+            for(var i=0; i<2; ++i) {
                 gl.vertexBuffer[i] = gl.createBuffer();
                 gl.colorBuffer[i] = gl.createBuffer();
             }
 
             canvasLayer.enabledNodes = [];
+            gl.nodeColorArray = [];
+            for(var i=0; i<roads.nodes.length; ++i) {
+                for(var k=0; k<4; ++k) {
+                    gl.nodeColorArray.push(0);
+                }
+            }
             canvasLayer.gl = gl;
             self.roadnetworkLayer = canvasLayer;
         }
@@ -596,6 +639,86 @@
             alert("Geolocation API is not supported in your browser.");
         }
     };
+
+    MapsLib.prototype.queryNetworkServer = function(metric, categories, points, radius) {
+        var self = this;
+        if(metric == 'time') {
+            radius *= 60;
+        }
+        var serviceRequestData = {
+            points: points,
+            range: radius,
+            categories: categories
+        };
+
+        $.ajax({
+            url: "http://vaderserver0.cidse.dhcp.asu.edu:8181/api/" + metric,
+            method: "POST",
+            dataType: "json",
+            jsonp: false,
+            data: JSON.stringify(serviceRequestData),
+            success: function(json) {
+                self.roadnetworkLayer.enabledNodes = [];
+                for(var i in json.result) {
+                    for(var k in json.result[i]) {
+                        for(var x in json.result[i][k]) {
+                            self.roadnetworkLayer.enabledNodes.push(json.result[i][k][x]);
+                        }
+                    }
+                }
+                self.roadnetworkLayer.scheduleUpdate();
+            }
+        });
+    }
+
+    MapsLib.prototype.queryNetwork = function(metric, categories, radius) {
+        var self = this;
+        if(categories.length == 0) {
+            this.enabledNodes = [];
+            this.roadnetworkLayer.scheduleUpdate();
+            return;
+        }
+
+        var sql = "SELECT 'Facility' as Facility, 'Geometry' as Location, 'Type' as Type FROM 1S0RxiJ4dgV728CEOKGW-ZmCCoLxZAjGLq0tGkke4 where Type IN (" + categories[0];
+        for(var i=1; i<categories.length; ++i) {
+            sql += "," + categories[i];
+        }
+        sql += ")";
+        $.ajax({
+            url: "https://www.googleapis.com/fusiontables/v2/query?callback=?",
+            method: "GET",
+            dataType: "jsonp",
+            data: {
+                sql: sql,
+                key: "AIzaSyBlElNqMWCzO_psyf0zwhumBViK6gRiMfY"
+            },
+            success: function(data) {
+                var coordinates = [];
+                for(var i in categories) {
+                    coordinates[i] = [];
+                }
+                for(var i = 0; i<data.rows.length; ++i) {
+                    var str = data.rows[i][1];
+                    var type = data.rows[i][2];
+                    var typeIndex = 0;
+                    for(; typeIndex < categories; ++typeIndex) {
+                        if(type == categories[typeIndex]) {
+                          break;
+                        }
+                    }
+                    // remove ()
+                    str = str.substr(1);
+                    str = str.substr(0, str.length - 1);
+                    var index = str.indexOf(", ");
+
+                    var lat = parseFloat(str.substr(0, index));
+                    var lng = parseFloat(str.substr(index+2));
+                    coordinates[typeIndex].push([lng, lat]);
+                }
+                self.queryNetworkServer(metric, categories, coordinates, radius);
+            }
+        });
+    }
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
         module.exports = MapsLib;
     } else if (typeof define === 'function' && define.amd) {

@@ -494,8 +494,6 @@ GoogleCanvasLayer.prototype.repositionCanvas_ = function() {
 
   this.canvas.style.left = offsetX + "px";
   this.canvas.style.top = offsetY + "px";
-
-  console.log(this.canvas);
   
   this.resize_();
 //  this.canvas.style[GoogleCanvasLayer.CSS_TRANSFORM_] = 'translate(' +

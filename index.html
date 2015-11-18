@@ -17,10 +17,10 @@
     <script type="text/javascript" src="js/jquery.address.js"></script>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
     <script type="text/javascript" src='maps/shp.js'></script>
+    <script src="chicago_map.js"></script>
     <script type="text/javascript" src="js/GoogleCanvasLayer.js"></script>
     <script type="text/javascript" src="js/maps_lib.js"></script>
     <script src="lib/webgl-utils.js"></script>
-    <script src="chicago_map.js"></script>
     
     
     <!-- Styles -->
@@ -171,8 +171,8 @@
             </p>
             <br />
 
-            <a class="btn btn-default" role="button"> 3 mile, FQHC (type 1) </a>
-            <a class="btn btn-default" role="button"> 30 min, FQHC (type 1) </a><br><br><br>
+            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('distance', [1], 3);"> 3 mile, FQHC (type 1) </a>
+            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('time', [1], 5)"> 5 min, FQHC (type 1) </a><br><br><br>
 
           <h4> Tables and Graphs </h4>
             <p>For the selected service area, show me a breakdown of the demographic and socioeconomic characteristics for the population served. 
@@ -204,6 +204,7 @@
 
 
     <script type='text/javascript'>
+      var myMap;
       //<![CDATA[
         $(window).resize(function () {
           var h = $(window).height(),
@@ -213,7 +214,7 @@
         }).resize();
         
         $(function() {
-          var myMap = new MapsLib({
+          myMap = new MapsLib({
             fusionTableId:      "1S0RxiJ4dgV728CEOKGW-ZmCCoLxZAjGLq0tGkke4",
             // 1mYz7EnrWR78BQgRivuHAQTedUc2ymntN7oI450SX
             googleApiKey:       "AIzaSyBlElNqMWCzO_psyf0zwhumBViK6gRiMfY",
