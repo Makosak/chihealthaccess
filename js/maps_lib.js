@@ -251,7 +251,7 @@ var determineGLColor = function(data, result) {
         // Array reading in de-bugging console, but not visualizing. 
         //////////////////////////////////////////////////////////////////////
         
-        shp("./data/City_Boundary").then(function(geojson) {
+        shp("./data/CommAreas").then(function(geojson) {
             //do something with your geojson
             console.log(geojson);   // DEBUGGING
             // google map do not support multipolygon directly, so we need to 
@@ -293,14 +293,15 @@ var determineGLColor = function(data, result) {
             self.map.data.addGeoJson(expandedGeoJson);
             self.map.data.setStyle(function(feature) {
             var color = 'gray';
-            var zIndex = 100;
             if (feature.getProperty('isColorful')) {
               color = feature.getProperty('color');
             }
             return /** @type {google.maps.Data.StyleOptions} */({
-              fillColor: color,
-              strokeColor: color,
-              strokeWeight: 2
+              fillColor: 'gray',
+              fillOpacity: 0,
+              strokeColor: 'gray',
+              strokeWeight: 1.5,
+              zIndex: -100
             });
           });
 
