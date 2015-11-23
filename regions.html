@@ -12,20 +12,30 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <!-- Scripts -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>  
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="/js/slider_input.js"></script>
     <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js?2'></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <style type="text/css">
+    .chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+    </style>
 
   </head>
 
@@ -54,20 +64,43 @@
            <h1> Healthy Regions </h1>  
 
             <a class="btn btn-default" role="button" onclick="loadParks()">Test File (Parks)</a><br><br>
-            <a class="btn btn-default" role="button" onclick="loadHIS()">Household Income Diversity Index</a><br><br>
-            <a class="btn btn-default" role="button" onclick="loadCOI()">Childhood Opportunity Index</a><br><br>
-            <a class="btn btn-default" role="button" onclick="loadCommAreas()">Community Area Boundary</a><br><br>
-            <a class="btn btn-info" role="button" onclick="loadBlobs()">Healthy Region Blobs (All Data)</a><br><br>
 
             <div class="dropdown">
-              <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Dropdown Test
+              <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Household Income Diversity Index
               <span class="caret"></span></button>
               <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="map_example.html">Test 1</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="test.html">Test 2</a></li>
+                <li role="presentation"><a role="menuitem" onclick="loadHIS()">Household Income Diversity Index, Equal Interval</a></li>
+                <li role="presentation"><a role="menuitem" onclick="loadHIS2()">Household Income Diversity Index by Category</a></li>
+              </ul>
+            </div>  
+            <br>
+
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Childhood Opportunity Index
+              <span class="caret"></span></button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <li role="presentation"><a role="menuitem" onclick="loadCOI1()">Childhood Opportunity Index, Equal Interval</a></li>
+                <li role="presentation"><a role="menuitem" onclick="loadCOI2()">Childhood Opportunity Index by Category</a></li>
               </ul>
             </div>
+            <br>
+
+            <a class="btn btn-default" role="button" onclick="loadCommAreas()">Community Area Boundary</a><br><br>
+
+            <a class="btn btn-info" role="button" onclick="loadBlobs()">Healthy Region Blobs (All Data)</a><br><br>
+
+            <a class='btn btn-default' onclick="reloadExistingLayers">
+              <i class='glyphicon glyphicon-repeat'></i>
+              Reset
+            </a>
+
+
+
       </div>
+
+
+      <div id="testingHover"></div>
+      <div class="chart"></div>
       </div>
 
   <div class='col-md-8'>
