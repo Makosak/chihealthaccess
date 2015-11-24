@@ -83,8 +83,6 @@ var determineGLColor = function(data, result) {
 
         this.currentPinpoint = null;
         $("#result_count").html("");
-        
-
         var styleArray = [
           {
             featureType: "all",
@@ -134,68 +132,38 @@ var determineGLColor = function(data, result) {
                 var nodes = this.nodes;
                 var edges = this.edges;
                 var proj = this.getProjection();
-                var glNodes = this.glNodes;
-                var gl = this.gl;
+                var canvasNodes = this.canvasNodes;
+                var ctx = this.ctx;
                 var bounds = this.map.getBounds();
                 var self = this;
                 
                 // pixel positions
                 for(var i=0; i<nodes.length; ++i) {
-                    if(bounds.contains(nodes[i])) {
-                       var point = proj.fromLatLngToContainerPixel(nodes[i]);
-                       var x = point.x;
-                       var y = height - point.y;
-                       x = (x * 2.0 - width) / width;
-                       y = (y * 2.0 - height) / height;
-                       glNodes[i] = [x,y];
-                    } else {
-                       glNodes[i] = [-2, -2];
-                    }
+                   var point = proj.fromLatLngToContainerPixel(nodes[i]);
+                   var x = Math.floor(point.x);
+                   var y = Math.floor(point.y);
+                   canvasNodes[i] = [x,y];
                 }
 
-                var lineWidth = [3.0, 2.0];
+                var lineWidth = [3, 2];
                 
-                gl.viewport(0, 0, width, height);
-                gl.clear(gl.COLOR_BUFFER_BIT);
-                determineGLColor(self.enabledNodes, gl.nodeColorArray);
+                ctx.clearRect(0, 0, width, height);
 
                 for(var i=0; i<2; ++i) {
                     var vertex = [];
                     var color = [];
+                    ctx.beginPath();
+                    ctx.lineWidth = lineWidth[i];
+                    ctx.strokeStyle = "rgb((140,150,198)";
                     for(k=0; k<edges[i].length; k+=2) {
                         var start = edges[i][k];
                         var end = edges[i][k+1];
-                        if(glNodes[start][0] < -1 || glNodes[end][0] < -1) {
-                            continue;
+                        if(self.enabledNodes.hasOwnProperty(end) && self.enabledNodes.hasOwnProperty(start)) {
+                            ctx.moveTo(canvasNodes[start][0], canvasNodes[start][1]);
+                            ctx.lineTo(canvasNodes[end][0], canvasNodes[end][1]);
                         }
-
-                        vertex.push(glNodes[start][0]);
-                        vertex.push(glNodes[start][1]);
-                        vertex.push(glNodes[end][0]);
-                        vertex.push(glNodes[end][1]);
-
-                        color.push(gl.nodeColorArray[start*4+0]);
-                        color.push(gl.nodeColorArray[start*4+1]);
-                        color.push(gl.nodeColorArray[start*4+2]);
-                        color.push(gl.nodeColorArray[start*4+3]);
-                        color.push(gl.nodeColorArray[end*4+0]);
-                        color.push(gl.nodeColorArray[end*4+1]);
-                        color.push(gl.nodeColorArray[end*4+2]);
-                        color.push(gl.nodeColorArray[end*4+3]);
                     }
-
-                    gl.bindBuffer(gl.ARRAY_BUFFER, gl.vertexBuffer[i]);
-                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertex), gl.DYNAMIC_DRAW);
-                    gl.enableVertexAttribArray(gl.positionLocation);
-                    gl.vertexAttribPointer(gl.positionLocation, 2, gl.FLOAT, false, 0, 0);
-
-                    gl.bindBuffer(gl.ARRAY_BUFFER, gl.colorBuffer[i]);
-                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(color), gl.DYNAMIC_DRAW);
-                    gl.enableVertexAttribArray(gl.colorLocation);
-                    gl.vertexAttribPointer(gl.colorLocation, 4, gl.FLOAT, false, 0, 0);
-
-                    gl.lineWidth(lineWidth[i]);
-                    gl.drawArrays(gl.LINES, 0, vertex.length / 2);
+                    ctx.stroke();
                 }
             }
             var canvasLayerOptions = {
@@ -223,35 +191,13 @@ var determineGLColor = function(data, result) {
                 }
                 canvasLayer.edges = edges;
                 canvasLayer.nodes = nodes;
-                canvasLayer.glNodes = [];
+                canvasLayer.canvasNodes = [];
             }
 
             var canvas = canvasLayer.canvas;
-            var gl = canvas.getContext("experimental-webgl", {depth:false, alpha:true, antialias: false});
-            var vertexShader = createShaderFromScriptElement(gl, "2d-vertex-shader");
-            var fragmentShader = createShaderFromScriptElement(gl, "2d-fragment-shader-gradient");
-
-            var program = createProgram(gl, [vertexShader, fragmentShader]);
-            gl.useProgram(program);
-
-            gl.positionLocation = gl.getAttribLocation(program, "vertex_position");
-            gl.colorLocation = gl.getAttribLocation(program, "vertex_color");
-            gl.vertexBuffer = [];
-            gl.colorBuffer = [];
-
-            for(var i=0; i<2; ++i) {
-                gl.vertexBuffer[i] = gl.createBuffer();
-                gl.colorBuffer[i] = gl.createBuffer();
-            }
-
-            canvasLayer.enabledNodes = [];
-            gl.nodeColorArray = [];
-            for(var i=0; i<roads.nodes.length; ++i) {
-                for(var k=0; k<4; ++k) {
-                    gl.nodeColorArray.push(0);
-                }
-            }
-            canvasLayer.gl = gl;
+            var ctx = canvas.getContext("2d");
+            canvasLayer.ctx = ctx;
+            canvasLayer.enabledNodes = {};
             self.roadnetworkLayer = canvasLayer;
         }
 
@@ -681,11 +627,11 @@ var determineGLColor = function(data, result) {
             jsonp: false,
             data: JSON.stringify(serviceRequestData),
             success: function(json) {
-                self.roadnetworkLayer.enabledNodes = [];
+                self.roadnetworkLayer.enabledNodes = {};
                 for(var i in json.result) {
                     for(var k in json.result[i]) {
                         for(var x in json.result[i][k]) {
-                            self.roadnetworkLayer.enabledNodes.push(json.result[i][k][x]);
+                            self.roadnetworkLayer.enabledNodes[json.result[i][k][x]] = true;
                         }
                     }
                 }
@@ -697,7 +643,7 @@ var determineGLColor = function(data, result) {
     MapsLib.prototype.queryNetwork = function(metric, categories, radius) {
         var self = this;
         if(categories.length == 0) {
-            this.enabledNodes = [];
+            this.enabledNodes = {};
             this.roadnetworkLayer.scheduleUpdate();
             return;
         }
@@ -720,7 +666,7 @@ var determineGLColor = function(data, result) {
                 for(var i in categories) {
                     coordinates[i] = [];
                 }
-                for(var i = 0; i<50; ++i) {
+                for(var i = 0; i<data.rows.length; ++i) {
                     var str = data.rows[i][1];
                     var type = data.rows[i][2];
                     var typeIndex = 0;
