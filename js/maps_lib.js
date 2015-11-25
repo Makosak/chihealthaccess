@@ -642,11 +642,25 @@ var determineGLColor = function(data, result) {
 
     MapsLib.prototype.queryNetwork = function(metric, categories, radius) {
         var self = this;
+        self.roadnetworkLayer.enabledNodes = {};
+        var cache = NetworkResultCache[metric];
+        for(var cat in categories) {
+            var array = cache.result[categories[cat]-1];
+            for(var k in array) {
+                for(var x in array[k]) {
+                    self.roadnetworkLayer.enabledNodes[array[k][x]] = true;
+                }
+            }
+        }
+        self.roadnetworkLayer.scheduleUpdate();
+        return;
+
         if(categories.length == 0) {
             this.enabledNodes = {};
             this.roadnetworkLayer.scheduleUpdate();
             return;
         }
+
 
         var sql = "SELECT 'Facility' as Facility, 'Geometry' as Location, 'Type' as Type FROM 1S0RxiJ4dgV728CEOKGW-ZmCCoLxZAjGLq0tGkke4 where Type IN (" + categories[0];
         for(var i=1; i<categories.length; ++i) {
