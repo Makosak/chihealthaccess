@@ -154,10 +154,10 @@ var determineGLColor = function(data, result) {
                     var color = [];
                     ctx.beginPath();
                     ctx.lineWidth = lineWidth[i];
-                    ctx.strokeStyle = "rgb((140,150,198)";
+                    ctx.strokeStyle = "rgb(99,99,99)";
                     for(k=0; k<edges[i].length; k+=2) {
                         var start = edges[i][k];
-                        var end = edges[i][k+1];
+                        var end = edges[i][k+1]; // ctx.strokeStyle = "rgb(49,130,189)"
                         if(self.enabledNodes.hasOwnProperty(end) && self.enabledNodes.hasOwnProperty(start)) {
                             ctx.moveTo(canvasNodes[start][0], canvasNodes[start][1]);
                             ctx.lineTo(canvasNodes[end][0], canvasNodes[end][1]);
@@ -208,7 +208,7 @@ var determineGLColor = function(data, result) {
         // Array reading in de-bugging console, but not visualizing. 
         //////////////////////////////////////////////////////////////////////
         
-        shp("./data/CommAreas").then(function(geojson) {
+        shp("./data/City_Boundary").then(function(geojson) {
             //do something with your geojson
             console.log(geojson);   // DEBUGGING
             // google map do not support multipolygon directly, so we need to 
@@ -256,8 +256,9 @@ var determineGLColor = function(data, result) {
             return /** @type {google.maps.Data.StyleOptions} */({
               fillColor: 'gray',
               fillOpacity: 0,
-              strokeColor: 'gray',
-              strokeWeight: 3,
+              strokeColor: '#6baed6',
+              strokeWeight: 2.5,
+              strokeOpacity: 1,
               zIndex: -100
             });
           });
@@ -647,7 +648,7 @@ var determineGLColor = function(data, result) {
         for(var cat in categories) {
             var array = cache.result[categories[cat]-1];
             for(var k in array) {
-                for(var x in array[k]) {
+                for(var x in array[k]) { //if want to add multiple colors add here
                     self.roadnetworkLayer.enabledNodes[array[k][x]] = true;
                 }
             }
