@@ -149,12 +149,33 @@
         <div class='col-md-3'>
 
           <h4>
+            Data
+            </h4>
+            <p>
+              Explore the data table in more depth: <br>
+
+              <a href="test.html">Medical Provider Dataset </a> <br>
+            </p><br>
+
+          <h4>
             Service Areas
             </h4>
             <p>
               Show me service areas for selected health providers by distance or travel time: 
             </p>
-              <label>
+
+
+            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('distance', [1], 1);"> 1 mile, FQHC </a>
+            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('time', [1], 2)"> 2 min, FQHC </a><br><br>
+            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('distance', [2], 1);"> 1 mile, Hospital </a>
+            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('time', [2], 2)"> 2 min, Hospital </a><br><br>
+            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('distance', [3], 1);"> 1 mile, Free Clinics </a>
+            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('time', [3], 2)"> 2 min, Free Clinics </a><br><br>
+            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('distance', [3], 1);"> 1 mile, School Clinics </a>
+            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('time', [3], 2)"> 2 min, School Clinics </a><br><br>
+
+
+              <!-- <label>
                 within
                 <select id='search_radius'>
                   <option value='1610'>1 mile</option>
@@ -164,15 +185,13 @@
                   <option value='1610'>30 minutes</option>
                   <option value='3220'>1 hour+</option>
                 </select>
-              </label>
-            </p>
+              </label> -->
+            
             <p>
               <a href="#"> Calculate New Service Areas </a> 
             </p>
             <br />
 
-            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('distance', [1], 1);"> 1 mile, FQHC (type 1) </a>
-            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('time', [1], 2)"> 2 min, FQHC (type 1) </a><br><br><br>
 
           <h4> Tables and Graphs </h4>
             <p>For the selected service area, show me a breakdown of the demographic and socioeconomic characteristics for the population served. 

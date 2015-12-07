@@ -40,6 +40,8 @@
   </head>
 
   <body>
+        
+  
 
     <div class='navbar navbar-default navbar-static-top'>
           <div class='container-fluid'>
@@ -63,27 +65,55 @@
           <div class='well'>
            <h1> Healthy Regions </h1>  
 
-            <a class="btn btn-default" role="button" onclick="loadParks()">Test File (Parks)</a><br><br>
 
-            <div class="dropdown">
-              <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Household Income Diversity Index
-              <span class="caret"></span></button>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                <li role="presentation"><a role="menuitem" onclick="loadHIS()">Household Income Diversity Index, Equal Interval</a></li>
-                <li role="presentation"><a role="menuitem" onclick="loadHIS2()">Household Income Diversity Index by Category</a></li>
-              </ul>
-            </div>  
-            <br>
-
-            <div class="dropdown">
-              <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Childhood Opportunity Index
-              <span class="caret"></span></button>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                <li role="presentation"><a role="menuitem" onclick="loadCOI1()">Childhood Opportunity Index, Equal Interval</a></li>
-                <li role="presentation"><a role="menuitem" onclick="loadCOI2()">Childhood Opportunity Index by Category</a></li>
-              </ul>
+            <div class="panel-group">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <a data-toggle="collapse" href="#HealthySpaces">Healthy Spaces</a>
+                        </h4>
+                      </div>
+                      <div id="HealthySpaces" class="panel-collapse collapse">
+                        <ul class="list-group">
+                          <li class="list-group-item"><a role="menuitem" onclick="loadParks()">Parks & Green Spaces</a></li>
+                        </ul>
+                      </div>
+                    </div>
+            </div> 
+            <div class="panel-group">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#HouseholdIncome">Household Income Diversity Index</a>
+                </h4>
+              </div>
+              <div id="HouseholdIncome" class="panel-collapse collapse">
+                <ul class="list-group">
+                  <li class="list-group-item"><a role="menuitem" onclick="loadHIS()">Equal Interval</a></li>
+                  <li class="list-group-item"><a role="menuitem" onclick="loadHIS2()">CDPH Category</a></li>
+                </ul>
+              </div>
             </div>
-            <br>
+          </div>
+
+            <div class="panel-group">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#ChildhoodOpportunity">Childhood Opportunity Index</a>
+                </h4>
+              </div>
+              <div id="ChildhoodOpportunity" class="panel-collapse collapse">
+                <ul class="list-group">
+                  <li class="list-group-item"><a role="menuitem" onclick="loadCOI1()">Equal Interval</a></li>
+                  <li class="list-group-item"><a role="menuitem" onclick="loadCOI2()">CDPH Category</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+
+
 
             <a class="btn btn-default" role="button" onclick="loadCommAreas()">Community Area Boundary</a><br><br>
 
