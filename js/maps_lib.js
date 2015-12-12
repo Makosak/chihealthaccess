@@ -259,7 +259,7 @@ var determineGLColor = function(data, result) {
               strokeColor: '#6baed6',
               strokeWeight: 2.5,
               strokeOpacity: 1,
-              zIndex: -100
+              zIndex: 100
             });
           });
 
@@ -313,7 +313,7 @@ var determineGLColor = function(data, result) {
             },
             styles:[{
                 markerOptions: {
-                    zIndex: 100,
+                    zIndex: -100,
                     label: "blah",
                     title: "blah",
                     fillColor: "blue"
@@ -644,7 +644,7 @@ var determineGLColor = function(data, result) {
     MapsLib.prototype.queryNetwork = function(metric, categories, radius) {
         var self = this;
         self.roadnetworkLayer.enabledNodes = {};
-        var cache = NetworkResultCache[metric];
+        var cache = NetworkResultCache[metric + "_" + radius];
         for(var cat in categories) {
             var array = cache.result[categories[cat]-1];
             for(var k in array) {

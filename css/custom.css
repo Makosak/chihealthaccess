@@ -5,6 +5,8 @@ a:hover { color: #4B58A6; }
   max-width: none;
 }
 
+.btn-block {width:350px;}
+
 .filter-box { 
   height: 15px; 
   width: 15px;  

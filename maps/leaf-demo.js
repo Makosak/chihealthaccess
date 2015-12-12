@@ -161,17 +161,17 @@ function coiStyleCat(feature) { //Parks with more acres have darker color
 }
 
 
-function coiColorEq(a) { //Parks with more acres have darker color
+function coiColorEq(a) { // Equal Interval
     
-    return a > 0.63  ? '#016c59' :
-           a > 0.08  ? '#1c9099' :
+    return a > 0.63  ? '#f6eff7' :
+           a > 0.08  ? '#bdc9e1' :
            a > (-0.45)   ? '#67a9cf' :
-           a > (-0.99)   ? '#bdc9e1' :
-           a > (-1.54)   ? '#f6eff7' :
+           a > (-0.99)   ? '#1c9099' :
+           a > (-1.54)   ? '#016c59' :
                       '#FFEDA0';
 }
 
-function coiColorCat(a) { //Parks with more acres have darker color
+function coiColorCat(a) { // CDPH Category
     
     return a > (0.424)  ? '#fef0d9' :
            a > (0.115)       ? '#fdcc8a' :
@@ -532,5 +532,3 @@ function reloadExistingLayers(geojson){
   //geo.clearLayers();
   //L.geoJson(cityBoundary).addTo(map);
 }
-
-

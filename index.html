@@ -12,21 +12,26 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <!-- Scripts -->
-    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/js/slider_input.js"></script>
+    <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js?2'></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
     <script type="text/javascript" src="js/jquery.address.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
     <script type="text/javascript" src='maps/shp.js'></script>
     <script src="chicago_map.js"></script>
     <script type="text/javascript" src="js/GoogleCanvasLayer.js"></script>
     <script type="text/javascript" src="js/maps_lib.js"></script>
     <script src="js/NetworkResultCache.js"></script>
-    
-    
+
+
     <!-- Styles -->
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/custom.css"/>
+    <link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -63,10 +68,10 @@
       <h1>Healthy Access:<br>
         Medical Services</h1>
    
-      <p>Health Clinics, Hospitals, and other Service Providers.
+      <p>Explore the locations of medical service providers in Chicago. Choose from Federal Qualified Health Centers or Community Clinics, Hospitals, Free Clinics, School-Based Health Clinics, and Other Providers that include County Clinics. <p>
 
 
-<ul class='inputs-list unstyled'>
+      <ul class='inputs-list unstyled'>
               <li>
                 <label class='checkbox inline'>
                   <input type='checkbox' id='cbType1' />
@@ -111,7 +116,7 @@
             </h4>
             <input class='form-control' id='text_search' placeholder="Enter a organization name" type='text' />
                         
-            <br />
+            
 
             <h4>
             Address <small>(<a id='find_me' href='#'>find me</a>)</small>
@@ -146,46 +151,6 @@
           <div class='alert alert-info' id='result_box' ><strong id='result_count'></strong></div>
         </div>
 
-        <div class='col-md-3'>
-
-          <h4>
-            Service Areas
-            </h4>
-            <p>
-              Show me service areas for selected health providers by distance or travel time: 
-            </p>
-              <label>
-                within
-                <select id='search_radius'>
-                  <option value='1610'>1 mile</option>
-                  <option value='4830'>3 miles</option>
-                  <option value='8050'>5 miles</option>
-                  <option value='805'>15 minutes</option>
-                  <option value='1610'>30 minutes</option>
-                  <option value='3220'>1 hour+</option>
-                </select>
-              </label>
-            </p>
-            <p>
-              <a href="#"> Calculate New Service Areas </a> 
-            </p>
-            <br />
-
-            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('distance', [1], 1);"> 1 mile, FQHC (type 1) </a>
-            <a class="btn btn-default" role="button" href="javascript:myMap.queryNetwork('time', [1], 2)"> 2 min, FQHC (type 1) </a><br><br><br>
-
-          <h4> Tables and Graphs </h4>
-            <p>For the selected service area, show me a breakdown of the demographic and socioeconomic characteristics for the population served. 
-              <br>
-              <b>[[test only: in development]]</b>:
-            </p>
-            <br />
-
-          <div id="visualization_div" style="width: 600px; height: 400px;"></div>
-
-          
-              </div>
-
 
           <div class='col-md-6'>
           <noscript>
@@ -199,8 +164,116 @@
             Customized Map by Marynia, developed from <a href='http://derekeder.com/searchable_map_template/'> Derek Eder Template</a>.
         </p>
         </div>
-      </div>
-    </div>
+ 
+        <div class='col-md-3'>
+        <!-- <div id="visualization_div" style="width: 600px; height: 400px;"></div> -->
+          <h2>
+            Service Areas
+            </h2>
+            <p>
+              Service areas are calculated along the road network. In this version, primary and secondary roads are used (and residential sterets are not). Click to view service areas for selected health providers by distance. 
+            </p>
+
+             <!-- Single button -->
+            <div class="btn-group">
+              <button type="button" class="btn btn-default btn-lg btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span> <span class='filter-box filter-blue'></span>
+                FQHC Clinics <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="javascript:myMap.queryNetwork('distance', [1], 1);"> 1 mile</a></li>
+                <li><a href="javascript:myMap.queryNetwork('distance', [1], 3);"> 3 mile</a></li>
+                <li><a href="javascript:myMap.queryNetwork('distance', [1], 5);"> 5 mile</a>
+              </ul>
+            </div>
+
+            <br><br>  
+
+            <div class="btn-group">
+              <button type="button" class="btn btn-default btn-lg btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class='filter-box filter-red'></span>
+                Hospitals <span class="caret" >
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="javascript:myMap.queryNetwork('distance', [2], 1);"> 1 mile</a></li>
+                <li><a href="javascript:myMap.queryNetwork('distance', [2], 3);"> 3 mile</a></li>
+                <li><a href="javascript:myMap.queryNetwork('distance', [2], 5);"> 5 mile</a>
+              </ul>
+            </div> 
+
+            <br><br>
+            
+            <div class="btn-group">
+              <button type="button" class="btn btn-default btn-lg btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class='filter-box filter-green'></span>
+                Free Clinics <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="javascript:myMap.queryNetwork('distance', [3], 1);"> 1 mile</a></li>
+                <li><a href="javascript:myMap.queryNetwork('distance', [3], 3);"> 3 mile</a></li>
+                <li><a href="javascript:myMap.queryNetwork('distance', [3], 5);"> 5 mile</a>
+              </ul>
+            </div> 
+
+            <br><br>
+
+            <div class="btn-group">
+              <button type="button" class="btn btn-default btn-lg btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class='filter-box filter-yellow'></span>
+                School Clinics <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="javascript:myMap.queryNetwork('distance', [4], 1);"> 1 mile</a></li>
+                <li><a href="javascript:myMap.queryNetwork('distance', [4], 3);"> 3 mile</a></li>
+                <li><a href="javascript:myMap.queryNetwork('distance', [4], 5);"> 5 mile</a>
+              </ul>
+            </div>  
+            
+            <br><br>
+
+            <div class="btn-group"> 
+              <button type="button" class="btn btn-default btn-lg btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class='filter-box filter-purple'></span>
+                Other Providers <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="javascript:myMap.queryNetwork('distance', [5], 1);"> 1 mile</a></li>
+                <li><a href="javascript:myMap.queryNetwork('distance', [5], 3);"> 3 mile</a></li>
+                <li><a href="javascript:myMap.queryNetwork('distance', [5], 5);"> 5 mile</a>
+              </ul>
+            </div> 
+                   
+
+
+              <!-- <label>
+                within
+                <select id='search_radius'>
+                  <option value='1610'>1 mile</option>
+                  <option value='4830'>3 miles</option>
+                  <option value='8050'>5 miles</option>
+                  <option value='805'>15 minutes</option>
+                  <option value='1610'>30 minutes</option>
+                  <option value='3220'>1 hour+</option>
+                </select>
+              </label> -->
+            
+<!--             
+            <p><p>
+              <a href="#"> Calculate New Service Areas </a> 
+            </p>
+            <br /> -->
+
+            <br><br>
+            <h2> Data </h2>
+            <p> This dynamic data is provided from the Chicago Department of Public Health. It will be updated on a regular basis. Explore the data table in more depth: <br>
+              <a href="test.html">Medical Provider Dataset </a> <br>
+            </p><br>
+
+<!-- 
+          <h4> Tables and Graphs </h4>
+            <p>For the selected service area, show me a breakdown of the demographic and socioeconomic characteristics for the population served. 
+              <br>
+              <b>[[test only: in development]]</b>:
+            </p>
+            <br />
+ -->
+
+
 
 
     <script type='text/javascript'>
