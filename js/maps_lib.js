@@ -259,7 +259,7 @@ var determineGLColor = function(data, result) {
               strokeColor: '#6baed6',
               strokeWeight: 2.5,
               strokeOpacity: 1,
-              zIndex: -100
+              zIndex: 100
             });
           });
 
@@ -313,7 +313,7 @@ var determineGLColor = function(data, result) {
             },
             styles:[{
                 markerOptions: {
-                    zIndex: 100,
+                    zIndex: -100,
                     label: "blah",
                     title: "blah",
                     fillColor: "blue"
