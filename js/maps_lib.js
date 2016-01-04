@@ -124,7 +124,7 @@ var determineGLColor = function(data, result) {
 
         //-----custom initializers-----
         
-        // initialize the WebGL layer on Google Maps
+        // initialize the Canvas layer on Google Maps
         {
             var update = function() {
                 var width = this.canvas.width;
@@ -145,13 +145,11 @@ var determineGLColor = function(data, result) {
                    canvasNodes[i] = [x,y];
                 }
 
-                var lineWidth = [3, 2];
+                var lineWidth = [3, 2, 2, 2];
                 
                 ctx.clearRect(0, 0, width, height);
 
-                for(var i=0; i<2; ++i) {
-                    var vertex = [];
-                    var color = [];
+                for(var i=0; i<4; ++i) {
                     ctx.beginPath();
                     ctx.lineWidth = lineWidth[i];
                     ctx.strokeStyle = "rgb(99,99,99)";
@@ -182,8 +180,10 @@ var determineGLColor = function(data, result) {
                 for(var i in roads.nodes) {
                     nodes[i] = new google.maps.LatLng(roads.nodes[i][0], roads.nodes[i][1]);
                 }
-                edges[0] = [];
-                edges[1] = [];
+
+                for(var i =0; i<4; ++i) {
+                    edges[i] = [];
+                }
                 for(var i in roads.edges) { 
                     edge = roads.edges[i];
                     edges[edge[2]].push(edge[0]);
