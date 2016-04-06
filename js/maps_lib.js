@@ -83,18 +83,11 @@ var determineGLColor = function(data, result) {
 
         this.currentPinpoint = null;
         $("#result_count").html("");
-        var styleArray = [
-          {
-            featureType: "all",
-            elementType: "all",
-            stylers: [
-                { saturation: -100 } // Grayscale
-              ]
-          }
-        ];
+        var styleArray = [{"featureType":"water","elementType":"geometry","stylers":[{"color":"#a0d6d1"},{"lightness":17}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#dedede"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#dedede"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#dedede"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":16}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#f1f1f1"},{"lightness":21}]},{"elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"lightness":16}]},{"elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#333333"},{"lightness":40}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#f2f2f2"},{"lightness":19}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#fefefe"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#fefefe"},{"lightness":17},{"weight":1.2}]}]
+                ;
 
         this.myOptions = {
-            zoom: 11,
+            zoom: 12,
             center: this.map_centroid,
             styles: styleArray
         };
@@ -208,7 +201,7 @@ var determineGLColor = function(data, result) {
         // Array reading in de-bugging console, but not visualizing. 
         //////////////////////////////////////////////////////////////////////
         
-        shp("./data/City_Boundary").then(function(geojson) {
+/*        shp("./data/City_Boundary").then(function(geojson) {
             //do something with your geojson
             console.log(geojson);   // DEBUGGING
             // google map do not support multipolygon directly, so we need to 
@@ -245,7 +238,7 @@ var determineGLColor = function(data, result) {
                     }
                     break;
                 }
-            }
+            } 
 
             self.map.data.addGeoJson(expandedGeoJson);
             self.map.data.setStyle(function(feature) {
@@ -253,15 +246,17 @@ var determineGLColor = function(data, result) {
             if (feature.getProperty('isColorful')) {
               color = feature.getProperty('color');
             }
-            return /** @type {google.maps.Data.StyleOptions} */({
-              fillColor: 'gray',
+
+
+            return /** @type {google.maps.Data.StyleOptions} *///({
+              /*fillColor: 'gray',
               fillOpacity: 0,
               strokeColor: '#6baed6',
               strokeWeight: 2.5,
               strokeOpacity: 1,
-              zIndex: 100
+              zIndex: -100
             });
-          });
+          }); 
 
           // When the user clicks, set 'isColorful', changing the color of the letters.
           map.data.addListener('click', function(event) {
@@ -273,7 +268,7 @@ var determineGLColor = function(data, result) {
 
             //map.data.loadData(geojson); 
 
-          $("#text_search").val("");
+          $("#text_search").val(""); */
         
         //////////////////////////////////////////////////////////////////////
         // Test KML/Fusion Layer
