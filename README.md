@@ -6,15 +6,14 @@
 
 ## Hot List
 
-Healthy Access:
-<li> Turn OSM streets to WebGL for service (in progress) </li>
-<li> Connect service algorithm (ASU front-end service for points and streets, by distance </li>
-
-
 Healthy Regions:
 <li> Connect python script </li>
 <li> Add button for testing python </li>
 
+Data to Add:
+<li> Health literacy by Census tract </li>
+<li> Zip code boundaries </li>
+<li> Demographic and SES data with tracts, zip codes, and community areas </li>
 
 
 ## Later
@@ -24,6 +23,8 @@ Healthy Living:
 <li> Aggregate by region (if needed) </li>
 <li> Customize Searches </li>
 <li> Identify clusters of high and low need based on service type </li>
+<li> Turn OSM streets to WebGL for service (in progress) </li>
+<li> Connect service algorithm (ASU front-end service for points and streets, by distance </li>
 
 Healthy Regions:
 <li> Mortality index (aggregated or adjusted) blobs </li>
