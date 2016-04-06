@@ -100,9 +100,13 @@ var determineGLColor = function(data, result) {
             self.calculateCenter();
         });
         google.maps.event.addDomListener(window, 'resize', function () {
+            var center = map.getCenter();
             self.map.setCenter(self.map_centroid);
+            google.maps.event.trigger(map, "resize");
+            map.setCenter(center); 
         });
-        self.searchrecords = null;
+
+    self.searchrecords = null;
 
         //reset filters
         $("#search_address").val(self.convertToPlainString($.address.parameter('address')));
