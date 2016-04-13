@@ -311,6 +311,8 @@ info.updateTract = function (props) {
         .domain([d3.min(data), d3.max(data)])
         .range([0, 420]);
 
+
+
     data = d3.layout.histogram()
     .bins(x.ticks(5))
     (data);
