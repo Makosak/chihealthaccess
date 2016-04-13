@@ -121,7 +121,7 @@ var determineGLColor = function(data, result) {
 
         //-----custom initializers-----
         
-        // initialize the WebGL layer on Google Maps
+        // initialize the Canvas layer on Google Maps
         {
             var update = function() {
                 var width = this.canvas.width;
