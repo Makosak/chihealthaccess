@@ -297,9 +297,14 @@ info.updateTract = function (props) {
 
     var data = [];
     var features = COI2tracts.geojson.features;
-
+    var min = features[0].properties.COI_ct, max = features[0].properties.COI_ct;
     for (var i = 0; i < features.length; i++) {
-      data.push(features[i].properties.COI_ct);
+      value = features[i].properties.COI_ct;
+      data.push(value);
+      if(value < min)
+        min = value;
+      else if(value > max)
+        max = value;
     };
 
 
@@ -307,23 +312,79 @@ info.updateTract = function (props) {
 
     // console.log(d3.min(data), d3.max(data));
 
-    var x = d3.scale.linear()
+    /* var x = d3.scale.linear()
         .domain([d3.min(data), d3.max(data)])
-        .range([0, 420]);
+        .range([0, 420]); */
+
+    //var values = d3.range(1000).map(d3.random.bates(10));
+
+    var formatCount = d3.format(",.0f");
+
+    var margin = {top: 10, right: 30, bottom: 30, left: 30},
+    width = $('.chart').width() - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+  
+    var x = d3.scale.linear()
+    .domain([min, max])
+    .range([0, width]);
 
     data = d3.layout.histogram()
     .bins(x.ticks(5))
     (data);
 
+    var y = d3.scale.linear()
+    .domain(d3.extent(data, function(d){ return d.length}))
+    .range([height, 0]);
 
-    d3.select(".chart")  //select chart container using a class selector
+    var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom")
+    .ticks(7);
+
+    var svg = d3.select(".chart").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+
+    console.log(data);
+
+
+    var bar = svg.selectAll(".bar")
+        .data(data)
+      .enter().append("g")
+        .attr("class", "bar")
+        .attr("transform", function(d, i) { console.log(y(d.length)); return "translate(" + x(d3.min(d)) + "," + y(d.length) + ")"; });
+
+    bar.append("rect")
+        .attr("x", 1)
+        .attr("width", 20)
+        .attr("height", function(d, i) { return height - y(d.y); });
+
+    bar.append("text")
+        .attr("dy", ".75em")
+        .attr("y", 6)
+        .attr("x", function(d){console.log(d.dx); return x(d.dx) / 2;})
+        .attr("text-anchor", "middle")
+        .text(function(d) { console.log(d.y); return formatCount(d.y); });
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+
+//////////////
+
+    /*d3.select(".chart")  //select chart container using a class selector
       .selectAll("div")  //initiate data join by defining selection to which we join the data
         .data(data) // join the data
 
         
       .enter().append("div")
         .style("width", function(d) { return x(d) + "px"; })
-        .text(function(d) { return d; });
+        .text(function(d) { return d; });*/
 };
 
 info.addTo(map);
