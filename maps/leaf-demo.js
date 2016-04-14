@@ -237,8 +237,12 @@ function highlightFeatureTract(e) {
 
 function resetHighlightTract(e) {
     //commAreas.layer.resetStyle(e.target);
-    layer.resetStyle(e.target);
 
+
+    // Steptoe: layer below is not defined
+    // need to call object which contains layers as above
+    // layer.resetStyle(e.target);
+    COI2tracts.layer.resetStyle(e.target);
 }
 
 function zoomToFeature(e) {
@@ -299,92 +303,98 @@ info.updateTract = function (props) {
     var features = COI2tracts.geojson.features;
     var min = features[0].properties.COI_ct, max = features[0].properties.COI_ct;
     for (var i = 0; i < features.length; i++) {
+
+      // Get COI value and store it in the data array
       value = features[i].properties.COI_ct;
       data.push(value);
+
+      // Update min and max for x domain using value
       if(value < min)
         min = value;
       else if(value > max)
         max = value;
     };
 
-
-
-
-    // console.log(d3.min(data), d3.max(data));
-
-    /* var x = d3.scale.linear()
-        .domain([d3.min(data), d3.max(data)])
-        .range([0, 420]); */
-
-    //var values = d3.range(1000).map(d3.random.bates(10));
-
     var formatCount = d3.format(",.0f");
 
     var margin = {top: 10, right: 30, bottom: 30, left: 30},
+    // Use chart class width to determine chart width
     width = $('.chart').width() - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
-  
+    // Use 'Healthy Regions' container to determine height
+    height = $('.well').height() - margin.top - margin.bottom;
+
+    // Scale x values to have domain between min/max
+    // and bind pixel range from 0->width
     var x = d3.scale.linear()
     .domain([min, max])
     .range([0, width]);
 
-    data = d3.layout.histogram()
-    .bins(x.ticks(5))
-    (data);
+    // Bin the data into specified number of histbins
+    data = d3.layout.histogram().bins(x.ticks(5))(data);
 
+    // Scale y values to have domain between min/max of bin sizes
+    // and bind pixel range from height->0
     var y = d3.scale.linear()
     .domain(d3.extent(data, function(d){ return d.length}))
     .range([height, 0]);
 
+    // Setup xAxis using x scale from above, on the bottom,
+    // with set # of tick marks
     var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom")
     .ticks(7);
 
+    // Make sure to remove old chart before drawing new chart
+    $(".chart").empty();
+
+    // Select Chart area and append svg with specified dims
+    // and append the g to contain all elements shifted by margins
     var svg = d3.select(".chart").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    console.log(data);
+    // Set minimum bar pixel height for very small bin count
+    var minBarHeight = 18;
 
-
-    var bar = svg.selectAll(".bar")
-        .data(data)
+    // Append a bar for each item provided as data and translate into x,y position
+    var bar = svg.selectAll(".bar") // initiate data join by defining selection to which we join the data
+        .data(data) // join the data
       .enter().append("g")
         .attr("class", "bar")
-        .attr("transform", function(d, i) { console.log(y(d.length)); return "translate(" + x(d3.min(d)) + "," + y(d.length) + ")"; });
+        .attr("transform", function(d, i) {
+          // Check if bar height is smaller than min height, if so use min
+          var yTrans = ((height - y(d.y) < minBarHeight) ? (height - minBarHeight) : y(d.y));
+          return "translate(" + x(d3.min(d)) + "," + yTrans + ")";
+        });
 
+    // Append a rect with fill based on the mean value of the data it represents,
+    // set height with bin count and set width with COI value range it reps
     bar.append("rect")
+        .style("fill", function(d, i){return coiColorCat(d3.mean(d));})
         .attr("x", 1)
-        .attr("width", 20)
-        .attr("height", function(d, i) { return height - y(d.y); });
+        .attr("width", function(d, i){
+          //Calculate width using max and min value range
+          d.width = x(d3.max(d)) - x(d3.min(d));
+          return d.width - 1;
+        })
+        .attr("height", function(d, i) { return d3.max([minBarHeight, height - y(d.y)]); });
 
+    // Append the bin count as text below the top of the bar centered
     bar.append("text")
         .attr("dy", ".75em")
         .attr("y", 6)
-        .attr("x", function(d){console.log(d.dx); return x(d.dx) / 2;})
+        .attr("x", function(d){ return d.width / 2;})
         .attr("text-anchor", "middle")
-        .text(function(d) { console.log(d.y); return formatCount(d.y); });
+        .text(function(d) { return formatCount(d.y); });
 
+    // Append the xAxis to the chart
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
-
-
-//////////////
-
-    /*d3.select(".chart")  //select chart container using a class selector
-      .selectAll("div")  //initiate data join by defining selection to which we join the data
-        .data(data) // join the data
-
-        
-      .enter().append("div")
-        .style("width", function(d) { return x(d) + "px"; })
-        .text(function(d) { return d; });*/
 };
 
 info.addTo(map);
