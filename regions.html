@@ -29,13 +29,28 @@
 
    <style type="text/css">
     .chart div {
-  font: 10px sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
-}
+      font: 10px sans-serif;
+      /*background-color: steelblue;*/
+      text-align: right;
+      padding: 3px;
+      margin: 1px;
+      color: white;
+    }
+
+    .bar rect {
+      /*fill: steelblue;*/
+      shape-rendering: crispEdges;
+    }
+
+    .bar text {
+      fill: #000;
+    }
+
+    .axis path, .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
     </style>
 
   </head>
@@ -62,7 +77,7 @@
 
     <div class='container-fluid'>
       <div class='row'>
-        <div class='col-md-3'>
+        <div class='col-md-4'>
           <div class='well'>
            <h1> Healthy Regions </h1>  
 
@@ -129,18 +144,18 @@
       <div id="testingHover"></div>
       </div>
 
-
+<!-- 
   <div class='col-md-3'>
 
     <div class="chart"></div>
 
-  </div>
+  </div> -->
 
 
 
 
 
-  <div class='col-md-6'>
+  <div class='col-md-8'>
     <div id="map" style="height: 700px; border: 1px solid #AAA;"></div>
       <script type="text/javascript" src='maps/shp.js'></script>
       <script type='text/javascript' src='maps/leaf-demo.js'></script>
