@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>Healthy Chicago 2015</title>
+
+    <!-- Metadata -->
+    <meta charset='utf-8' />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content='' name='Healthy Regions Page - 2015' />
+    <meta content='' name='Marynia Kolak' />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>  
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/js/slider_input.js"></script>
+    <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js?2'></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+
+   <style type="text/css">
+    .chart div {
+      font: 10px sans-serif;
+      /*background-color: steelblue;*/
+      text-align: right;
+      padding: 3px;
+      margin: 1px;
+      color: white;
+    }
+
+    .bar rect {
+      /*fill: steelblue;*/
+      shape-rendering: crispEdges;
+    }
+
+    .bar text {
+      fill: #000;
+    }
+
+    .axis path, .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+    </style>
+
+  </head>
+
+  <body>
+        
+      
+
+    <div class='navbar navbar-default navbar-static-top'>
+          <div class='container-fluid'>
+            <div class="navbar-header">
+              <a class='navbar-brand' href='index.html'>Healthy Chicago 2015</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="index.html">Healthy Access</a></li>
+                <li><a href="services.html">Healthy Living</a></li>
+                <li class='active'><a href="regions.html">Healthy Regions</a></li>
+                <li><a href="about.html">About</a></li>
+              </ul>
+            </div>
+          </div>
+    </div>
+
+    <div class='container-fluid'>
+      <div class='row'>
+        <div class='col-md-3'>
+           <h3> Health Risk Indicators </h3><p>
+           <h4> Social </h4>  
+           <a class="btn btn-default" role="button" onclick="loadCOI1()"> 
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+            Childhood Opportunity Index</a><p><p>    
+           <a class="btn btn-default" role="button" onclick="#"> 
+            <span class="glyphicon glyphicon-thumbs-down"></span>
+            Health Literacy Index</a><p><p> 
+           <a class="btn btn-default" role="button" onclick="loadHIS2()"> 
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+            Household Diversity Index</a><br> <br>  
+           <h4> Economic </h4> 
+           <a class="btn btn-default" role="button" onclick="#"> 
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+            Economic Hardship Index</a><br><br>  
+           <h4> Environment </h4>  
+           <a class="btn btn-default" role="button" onclick="#"> 
+            <span class="glyphicon glyphicon-thumbs-down"></span>
+            Violent Crime </a><p><p>
+           <a class="btn btn-default" role="button" onclick="#"> 
+            <span class="glyphicon glyphicon-thumbs-down"></span>
+            Property Crime </a><br><br>  
+           <h4> Outcomes </h4>  
+           <a class="btn btn-default" role="button" onclick="#"> 
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+            Premature Mortality Rate</a><br><br>  
+           <h4> ANALYTICS </h4>
+            <a class="btn btn-default" role="button" onclick="#"> 
+              Blobs (Max-P Regions Algorithm)</a><br><br>  
+        
+        </div>
+
+
+        <!-- Second Column -->
+        <div class='col-md-3'>
+
+          Information about Category here.
+          <div id="testingHover"></div>
+          <div class="chart"></div>
+
+        </div>
+
+        <!-- Second Column -->
+        <div class='col-md-6'>
+          <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class='filter-box filter-purple'></span>
+                Other Providers <span class="caret"></span>
+          </button>
+          <div id="map" style="height: 700px; border: 1px solid #AAA;"></div>
+            <script type="text/javascript" src='maps/shp.js'></script>
+            <script type='text/javascript' src='maps/leaf-demo.js'></script>
+        </div>
+
+
+
+  </div></div>
+
+
+  
+</body>
+</html>
