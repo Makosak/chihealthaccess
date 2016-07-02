@@ -7,19 +7,17 @@
 ## Hot List
 
 Healthy Regions:
-<li> Connect python script </li>
-<li> Add button for testing python </li>
+<li> update dashboard </li>
 
 Data to Add:
-<li> Health literacy by Census tract </li>
+<li> Indicated by X in button </li>
 <li> Zip code boundaries </li>
-<li> Demographic and SES data with tracts, zip codes, and community areas </li>
 
 
 ## Later
 
 Healthy Living:
-<li> Add Purple Binder Data as Fusion Table </li>
+<li> Add Community service as Fusion Table </li>
 <li> Aggregate by region (if needed) </li>
 <li> Customize Searches </li>
 <li> Identify clusters of high and low need based on service type </li>
