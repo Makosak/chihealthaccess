@@ -23,7 +23,7 @@ var CartoDB_Positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{
 
 
 
-var legend = L.control({position: 'bottomright'});
+/*var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {
 
@@ -41,7 +41,7 @@ legend.onAdd = function (map) {
     return div;
 };
 
-legend.addTo(map);
+legend.addTo(map); */
 
 ////////////////////////////////////////////////////////
 // Base layer is always on: City of Chicago Boundary
@@ -63,7 +63,7 @@ var myStyle1 = {  // base layer of Chicago boundary - always on
     "fill": false
 };
 
-var commAreasStyle = {  // base layer of Chicago boundary - always on
+var commAreasStyle = {  // Community Area Layer Overlay
     "color": "#636363",
     "weight": 4,
     "dashArray": true,
@@ -97,7 +97,7 @@ function acreStyle(feature) { //Parks with more acres have darker color
     };
 }
 
-function hisStyle(feature) { //Parks with more acres have darker color
+function hisStyle(feature) { // Household Income Diversity Style
     return {
         fillColor: hisColor(feature.properties.HIS_ct),
         weight: 1,
@@ -108,7 +108,7 @@ function hisStyle(feature) { //Parks with more acres have darker color
     };
 }
 
-function hisStyleCat(feature) { //CDPH Coding
+function hisStyleCat(feature) { // Household Income Diversity Style, CDPH Coding
     return {
         fillColor: hisColorCat(feature.properties.HIS_ct),
         weight: 1,
@@ -297,7 +297,10 @@ info.updateTract = function (props) {
         + ' Population Change (since 2010): ' + props.PopChange + '<br>'
 
 
-        : 'Hover over an area');
+        : 'Hover over an area to get information about it.');
+
+
+
 
     var data = [];
     var features = COI2tracts.geojson.features;
