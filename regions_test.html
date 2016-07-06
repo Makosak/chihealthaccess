@@ -80,64 +80,65 @@
     <div class='container-fluid'>
       <div class='row'>
         <div class='col-md-3'>
-           <h3> Health Risk Indicators </h3><p>
-            <div class="btn-group">
+           <h3> Health Risk Indicators </h3>
+           <hr>
+<!--             <div class="btn-group">
               <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class='filter-box filter-red'></span>
                 Choose a variable to explore <span class="caret" >
               </button>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu"> -->
 
             <h4> Social </h4>  
-           <a class="btn btn-default btn-block" role="button" onclick="loadCOI1()">
-            <span class="glyphicon glyphicon-ok"></span>
+           <a class="btn btn-default btn-default" role="button" onclick="loadCOI1()">
             Childhood Opportunity Index</a><p><p>    
-           <a class="btn btn-default btn-block" role="button" onclick="#"> 
-            <span class="glyphicon glyphicon-remove"></span>
+           <a class="btn btn-default btn-default" role="button" onclick="#"> 
             Health Literacy Index</a><p><p> 
-           <a class="btn btn-default btn-block" role="button" onclick="loadHIS2()">
-            <span class="glyphicon glyphicon-ok"></span>
+           <a class="btn btn-default btn-default" role="button" onclick="loadHIS2()">
             Household Diversity Index</a>  
            <h4> Economic </h4> 
-           <a class="btn btn-default btn-block" role="button" onclick="#"> 
-            <span class="glyphicon glyphicon-ok"></span>
+           <a class="btn btn-default btn-default" role="button" onclick="#"> 
             Economic Hardship Index</a>  
            <h4> Environment </h4>  
-           <a class="btn btn-default btn-block" role="button" onclick="#"> 
-            <span class="glyphicon glyphicon-remove"></span>
+           <a class="btn btn-default btn-default" role="button" onclick="#"> 
             Violent Crime </a><p><p>
-           <a class="btn btn-default btn-block" role="button" onclick="#"> 
-            <span class="glyphicon glyphicon-remove"></span>
+           <a class="btn btn-default btn-default" role="button" onclick="#"> 
             Property Crime </a> 
            <h4> Outcomes </h4>  
-           <a class="btn btn-default btn-block" role="button" onclick="#"> 
-            <span class="glyphicon glyphicon-ok"></span>
+           <a class="btn btn-default btn-default" role="button" onclick="#"> 
             Premature Mortality Rate</a> 
+
+            <hr>
+            
            <h4> Analytics </h4>
-            <a class="btn btn-default btn-block" role="button" onclick="#"> 
+            <a class="btn btn-default btn-default" role="button" onclick="#"> 
               Blobs (Max-P Regions Algorithm)</a>
               </ul>
-            </div> 
+            <!-- </div>  -->
 
             <br><br>
-        Information about Category here.
-        <div id="testingHover"></div>
+      
         </div>
 
         <!-- Second Column -->
         <div class='col-md-3'>
-
+          Information about Category here.
           <div id="testingHover"></div>
           <div class="chart">test</div>
         </div>
 
         <!-- Second Column -->
         <div class='col-md-6'>
-          <button type="button" class="btn btn-default btn-block" aria-haspopup="true" aria-expanded="false"><span class='filter-box filter-purple'></span> Map Options <span class="caret"></span>
+          
+          <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"><span class='filter-box filter-purple'></span> Scale <span class="caret"></span>
           </button>
+          <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"><span class='filter-box filter-purple'></span> Data Classification <span class="caret"></span>
+          </button> <p> 
+       
+
           <div id="map" style="height: 700px; border: 1px solid #AAA;"></div>
             <script type="text/javascript" src='maps/shp.js'></script>
             <script type='text/javascript' src='maps/regions_map.js'></script>
-        </div>
+          </div> 
 
 
 
