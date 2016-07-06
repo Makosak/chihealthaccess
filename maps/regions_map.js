@@ -278,9 +278,10 @@ info.update = function (props) {
         '<b>' + props.COMMUNITY + ' (ID: ' + props.AREA_NUMBE + ')'
         : 'Hover over an area');
 
-    document.getElementById("testingHover").innerHTML = '<h4>Community Area</h4>' +  (props ?
+
+    document.getElementById("testingHover").innerHTML = '<h4>Statistics & Visuzalizations </h4>' +  (props ?
         '<b>' + props.COMMUNITY + ' (ID: ' + props.AREA_NUMBE + ')'
-        : 'Hover over an area');
+        : 'Get information about a specific tract, zip code, or community area by hovering over it.');
 };
 
 info.updateTract = function (props) {
