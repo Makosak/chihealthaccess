@@ -12,16 +12,6 @@ var CartoDB_Positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{
   maxZoom: 19
  }).addTo( map );
 
-/*var Stamen_Toner = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}', {
-  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  subdomains: 'abcd',
-  minZoom: 0,
-  maxZoom: 20,
-  ext: 'png'
-});*/
-
-
-
 
 /*var legend = L.control({position: 'bottomright'});
 
@@ -292,7 +282,7 @@ info.updateTract = function (props) {
     document.getElementById("testingHover").innerHTML = '<h4>Results for Selected Tract: </h4>' 
         +  (props ? '<p>'
         + ' Household Income Diversity Index: ' + props.Hicat_ct + '<br>'
-        + ' Childhood Opportunity Index: ' + props.COI_ct + '<br>'
+        + ' Childhood Opportunity Index: ' + props.COI_cat_ct + '<br>'
         + ' Years Lost: ' + props.YEARS_LOST + '<br>'
         + ' Population in 2012: ' + props.Pop2012 + '<br>'
         + ' Population Change (since 2010): ' + props.PopChange + '<br>'
