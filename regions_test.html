@@ -29,12 +29,13 @@
 
    <style type="text/css">
 
-    .chart div {
+    div.chart {
       font: 10px sans-serif;
       text-align: right;
       padding: 3px;
       margin: 1px;
       color: white;
+      height: 100px;
     }
 
     .bar rect {
@@ -87,13 +88,13 @@
 
            <h4> Social </h4> 
 
-           <a class="btn btn-default btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="loadCOI2()">
+           <a id="COI_ct-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('COI_ct')">
             Childhood Opportunity Index</a><p><p>   
 
            <a class="btn btn-default btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="#"> 
             Health Literacy Index</a><p><p>
 
-           <a class="btn btn-default btn-default data-toggle="button" aria-pressed="false" autocomplete="off" " role="button" onclick="loadHIS2()">
+           <a id="HIS_ct-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" role="button" onclick="buttonClick('HIS_ct')" >
             Household Diversity Index</a> 
 
            <p><p><p>
@@ -127,7 +128,6 @@
 
         <!-- Second Column -->
         <div class='col-md-3'>
-
           <div id="testingHover"></div>
           <br>
           <div class="chart">bar chart test</div>

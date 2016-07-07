@@ -13,6 +13,7 @@ var CartoDB_Positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{
  }).addTo( map );
 
 
+
 /*var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {
@@ -21,7 +22,7 @@ legend.onAdd = function (map) {
         grades = [0, 10, 20, 50, 100, 200, 500, 1000],
         labels = [];
 
-    // loop through our density intervals and generate a label with a colored square for each interval
+    // loop through our density intervals and generate ac label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
@@ -109,6 +110,7 @@ function hisStyleCat(feature) { // Household Income Diversity Style, CDPH Coding
     };
 }
 
+
 function hisColor(a) { //Equal intervel
     
     return a > 60  ? '#810f7c' :
@@ -172,6 +174,34 @@ function coiColorCat(a) { // CDPH Category
 }
 
 
+var classColors = {
+  "Quantile" : {
+    "COI_ct" : [],
+    "HIS_ct" : [],
+  },
+  "CDPH" : {
+    "COI_ct" : ['#fef0d9','#fdcc8a','#fc8d59','#e34a33','#b30000', '#FFEDA0'],
+    "HIS_ct" : ['#b30000','#fc8d59','#fef0d9', '#FFEDA0'],
+  },
+  "Fisher" : {
+    "COI_ct" : [],
+  },
+}
+
+var classIntervals = {
+  "Quantile" : {
+    "COI_ct" : [],
+  },
+  "CDPH" : {
+    "COI_ct" : [0.424, 0.115, -0.11279, -0.40195, -1.54],
+    "HIS_ct" : [46.4, 33.7, 6.7],
+  },
+  "Fisher" : {
+    "COI_ct" : [],
+  }
+}
+
+
 /*
 coiScale
 
@@ -232,7 +262,7 @@ function resetHighlightTract(e) {
     // Steptoe: layer below is not defined
     // need to call object which contains layers as above
     // layer.resetStyle(e.target);
-    COI2tracts.layer.resetStyle(e.target);
+    state.shapeStore[state.Scale][state.activeLayer].resetStyle(e.target);
 }
 
 function zoomToFeature(e) {
@@ -291,104 +321,109 @@ info.updateTract = function (props) {
         : 'Hover over an area to get information about it.');
 
 
-
-
-    var data = [];
-    var features = COI2tracts.geojson.features;
-    var min = features[0].properties.COI_ct, max = features[0].properties.COI_ct;
-    for (var i = 0; i < features.length; i++) {
-
-      // Get COI value and store it in the data array
-      value = features[i].properties.COI_ct;
-      data.push(value);
-
-      // Update min and max for x domain using value
-      if(value < min)
-        min = value;
-      else if(value > max)
-        max = value;
-    };
-
-    var formatCount = d3.format(",.0f");
-
-    var margin = {top: 10, right: 30, bottom: 30, left: 30},
-    // Use chart class width to determine chart width
-    width = $('.chart').width() - margin.left - margin.right,
-    // Use 'Healthy Regions' container to determine height
-    height = $('.well').height() - margin.top - margin.bottom;
-
-    // Scale x values to have domain between min/max
-    // and bind pixel range from 0->width
-    var x = d3.scale.linear()
-    .domain([min, max])
-    .range([0, width]);
-
-    // Bin the data into specified number of histbins
-    data = d3.layout.histogram().bins(x.ticks(5))(data);
-
-    // Scale y values to have domain between min/max of bin sizes
-    // and bind pixel range from height->0
-    var y = d3.scale.linear()
-    .domain(d3.extent(data, function(d){ return d.length}))
-    .range([height, 0]);
-
-    // Setup xAxis using x scale from above, on the bottom,
-    // with set # of tick marks
-    var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom")
-    .ticks(7);
-
     // Make sure to remove old chart before drawing new chart
     $(".chart").empty();
 
-    // Select Chart area and append svg with specified dims
-    // and append the g to contain all elements shifted by margins
-    var svg = d3.select(".chart").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var data = [];
+    var features = state.shapeStore[state.Scale].geojson.features; // don't need attribute here
+    var riskIndicators = ['COI_ct', 'HIS_ct'];
+    // Loop through risk indicators and generate a chart for each indicator
+    for(var riskIndex = 0; riskIndex < riskIndicators.length; riskIndex++){
 
-    // Set minimum bar pixel height for very small bin count
-    var minBarHeight = 18;
+      var min = features[0].properties[riskIndicators[riskIndex]],
+      max = features[0].properties[riskIndicators[riskIndex]];
 
-    // Append a bar for each item provided as data and translate into x,y position
-    var bar = svg.selectAll(".bar") // initiate data join by defining selection to which we join the data
-        .data(data) // join the data
-      .enter().append("g")
-        .attr("class", "bar")
-        .attr("transform", function(d, i) {
-          // Check if bar height is smaller than min height, if so use min
-          var yTrans = ((height - y(d.y) < minBarHeight) ? (height - minBarHeight) : y(d.y));
-          return "translate(" + x(d3.min(d)) + "," + yTrans + ")";
-        });
+      for (var i = 0; i < features.length; i++) {
 
-    // Append a rect with fill based on the mean value of the data it represents,
-    // set height with bin count and set width with COI value range it reps
-    bar.append("rect")
-        .style("fill", function(d, i){return coiColorCat(d3.mean(d));})
-        .attr("x", 1)
-        .attr("width", function(d, i){
-          //Calculate width using max and min value range
-          d.width = x(d3.max(d)) - x(d3.min(d));
-          return d.width - 1;
-        })
-        .attr("height", function(d, i) { return d3.max([minBarHeight, height - y(d.y)]); });
+        // Get COI value and store it in the data array
+        value = features[i].properties[riskIndicators[riskIndex]];
+        data.push(value);
 
-    // Append the bin count as text below the top of the bar centered
-    bar.append("text")
-        .attr("dy", ".75em")
-        .attr("y", 6)
-        .attr("x", function(d){ return d.width / 2;})
-        .attr("text-anchor", "middle")
-        .text(function(d) { return formatCount(d.y); });
+        // Update min and max for x domain using value
+        if(value < min)
+          min = value;
+        else if(value > max)
+          max = value;
+      };
 
-    // Append the xAxis to the chart
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
+      var formatCount = d3.format(",.0f");
+
+      var margin = {top: 10, right: 30, bottom: 30, left: 30},
+      // Use chart class width to determine chart width
+      width = $('.chart').width() - margin.left - margin.right,
+      // Use 'Healthy Regions' container to determine height
+      height = $('.chart').height() - margin.top - margin.bottom;
+
+      // Scale x values to have domain between min/max
+      // and bind pixel range from 0->width
+      var x = d3.scale.linear()
+      .domain([min, max])
+      .range([0, width]);
+
+      // Bin the data into specified number of histbins
+      data = d3.layout.histogram().bins(x.ticks(5))(data);
+
+      // Scale y values to have domain between min/max of bin sizes
+      // and bind pixel range from height->0
+      var y = d3.scale.linear()
+      .domain(d3.extent(data, function(d){ return d.length}))
+      .range([height, 0]);
+
+      // Setup xAxis using x scale from above, on the bottom,
+      // with set # of tick marks
+      var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom")
+      .ticks(7);
+
+      // Select Chart area and append svg with specified dims
+      // and append the g to contain all elements shifted by margins
+      var svg = d3.select(".chart").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      // Set minimum bar pixel height for very small bin count
+      var minBarHeight = 18;
+
+      // Append a bar for each item provided as data and translate into x,y position
+      var bar = svg.selectAll(".bar") // initiate data join by defining selection to which we join the data
+          .data(data) // join the data
+        .enter().append("g")
+          .attr("class", "bar")
+          .attr("transform", function(d, i) {
+            // Check if bar height is smaller than min height, if so use min
+            var yTrans = ((height - y(d.y) < minBarHeight) ? (height - minBarHeight) : y(d.y));
+            return "translate(" + x(d3.min(d)) + "," + yTrans + ")";
+          });
+
+      // Append a rect with fill based on the mean value of the data it represents,
+      // set height with bin count and set width with COI value range it reps
+      bar.append("rect")
+          .style("fill", function(d, i){return coiColorCat(d3.mean(d));})
+          .attr("x", 1)
+          .attr("width", function(d, i){
+            //Calculate width using max and min value range
+            d.width = x(d3.max(d)) - x(d3.min(d));
+            return d.width - 1;
+          })
+          .attr("height", function(d, i) { return d3.max([minBarHeight, height - y(d.y)]); });
+
+      // Append the bin count as text below the top of the bar centered
+      bar.append("text")
+          .attr("dy", ".75em")
+          .attr("y", 6)
+          .attr("x", function(d){ return d.width / 2;})
+          .attr("text-anchor", "middle")
+          .text(function(d) { return formatCount(d.y); });
+
+      // Append the xAxis to the chart
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+    }
 };
 
 info.addTo(map);
@@ -582,7 +617,124 @@ function loadCOI2(){
 }
 
 
+/////////////////////
 
+
+
+/////////////////////
+
+
+var state = {
+  Scale: "Tract",
+  DataClassification: "CDPH",
+  shapeLoaded: {
+    "Tract" : [false, false],
+    "Zipcode": [false, false],
+    "CommArea" : [false, false]
+  },
+  shapeFiles: {
+    "Tract" : "./data/CDPHTractsFinal_Clipped",
+    "Zipcode": "./data/CDPHTractsFinal_Clipped",
+    "CommArea" : "./data/CommAreas"
+  },
+  shapeStore : {},
+  activeLayer : "",
+};
+
+
+
+function load(attribute){
+  if(!state.shapeLoaded[state.Scale][0]){
+    shp(state.shapeFiles[state.Scale]).then(function(geojson){
+      state.shapeStore[state.Scale] = {};
+      state.shapeStore[state.Scale][attribute] = {};
+      state.shapeStore[state.Scale][attribute] = L.geoJson(geojson, 
+      {
+          style: featureStyle, 
+          onEachFeature: onEachFeatureTract 
+
+      }).addTo(map);
+      state.shapeStore[state.Scale].geojson = geojson;
+      state.shapeLoaded[state.Scale] = [true, true];
+    });
+  }
+  else{
+    if(state.shapeLoaded[state.Scale][1]){
+      
+      // reloadExistingLayers(state.shapeStore[state.Scale][attribute]);
+      map.removeLayer(state.shapeStore[state.Scale][attribute]);
+
+      state.shapeLoaded[state.Scale][1] = false;
+    }
+    else{
+      if(!state.shapeStore[state.Scale][attribute]){
+        state.shapeStore[state.Scale][attribute] = L.geoJson(state.shapeStore[state.Scale].geojson, 
+        {
+            style: featureStyle, 
+            onEachFeature: onEachFeatureTract 
+
+        }).addTo(map);
+      }
+      else{
+        state.shapeStore[state.Scale][attribute].addTo(map);
+      }
+      state.shapeLoaded[state.Scale][1] = true;
+    }
+  }
+
+}
+
+
+function color(a) {
+  var colors = classColors[state.DataClassification][state.activeLayer],
+  intervals = classIntervals[state.DataClassification][state.activeLayer];
+
+  for(var i = 0; i < intervals.length; i++){
+    if ( a > intervals[i] ) {
+      return colors[i];
+    } 
+  }
+  return colors[colors.length-1];
+}
+
+function featureStyle (feature) {
+  return {
+      fillColor: color(feature.properties[state.activeLayer]),
+      weight: 1,
+      opacity: 1,
+      color: 'white',
+      dashArray: '1',
+      fillOpacity: 0.7
+  };
+}
+
+function buttonClick(attribute) {
+
+  // Adding a layer (No layers active)
+  if(!state.activeLayer){
+    state.activeButton = $('#' + attribute + '-button');
+    state.activeLayer = attribute;
+  }
+  // Remove current layer and add new layer
+  else if(state.activeLayer != attribute){
+    // Remove current layer from map
+    load(state.activeLayer);
+    // map.removeLayer(state.shapeStore[state.Scale][state.activeLayer].layer)
+    
+    // Remove active state from button
+    state.activeButton.removeClass('active');
+    
+    // Set current attribute as active layer
+    state.activeLayer = attribute;
+    state.activeButton = $('#' + attribute + '-button');
+  }
+  // Remove current layer
+  else{
+    state.activeLayer = '';
+  }
+  
+  load(attribute);
+}
 
 
 ////////////////////////////////////////////////////////
