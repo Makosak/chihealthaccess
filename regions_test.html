@@ -75,7 +75,7 @@
     </div>
 
     <div class='container-fluid'>
-      <div class='row'>
+
         <div class='col-md-3'>
            <h3> Health Risk Indicators </h3>
            <hr>
@@ -118,11 +118,12 @@
             <a class="btn btn-default btn-default" role="button" onclick="#" data-toggle="button" aria-pressed="false" autocomplete="off" > 
               Blobs (Max-P Regions Algorithm)</a>
               </ul>
-            <!-- </div>  -->
+            
 
             <br><br>
+          </div>
       
-        </div>
+    
 
         <!-- Second Column -->
         <div class='col-md-3'>
@@ -132,10 +133,27 @@
           <div class="chart">bar chart test</div>
         </div>
 
-        <!-- Second Column -->
+
+
+
+        <!-- Third Column -->
         <div class='col-md-6'>
-          <button type="button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="loadCommAreas()">Community Area Overlay </button>
           
+          
+          <div class="btn-group">
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Resources <span class="caret"></span></button>
+
+          <ul class="dropdown-menu" role="menu">
+            <li><div class="checkbox"> 
+              <label><input type="checkbox"></label>
+              Health Providers</div></li>
+            <li><div class="checkbox"> 
+              <label><input type="checkbox"></label>Community Groups</div></li>
+            <li><div class="checkbox"> 
+              <label><input type="checkbox"></label>Healthy Food Options</div></li>
+          </ul>
+          </div>
+
           <div class="btn-group">
           <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Scale <span class="caret"></span></button>
 
@@ -155,17 +173,16 @@
           </ul>
           </div>
 
-          <br><br>
+          <button type="button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="loadCommAreas()">Community Area Overlay </button>          
+          <p>
 
 
           <div id="map" style="height: 700px; border: 1px solid #AAA;"></div>
             <script type="text/javascript" src='maps/shp.js'></script>
             <script type='text/javascript' src='maps/regions_map.js'></script>
-          </div> 
+        </div> 
 
-
-
-  </div></div>
+        </div>
 
 
   
