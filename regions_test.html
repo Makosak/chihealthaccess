@@ -87,35 +87,35 @@
 
            <h4> Social </h4> 
 
-           <a class="btn btn-default btn-default" role="button" onclick="loadCOI2()">
+           <a class="btn btn-default btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="loadCOI2()">
             Childhood Opportunity Index</a><p><p>   
 
-           <a class="btn btn-default btn-default" role="button" onclick="#"> 
+           <a class="btn btn-default btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="#"> 
             Health Literacy Index</a><p><p>
 
-           <a class="btn btn-default btn-default" role="button" onclick="loadHIS2()">
+           <a class="btn btn-default btn-default data-toggle="button" aria-pressed="false" autocomplete="off" " role="button" onclick="loadHIS2()">
             Household Diversity Index</a> 
 
            <p><p><p>
 
            <h4> Economic </h4> 
-           <a class="btn btn-default btn-default" role="button" onclick="#"> 
+           <a class="btn btn-default btn-default" role="button" onclick="#"  data-toggle="button" aria-pressed="false" autocomplete="off" > 
             Economic Hardship Index</a> 
            <br>
            <h4> Environment </h4>  
-           <a class="btn btn-default btn-default" role="button" onclick="#"> 
+           <a class="btn btn-default btn-default" role="button" onclick="#" data-toggle="button" aria-pressed="false" autocomplete="off" > 
             Violent Crime </a><p><p>
-           <a class="btn btn-default btn-default" role="button" onclick="#"> 
+           <a class="btn btn-default btn-default" role="button" onclick="#" data-toggle="button" aria-pressed="false" autocomplete="off" > 
             Property Crime </a> 
            <p> 
            <h4> Outcomes </h4>  
-           <a class="btn btn-default btn-default" role="button" onclick="#"> 
+           <a class="btn btn-default btn-default" role="button" onclick="#" data-toggle="button" aria-pressed="false" autocomplete="off" > 
             Premature Mortality Rate</a> 
 
             <hr>
 
            <h4> Analytics </h4>
-            <a class="btn btn-default btn-default" role="button" onclick="#"> 
+            <a class="btn btn-default btn-default" role="button" onclick="#" data-toggle="button" aria-pressed="false" autocomplete="off" > 
               Blobs (Max-P Regions Algorithm)</a>
               </ul>
             <!-- </div>  -->
@@ -134,6 +134,7 @@
 
         <!-- Second Column -->
         <div class='col-md-6'>
+          <button type="button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="loadCommAreas()">Community Area Overlay </button>
           
           <div class="btn-group">
           <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Scale <span class="caret"></span></button>
@@ -154,7 +155,7 @@
           </ul>
           </div>
 
-          <button type="button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="loadCommAreas()">Community Area Overlay </button>
+          <br><br>
 
 
           <div id="map" style="height: 700px; border: 1px solid #AAA;"></div>
