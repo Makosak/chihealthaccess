@@ -292,7 +292,7 @@ info.updateTract = function (props) {
     document.getElementById("testingHover").innerHTML = '<h4>Results for Selected Tract: </h4>' 
         +  (props ? '<p>'
         + ' Household Income Diversity Index: ' + props.Hicat_ct + '<br>'
-        + ' Childhood Opportunity Index: ' + props.COI_cat_ct + '<br>'
+        + ' Childhood Opportunity Index: ' + props.COI_ct + '<br>'
         + ' Years Lost: ' + props.YEARS_LOST + '<br>'
         + ' Population in 2012: ' + props.Pop2012 + '<br>'
         + ' Population Change (since 2010): ' + props.PopChange + '<br>'
