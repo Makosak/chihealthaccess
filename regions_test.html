@@ -80,7 +80,7 @@
            <h3> Health Risk Indicators </h3>
            <hr>
 <!--             <div class="btn-group">
-              <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class='filter-box filter-red'></span>
+              <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Choose a variable to explore <span class="caret" >
               </button>
               <ul class="dropdown-menu"> -->
@@ -135,14 +135,27 @@
         <!-- Second Column -->
         <div class='col-md-6'>
           
-          <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"> Scale <span class="caret"></span>
-          </button>
-          <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"> Data Classification <span class="caret"></span>
-          </button> 
+          <div class="btn-group">
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Scale <span class="caret"></span></button>
+
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Census Tract</a></li>
+            <li><a href="#">Zip Code</a></li>
+            <li><a href="#">Community Area</a></li>
+          </ul>
+          </div>
+
+          <div class="btn-group">
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Data Classification <span class="caret"></span></button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Quantiles</a></li>
+            <li><a href="#">Equal Interval</a></li>
+            <li><a href="#">Fisher Jenks</a></li>
+          </ul>
+          </div>
+
+
           <a class="btn btn-default" role="button" onclick="loadCommAreas()">Community Area Overlay</a><br><br>
-
-          <p> 
-
        
 
           <div id="map" style="height: 700px; border: 1px solid #AAA;"></div>
