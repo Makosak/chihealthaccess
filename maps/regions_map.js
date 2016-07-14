@@ -67,101 +67,6 @@ var myStyle2 = { // basic layer with each unit defined
     "opacity": 0.8
 };
 
-function getColor(a) { //Parks with more acres have darker color
-    
-    return a > 500  ? '#006837' :
-           a > 100  ? '#31a354' :
-           a > 10   ? '#78c679' :
-           a > 1   ? '#c2e699' :
-           a > 0   ? '#ffffcc' :
-                      '#FFEDA0';
-}
-
-function acreStyle(feature) { //Parks with more acres have darker color
-    return {
-        fillColor: getColor(feature.properties.ACRES),
-        weight: 1,
-        opacity: 1,
-        color: 'white',
-        dashArray: '1',
-        fillOpacity: 0.7
-    };
-}
-
-function hisStyle(feature) { // Household Income Diversity Style
-    return {
-        fillColor: hisColor(feature.properties.HIS_ct),
-        weight: 1,
-        opacity: 1,
-        color: 'white',
-        dashArray: '1',
-        fillOpacity: 0.7
-    };
-}
-
-function hisStyleCat(feature) { // Household Income Diversity Style, CDPH Coding
-    return {
-        fillColor: hisColorCat(feature.properties.HIS_ct),
-        weight: 1,
-        opacity: 1,
-        color: 'white',
-        dashArray: '1',
-        fillOpacity: 0.7
-    };
-}
-
-
-function hisColor(a) { //Equal intervel
-    
-    return a > 60  ? '#810f7c' :
-           a > 45  ? '#8856a7' :
-           a > 30   ? '#8c96c6' :
-           a > 15   ? '#b3cde3' :
-           a > 0   ? '#edf8fb' :
-                      '#FFEDA0';
-}
-
-function hisColorCat(a) { //CDPH Coding
-  
-    return a > (46.4)  ? '#b30000' :
-           a > (33.7)   ? '#fc8d59' :
-           a > (6.7)   ? '#fef0d9' :
-                      '#f7f7f7';
-}
-
-
-function coiStyleEq(feature) { //Parks with more acres have darker color
-    return {
-        fillColor: coiColorEq(feature.properties.COI_ct),
-        weight: 1,
-        opacity: 1,
-        color: 'white',
-        dashArray: '1',
-        fillOpacity: 0.7
-    };
-}
-
-function coiStyleCat(feature) { //Parks with more acres have darker color
-    return {
-        fillColor: coiColorCat(feature.properties.COI_ct),
-        weight: 1,
-        opacity: 1,
-        color: 'white',
-        dashArray: '1',
-        fillOpacity: 0.7
-    };
-}
-
-
-function coiColorEq(a) { // Equal Interval
-    
-    return a > 0.63  ? '#f6eff7' :
-           a > 0.08  ? '#bdc9e1' :
-           a > (-0.45)   ? '#67a9cf' :
-           a > (-0.99)   ? '#1c9099' :
-           a > (-1.54)   ? '#016c59' :
-                      '#FFEDA0';
-}
 
 function coiColorCat(a) { // CDPH Category
     
@@ -173,10 +78,9 @@ function coiColorCat(a) { // CDPH Category
                       '#FFEDA0';
 }
 
-
 var classColors = {
   "Quantile" : {
-    "COI_ct" : [],
+    "COI_ct" : ['#f1eef6','#bdc9e1','#74a9cf','#2b8cbe','#045a8d', '#FFEDA0'],
     "HIS_ct" : [],
   },
   "CDPH" : {
@@ -190,7 +94,7 @@ var classColors = {
 
 var classIntervals = {
   "Quantile" : {
-    "COI_ct" : [],
+    "COI_ct" : [0.424, 0.115, -0.11279, -0.40195, -1.54],
   },
   "CDPH" : {
     "COI_ct" : [0.424, 0.115, -0.11279, -0.40195, -1.54],
@@ -201,15 +105,6 @@ var classIntervals = {
   }
 }
 
-
-/*
-coiScale
-
-min -1.54 
-max 1.17
-
-
-*/
 
 function highlightFeature(e) {
     var layer = e.target;
@@ -280,7 +175,8 @@ function onEachFeature(feature, layer) {
 function onEachFeatureTract(feature, layer) {
     layer.on({
         mouseover: highlightFeatureTract,
-        mouseout: resetHighlightTract
+        mouseout: resetHighlightTract,
+        dblclick: zoomToFeature
     });
 }
 
@@ -299,17 +195,21 @@ info.update = function (props) {
         : 'Hover over an area');
 
 
-    document.getElementById("testingHover").innerHTML = '<h4>Statistics & Visuzalizations </h4>' +  (props ?
+    // Data Dashboard Default -- when nothing is selected:
+    document.getElementById("dataDashboard").innerHTML = '<h4>Statistics & Visuzalizations </h4>' +  (props ?
         '<b>' + props.COMMUNITY + ' (ID: ' + props.AREA_NUMBE + ')'
-        : 'Get information about a specific tract, zip code, or community area by hovering over it.');
+        : 'Get information about a specific tract, zip code, or community area by hovering over it.') ;
 };
 
+
+
+// Data Dashboard when Hover is initiated
 info.updateTract = function (props) {
     this._div.innerHTML = '<h4>Community Area ID: ' +  (props ?
         '<b>' + props.COMMAREA + '</h4>'
         : 'Hover over an area');
 
-    document.getElementById("testingHover").innerHTML = '<h4>Results for Selected Tract: </h4>' 
+    document.getElementById("dataDashboard").innerHTML = '<h4>Results for Selected Tract: </h4>' 
         +  (props ? '<p>'
         + ' Household Income Diversity Index: ' + props.Hicat_ct + '<br>'
         + ' Childhood Opportunity Index: ' + props.COI_cat_ct + '<br>'
@@ -321,12 +221,20 @@ info.updateTract = function (props) {
         : 'Hover over an area to get information about it.');
 
 
+
+     /////////////////////////////////////////////////////
+     // BAR Chart
+     /////////////////////////////////////////////////////
+
     // Make sure to remove old chart before drawing new chart
     $(".chart").empty();
 
     var data = [];
     var features = state.shapeStore[state.Scale].geojson.features; // don't need attribute here
     var riskIndicators = ['COI_ct', 'HIS_ct'];
+    // var height = 100;
+
+    // $('.chart').height(riskIndicators.length * height);
     // Loop through risk indicators and generate a chart for each indicator
     for(var riskIndex = 0; riskIndex < riskIndicators.length; riskIndex++){
 
@@ -352,7 +260,15 @@ info.updateTract = function (props) {
       // Use chart class width to determine chart width
       width = $('.chart').width() - margin.left - margin.right,
       // Use 'Healthy Regions' container to determine height
-      height = $('.chart').height() - margin.top - margin.bottom;
+      height = $('.chart').height() / riskIndicators.length - margin.top - margin.bottom;
+
+      // Select Chart area and append svg with specified dims
+      // and append the g to contain all elements shifted by margins
+      var svg = d3.select(".chart").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       // Scale x values to have domain between min/max
       // and bind pixel range from 0->width
@@ -376,14 +292,6 @@ info.updateTract = function (props) {
       .orient("bottom")
       .ticks(7);
 
-      // Select Chart area and append svg with specified dims
-      // and append the g to contain all elements shifted by margins
-      var svg = d3.select(".chart").append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-          .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
       // Set minimum bar pixel height for very small bin count
       var minBarHeight = 18;
 
@@ -401,7 +309,7 @@ info.updateTract = function (props) {
       // Append a rect with fill based on the mean value of the data it represents,
       // set height with bin count and set width with COI value range it reps
       bar.append("rect")
-          .style("fill", function(d, i){return coiColorCat(d3.mean(d));})
+          .style("fill", function(d, i){return color(d3.mean(d));})
           .attr("x", 1)
           .attr("width", function(d, i){
             //Calculate width using max and min value range
@@ -423,6 +331,9 @@ info.updateTract = function (props) {
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
           .call(xAxis);
+
+     /////////////////////////////////////////////////////
+          
     }
 };
 
@@ -434,38 +345,6 @@ info.addTo(map);
 ////////////////////////////////////////////////////////
 
 
-/*$('#parks').click(function(){
-  loadParks();
-})*/
-
-var parks = {},
-parksLoaded = [false, false]; //[init(button click at all), on/off]
-
-function loadParks(){
-  if(!parksLoaded[0]){
-    shp("./data/Parks_Aug2012").then(function(geojson){
-      parks.layer = L.geoJson(geojson, 
-      {
-          style: acreStyle, 
-          
-
-      }).addTo(map);
-      parks.geojson = geojson;
-      parksLoaded = [true, true];
-    });
-  }
-  else{
-    if(parksLoaded[1]){
-      reloadExistingLayers(parks);
-      parksLoaded[1] = false;
-    }
-    else{
-      parks.layer.addTo(map);
-      parksLoaded[1] = true;
-    }
-  }
-
-}
 
 
 var commAreas = {},
@@ -496,131 +375,6 @@ function loadCommAreas(){
   }
 
 }
-
-var HIStracts = {},
-HIStractsLoaded = [false, false]; //[init(button click at all), on/off]
-
-function loadHIS(){
-  if(!HIStractsLoaded[0]){
-    shp("./data/CDPHTractsFinal_Clipped").then(function(geojson){
-      HIStracts.layer = L.geoJson(geojson, 
-      {
-          style: hisStyle, 
-          onEachFeature: onEachFeatureTract 
-
-      }).addTo(map);
-      HIStracts.geojson = geojson;
-      HIStractsLoaded = [true, true];
-    });
-  }
-  else{
-    if(HIStractsLoaded[1]){
-      reloadExistingLayers(HIStracts);
-      HIStractsLoaded[1] = false;
-    }
-    else{
-      HIStracts.layer.addTo(map);
-      HIStractsLoaded[1] = true;
-    }
-  }
-
-}
-
-
-var HIS2tracts = {},
-HIS2tractsLoaded = [false, false]; //[init(button click at all), on/off]
-
-
-function loadHIS2(){
-  if(!HIS2tractsLoaded[0]){
-    shp("./data/CDPHTractsFinal_Clipped").then(function(geojson){
-      HIS2tracts.layer = L.geoJson(geojson, 
-      {
-          style: hisStyleCat, 
-          onEachFeature: onEachFeatureTract  
-
-      }).addTo(map);
-      HIS2tracts.geojson = geojson;
-      HIS2tractsLoaded = [true, true];
-    });
-  }
-  else{
-    if(HIS2tractsLoaded[1]){
-      reloadExistingLayers(HIS2tracts);
-      HIS2tractsLoaded[1] = false;
-    }
-    else{
-      HIS2tracts.layer.addTo(map);
-      HIS2tractsLoaded[1] = true;
-    }
-  }
-
-}
-
-var COI1tracts = {},
-COI1tractsLoaded = [false, false]; //[init(button click at all), on/off]
-
-function loadCOI1(){
-  if(!COI1tractsLoaded[0]){
-    shp("./data/CDPHTractsFinal_Clipped").then(function(geojson){
-      COI1tracts.layer = L.geoJson(geojson, 
-      {
-          style: coiStyleEq, 
-          onEachFeature: onEachFeatureTract 
-
-      }).addTo(map);
-      COI1tracts.geojson = geojson;
-      COI1tractsLoaded = [true, true];
-    });
-  }
-  else{
-    if(COI1tractsLoaded[1]){
-      reloadExistingLayers(COI1tracts);
-      COI1tractsLoaded[1] = false;
-    }
-    else{
-      COI1tracts.layer.addTo(map);
-      COI1tractsLoaded[1] = true;
-    }
-  }
-
-}
-
-
-var COI2tracts = {},
-COI2tractsLoaded = [false, false]; //[init(button click at all), on/off]
-
-function loadCOI2(){
-  if(!COI2tractsLoaded[0]){
-    shp("./data/CDPHTractsFinal_Clipped").then(function(geojson){
-      COI2tracts.layer = L.geoJson(geojson, 
-      {
-          style: coiStyleCat, 
-          onEachFeature: onEachFeatureTract 
-
-      }).addTo(map);
-      COI2tracts.geojson = geojson;
-      COI2tractsLoaded = [true, true];
-    });
-  }
-  else{
-    if(COI2tractsLoaded[1]){
-      reloadExistingLayers(COI2tracts);
-      COI2tractsLoaded[1] = false;
-    }
-    else{
-      COI2tracts.layer.addTo(map);
-      COI2tractsLoaded[1] = true;
-    }
-  }
-
-}
-
-
-/////////////////////
-
-
-
 /////////////////////
 
 
@@ -638,7 +392,7 @@ var state = {
     "CommArea" : "./data/CommAreas"
   },
   shapeStore : {},
-  activeLayer : "",
+  activeLayer : ""
 };
 
 
@@ -676,6 +430,7 @@ function load(attribute){
         }).addTo(map);
       }
       else{
+        state.shapeStore[state.Scale][state.activeLayer].setStyle(featureStyle);
         state.shapeStore[state.Scale][attribute].addTo(map);
       }
       state.shapeLoaded[state.Scale][1] = true;
@@ -683,7 +438,6 @@ function load(attribute){
   }
 
 }
-
 
 function color(a) {
   var colors = classColors[state.DataClassification][state.activeLayer],
@@ -735,6 +489,102 @@ function buttonClick(attribute) {
   
   load(attribute);
 }
+
+
+
+/*function classifyData(DataClassification) {
+
+  DataClassification = state.DataClassification
+  state.DataClassification = newClassification
+
+
+if(state.activeLayer != state.DataClassification){
+  console.log("Not the Same ");
+
+  // Remove current layer and add new layer with
+
+    // Remove current layer from map
+    load(state.activeLayer);
+
+    // Change classification to button click
+
+
+}
+else {
+
+  // Don't do anything. 
+  console.log('Same ');
+}
+}*/
+
+function classifyData(dataClassification) {
+
+  if(dataClassification != state.DataClassification){
+    state.DataClassification = dataClassification;
+    console.log("Not the Same ");
+
+    if(state.activeLayer != ''){
+      state.shapeStore[state.Scale][state.activeLayer].setStyle(featureStyle);
+    }
+
+    // Remove current layer and add new layer with
+
+      // Remove current layer from map
+      // load(state.activeLayer);
+
+      // Change classification to button click
+
+
+  }
+  else {
+
+    // Don't do anything. 
+    console.log('Same ');
+  }
+}
+
+function changeScale(Scale) {
+
+// 
+if(Scale != state.Scale){
+    // Check if scale request is different from existing
+    console.log("Not the Same ");
+
+    // Check to see if already loaded, then view
+    if(state.activeLayer != ''){
+      map.removeLayer(state.shapeStore[state.Scale][state.activeLayer]);
+      state.shapeLoaded[state.Scale][1] = false;
+
+      state.Scale = Scale;
+      load(state.activeLayer)
+    } 
+
+
+
+    // Remove current layer and add new layer with
+
+
+
+
+      // Remove current layer from map
+      // load(state.activeLayer);
+
+      // Change classification to button click
+  }
+  else {
+
+    // Don't do anything. 
+    console.log('Same ');
+  }
+
+}
+
+function resetMapView(){
+  map.setView([41.854501, -87.715496], 11)
+}
+
+
+
 
 
 ////////////////////////////////////////////////////////
