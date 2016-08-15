@@ -13,41 +13,62 @@ var CartoDB_Positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{
  }).addTo( map );
 
 
-
-/*var legend = L.control({position: 'bottomright'});
-
-legend.onAdd = function (map) {
-
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 10, 20, 50, 100, 200, 500, 1000],
-        labels = [];
-
-    // loop through our density intervals and generate ac label with a colored square for each interval
-    for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-    }
-
-    return div;
-};
-
-legend.addTo(map); */
-
 ////////////////////////////////////////////////////////
 // Base layer is always on: City of Chicago Boundary
 ////////////////////////////////////////////////////////
 
 
-var cityBoundary
+/*var cityBoundary
 shp("./data/City_Boundary").then(function(geojson){
   L.geoJson(geojson, {
     style: myStyle1
 }).addTo(map);
   cityBoundary = geojson;
-});
+});*/
 
 
+
+
+$.ajax({
+                  url: "./data/City_Boundary.geojson",
+                  beforeSend: function(xhr){
+                    if (xhr.overrideMimeType)
+                    {
+                      xhr.overrideMimeType("application/json");
+                    }
+                  },
+                  dataType: 'json',
+                  data: null,
+                  success:  function(data, textStatus, request) {
+                    L.geoJson(data, { }).addTo(map);
+                  }
+                }); 
+
+
+
+  // load GeoJSON from an external file
+  $.getJSON("./data/City_Boundary.geojson",function(data){
+    data = JSON.parse(data);
+    // add GeoJSON layer to the map once the file is loaded
+    L.geoJson(data).addTo(map);
+  });
+
+
+
+/*var boundary = new L.geoJson();
+boundary.addTo(map);
+
+$.ajax({
+dataType: "json",
+url: "./data/City_Boundary.geojson",
+success: function(data) {
+    $(data.features).each(function(key, data) {
+        boundary.addData(data);
+    });
+}
+}).error(function() {});
+
+*/
 // Style of layers
 var myStyle1 = {  // base layer of Chicago boundary - always on
     "color": "#f03b20",
