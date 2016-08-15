@@ -28,7 +28,7 @@ shp("./data/City_Boundary").then(function(geojson){
 
 
 
-
+/*
 $.ajax({
                   url: "./data/City_Boundary.geojson",
                   beforeSend: function(xhr){
@@ -42,18 +42,18 @@ $.ajax({
                   success:  function(data, textStatus, request) {
                     L.geoJson(data, { }).addTo(map);
                   }
-                }); 
+                }); */
 
 
 
-  // load GeoJSON from an external file
+/*  // load GeoJSON from an external file
   $.getJSON("./data/City_Boundary.geojson",function(data){
     data = JSON.parse(data);
     // add GeoJSON layer to the map once the file is loaded
     L.geoJson(data).addTo(map);
   });
 
-
+*/
 
 /*var boundary = new L.geoJson();
 boundary.addTo(map);
@@ -79,7 +79,7 @@ var commAreasStyle = {  // Community Area Layer Overlay
     "color": "#636363",
     "weight": 4,
     "dashArray": true,
-    "opacity": 10
+    "opacity": 0.8,
 };
 
 var myStyle2 = { // basic layer with each unit defined
@@ -107,23 +107,38 @@ var classColors = {
   "CDPH" : {
     "COI_ct" : ['#fef0d9','#fdcc8a','#fc8d59','#e34a33','#b30000', '#FFEDA0'],
     "HIS_ct" : ['#b30000','#fc8d59','#fef0d9', '#FFEDA0'],
+    "VCRIMERT15" : ['#88419d','#8c96c6','#b3cde3','#edf8fb', '#FFEDA0'],
+    "VCER15" :['#88419d','#8c96c6','#b3cde3','#edf8fb', '#FFEDA0'],
+    "VCSR15" :['#88419d','#8c96c6','#b3cde3','#edf8fb', '#FFEDA0'],
+    "VCSEBS15" :['#ce1256','#df65b0','#d7b5d8','#f1eef6', '#FFEDA0'],
+    "PCRIMERT15" : ['#88419d','#8c96c6','#b3cde3','#edf8fb', '#FFEDA0'],
   },
+  
   "Fisher" : {
     "COI_ct" : [],
+    "VCRIMERT15" : [],
   },
 }
 
 var classIntervals = {
   "Quantile" : {
     "COI_ct" : [0.424, 0.115, -0.11279, -0.40195, -1.54],
+    "VCRIMERT15" : [],
   },
   "CDPH" : {
     "COI_ct" : [0.424, 0.115, -0.11279, -0.40195, -1.54],
     "HIS_ct" : [46.4, 33.7, 6.7],
+    "PCRIMERT15" :[0.0385, 0.0249, 0.0152, 0],
+    "VCRIMERT15" :[0.0454, 0.0183, 0.0111, 0],
+    "VCER15" :[1.74, 0.704, 0.422, 0],
+    "VCSR15" :[0.0418, 0.0198, 0.0133, 0.044],
+    "VCSEBS15" :[0.0418, 0.0198, 0.0133, 0.044],
+
+
   },
   "Fisher" : {
     "COI_ct" : [],
-  }
+  },
 }
 
 
@@ -224,6 +239,8 @@ info.update = function (props) {
 
 
 
+
+
 // Data Dashboard when Hover is initiated
 info.updateTract = function (props) {
     this._div.innerHTML = '<h4>Community Area ID: ' +  (props ?
@@ -236,7 +253,11 @@ info.updateTract = function (props) {
         + ' Childhood Opportunity Index: ' + props.COI_cat_ct + '<br>'
         + ' Years Lost: ' + props.YEARS_LOST + '<br>'
         + ' Population in 2012: ' + props.Pop2012 + '<br>'
-        + ' Population Change (since 2010): ' + props.PopChange + '<br>'
+        + ' 0-5 Years Pop %: ' + props.Less_5pop + '<br>'
+        + ' Over 65 years Pop %: ' + props.Over_65pop + '<br>'
+        + ' Property Crime Raw Rate: ' + props.PCRIMERT15 + '<br>'
+        + ' Violent Crime Raw Rate: ' + props.VCRIMERT15 + '<br>'
+
 
 
         : 'Hover over an area to get information about it.');
@@ -408,7 +429,7 @@ var state = {
     "CommArea" : [false, false]
   },
   shapeFiles: {
-    "Tract" : "./data/CDPHTractsFinal_Clipped",
+    "Tract" : "./data/ChiHealth",
     "Zipcode": "./data/CDPHTractsFinal_Clipped",
     "CommArea" : "./data/CommAreas"
   },

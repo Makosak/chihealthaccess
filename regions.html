@@ -87,21 +87,28 @@
           <div class="chart"> Add pic here</div>
           <p><p><p>
           <div id="dataDashboard"></div>
+
         </div>
+
+
 
         <!-- Second Column -->
         <div class='col-md-9'>
 
-          <button type="button" font-color="FFD180" class="btn btn-default" onlick='#'> About the Data </button>
+          <button type="button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="loadCommAreas()">Community Area Overlay </button>
+          
+<!--           <button type="button" font-color="FFD180" class="btn btn-default" onlick='#'> About the Data </button> -->
 
 
           <div class="btn-group">
+
 
               <button type="button" class="btn btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Choose a variable to explore <span class="caret" >
               </button>
 
                    <ul class="dropdown-menu"> 
+                   <div class="well">
 
                    <h4> Social </h4> 
 
@@ -121,13 +128,23 @@
                     Economic Hardship Index</a> 
                    <br>
                    <h4> Environment </h4>  
-                   <a class="btn btn-default" role="button" onclick="#" data-toggle="button" aria-pressed="false" autocomplete="off" > 
-                    Violent Crime </a><p><p>
-                   <a class="btn btn-default" role="button" onclick="#" data-toggle="button" aria-pressed="false" autocomplete="off" > 
-                    Property Crime </a> 
+                   <p><p>
+
+                   <a id="ViolentCrime-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('VCRIMERT15')">
+                    Violent Crime Raw Rate </a> 
                    <p> 
+
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCRIMERT15')">Raw Rate</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCSR15')">Spatial Rate</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCER15')">Excess Risk</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCSEBS15')">EBS Rate</label> <p> 
+
+                   <a id="PropertyCrime-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('PCRIMERT15')">
+                    Property Crime Raw Rate </a> 
+                   <p> 
+
                    <h4> Outcomes </h4>  
-                   <a class="btn btn-default" role="button" onclick="#" data-toggle="button" aria-pressed="false" autocomplete="off" > 
+                   <a id="PreMort-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('PreMort')">
                     Premature Mortality Rate</a> 
 
                     <hr>
@@ -135,7 +152,10 @@
                    <h4> Analytics </h4>
                     <a class="btn btn-default" role="button" onclick="#" data-toggle="button" aria-pressed="false" autocomplete="off" > 
                       Blobs (Max-P Regions Algorithm)</a>
+
+                   </div>          
                     </ul>
+
           </div>
           
           <div class="btn-group">
@@ -182,10 +202,12 @@
           </ul>
           </div>
 
-          <button type="button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="loadCommAreas()">Community Area Overlay </button>          
+          
           <p>
 
-
+          <div class="row">
+              
+          </div>
 
 
           <div id="map" style="height: 600px; border: 1px solid #AAA;"></div>
