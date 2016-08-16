@@ -28,17 +28,17 @@
 
 
    <style type="text/css">
-    .chart div {
+
+    div.chart {
       font: 10px sans-serif;
-      /*background-color: steelblue;*/
       text-align: right;
       padding: 3px;
       margin: 1px;
-      color: white;
+      /*color: white;*/
+      height: 200px;
     }
 
     .bar rect {
-      /*fill: steelblue;*/
       shape-rendering: crispEdges;
     }
 
@@ -59,15 +59,15 @@
         
       
 
-    <div class='navbar navbar-default navbar-static-top'>
+    <div class='navbar navbar-inverse navbar-static-top'>
           <div class='container-fluid'>
             <div class="navbar-header">
-              <a class='navbar-brand' href='index.html'>Healthy Chicago 2015</a>
+              <a class='navbar-brand' href='index.html'>Healthy Chicago 2016</a>
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="index.html">Healthy Access</a></li>
-                <li><a href="services.html">Healthy Living</a></li>
+                <!-- <li><a href="services.html">Healthy Living</a></li> -->
                 <li class='active'><a href="regions.html">Healthy Regions</a></li>
                 <li><a href="about.html">About</a></li>
               </ul>
@@ -75,95 +75,148 @@
           </div>
     </div>
 
-    <div class='container-fluid'>
-      <div class='row'>
-        <div class='col-md-4'>
-          <div class='well'>
-           <h1> Healthy Regions </h1>  
+    
+
+        <!-- First Column -->
+        <div class='col-md-3'>
+
+          <h2> Health Risk Indicators </h2>
+          Explore variables, scales, and data classifications.
+          <hr>
+          <p>
+          <div class="chart"> Add pic here</div>
+          <p><p><p>
+          <div id="dataDashboard"></div>
+
+        </div>
 
 
-            <div class="panel-group">
-                    <div class="panel panel-default">
-                      <div class="panel-heading">
-                        <h4 class="panel-title">
-                          <a data-toggle="collapse" href="#HealthySpaces">Healthy Spaces</a>
-                        </h4>
-                      </div>
-                      <div id="HealthySpaces" class="panel-collapse collapse">
-                        <ul class="list-group">
-                          <li class="list-group-item"><a role="menuitem" onclick="loadParks()">Parks & Green Spaces</a></li>
-                        </ul>
-                      </div>
-                    </div>
-            </div> 
-            <div class="panel-group">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" href="#HouseholdIncome">Household Income Diversity Index</a>
-                </h4>
-              </div>
-              <div id="HouseholdIncome" class="panel-collapse collapse">
-                <ul class="list-group">
-                  <li class="list-group-item"><a role="menuitem" onclick="loadHIS()">Equal Interval</a></li>
-                  <li class="list-group-item"><a role="menuitem" onclick="loadHIS2()">CDPH Category</a></li>
-                </ul>
-              </div>
-            </div>
+
+        <!-- Second Column -->
+        <div class='col-md-9'>
+
+          <button type="button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="loadCommAreas()">Community Area Overlay </button>
+          
+<!--           <button type="button" font-color="FFD180" class="btn btn-default" onlick='#'> About the Data </button> -->
+
+
+          <div class="btn-group">
+
+
+              <button type="button" class="btn btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Choose a variable to explore <span class="caret" >
+              </button>
+
+                   <ul class="dropdown-menu"> 
+                   <div class="well">
+
+                   <h4> Social </h4> 
+
+                   <a id="COI_ct-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('COI_ct')">
+                    Childhood Opportunity Index</a><p><p>   
+
+                   <a class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="#"> 
+                    Health Literacy Index</a><p><p>
+
+                   <a id="HIS_ct-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" role="button" onclick="buttonClick('HIS_ct')" >
+                    Household Diversity Index</a> 
+
+                   <p><p><p>
+
+                   <h4> Economic </h4> 
+                   <a class="btn btn-default btn-default" role="button" onclick="#"  data-toggle="button" aria-pressed="false" autocomplete="off" > 
+                    Economic Hardship Index</a> 
+                   <br>
+                   <h4> Environment </h4>  
+                   <p><p>
+
+                   <a id="ViolentCrime-button" class="btn btn-default">
+                    Violent Crime </a> 
+                   <p> 
+
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCRIMERT15')">Raw Rate</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCSR15')">Spatial Rate</label> <p><p>  
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCER15')">Excess Risk</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCSEBS15')">Bayes Rate</label> <p> 
+
+                   <a id="PropertyCrime-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('PCRIMERT15')">
+                    Property Crime </a> 
+                   <p> 
+
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('PCRIMERT15')">Raw Rate</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('PCRSPRT15')">Spatial Rate</label> <p><p>  
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('PCREXR15')">Excess Risk</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('PCSEBS15')">Bayes Rate</label> <p> 
+
+
+                   <h4> Outcomes </h4>  
+                   <a id="PreMort-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('PreMort')">
+                    Premature Mortality Rate</a> 
+
+                    <hr>
+
+                   </div>          
+                    </ul>
+
+          </div>
+          
+          <div class="btn-group">
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Time <span class="caret"></span></button>
+
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">2015</a></li>
+          </ul>
+          </div>          
+
+          <div class="btn-group">
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Scale <span class="caret"></span></button>
+
+          <ul class="dropdown-menu" role="menu">
+
+            <li><a id="Tract-button" onclick="changeScale('Tract')" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" >Census Tract </a></li>
+            <li><a href="#">Zip Code</a></li>
+            <li><a id="CommArea-button" onclick="changeScale('CommArea')" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" >Community Area</a></li>
+          </ul>
           </div>
 
-            <div class="panel-group">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" href="#ChildhoodOpportunity">Childhood Opportunity Index</a>
-                </h4>
-              </div>
-              <div id="ChildhoodOpportunity" class="panel-collapse collapse">
-                <ul class="list-group">
-                  <li class="list-group-item"><a role="menuitem" onclick="loadCOI1()">Equal Interval</a></li>
-                  <li class="list-group-item"><a role="menuitem" onclick="loadCOI2()">CDPH Category</a></li>
-                </ul>
-              </div>
-            </div>
+          <div class="btn-group">
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Data Classification <span class="caret"></span></button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a id="CDPH-button" onclick="classifyData('CDPH')" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" >CDPH (Default) </a></li>
+            <li><a onclick="classifyData('Quantile')" aria-pressed="false" autocomplete="off" >Quantile </a></li>
+            <li><a href="#">Equal Interval</a></li>
+            <li><a href="#">Fisher Jenks</a></li>
+          </ul>
           </div>
 
 
-            <a class="btn btn-default" role="button" onclick="loadCommAreas()">Community Area Boundary</a><br><br>
+          <div class="btn-group">
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Resources <span class="caret"></span></button>
 
-            <a class="btn btn-info" role="button" onclick="loadBlobs()">Healthy Region Blobs (All Data)</a><br><br>
+          <ul class="dropdown-menu" role="menu">
+            <li><div class="checkbox"> 
+              <label><input type="checkbox"></label>
+              Health Providers</div></li>
+            <li><div class="checkbox"> 
+              <label><input type="checkbox"></label>Community Groups</div></li>
+            <li><div class="checkbox"> 
+              <label><input type="checkbox"></label>Healthy Food Options</div></li>
+          </ul>
+          </div>
 
-            <a class='btn btn-default' onclick="reloadExistingLayers">
-              <i class='glyphicon glyphicon-repeat'></i>
-              Reset
-            </a>
+          
+          <p>
 
-
-
-      </div>
-      <div id="testingHover"></div>
-      </div>
-
-<!-- 
-  <div class='col-md-3'>
-
-    <div class="chart"></div>
-
-  </div> -->
-
+          <div class="row">
+              
+          </div>
 
 
+          <div id="map" style="height: 600px; border: 1px solid #AAA;"></div>
+            <script type="text/javascript" src='maps/shp.js'></script>
+            <script type='text/javascript' src='maps/regions_map.js'></script>
+        </div> 
 
-
-  <div class='col-md-8'>
-    <div id="map" style="height: 700px; border: 1px solid #AAA;"></div>
-      <script type="text/javascript" src='maps/shp.js'></script>
-      <script type='text/javascript' src='maps/leaf-demo.js'></script>
-  </div>
-
-
-
-  </div></div>
 
 
   
