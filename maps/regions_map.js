@@ -54,13 +54,23 @@ $.ajax({
     map.fitBounds(testLayer.getBounds())
   });*/
 
-  // Test geojson to show the code is good
-  /*$.getJSON("./data/test.geojson", function(data){
+/*  // Test geojson to show the code is good
+  $.getJSON("./data/Boundaries - City.geojson", function(data){
     // data = JSON.parse(data);
     // add GeoJSON layer to the map once the file is loaded
-    var testLayer = L.geoJson(data, {style: commAreasStyle}).addTo(map);
-    map.fitBounds(testLayer.getBounds())
+    var testLayer = L.geoJson(data, {style: myStyle1}).addTo(map);
+    //map.fitBounds(testLayer.getBounds())
   });*/
+
+
+
+  // Test geojson to show the code is good
+  $.getJSON("./data/Boundaries - City.geojson", function(data){
+    // data = JSON.parse(data);
+    // add GeoJSON layer to the map once the file is loaded
+    var cityBoundary = L.geoJson(data, {style: myStyle1}).addTo(map);
+    //map.fitBounds(testLayer.getBounds())
+  });
 
 
 
@@ -458,9 +468,10 @@ var state = {
 };
 
 
-
 function load(attribute){
   if(!state.shapeLoaded[state.Scale][0]){
+    // Need to add reading from geojson directly here.
+    // tried shp -> $.getJSON but not reading, & no error.
     shp(state.shapeFiles[state.Scale]).then(function(geojson){
       state.shapeStore[state.Scale] = {};
       state.shapeStore[state.Scale][attribute] = {};
