@@ -46,14 +46,23 @@ $.ajax({
 
 
 
-/*  // load GeoJSON from an external file
-  $.getJSON("./data/City_Boundary.geojson",function(data){
-    data = JSON.parse(data);
+  // load GeoJSON from an external file
+  /*$.getJSON("./data/City_Boundary.geojson", function(data){
+    // data = JSON.parse(data);
     // add GeoJSON layer to the map once the file is loaded
-    L.geoJson(data).addTo(map);
-  });
+    var testLayer = L.geoJson(data, {style: commAreasStyle}).addTo(map);
+    map.fitBounds(testLayer.getBounds())
+  });*/
 
-*/
+  // Test geojson to show the code is good
+  /*$.getJSON("./data/test.geojson", function(data){
+    // data = JSON.parse(data);
+    // add GeoJSON layer to the map once the file is loaded
+    var testLayer = L.geoJson(data, {style: commAreasStyle}).addTo(map);
+    map.fitBounds(testLayer.getBounds())
+  });*/
+
+
 
 /*var boundary = new L.geoJson();
 boundary.addTo(map);
