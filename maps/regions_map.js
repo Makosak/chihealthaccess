@@ -279,14 +279,25 @@ info.updateTract = function (props) {
 
     document.getElementById("dataDashboard").innerHTML = '<h4>Results for Selected Tract: </h4>' 
         +  (props ? '<p>'
-        + ' Household Income Diversity Index: ' + props.Hicat_ct + '<br>'
-        + ' Childhood Opportunity Index: ' + props.COI_cat_ct + '<br>'
-        + ' Years Lost: ' + props.YEARS_LOST + '<br>'
-        + ' Population in 2012: ' + props.Pop2012 + '<br>'
-        + ' 0-5 Years Pop %: ' + props.Less_5pop + '<br>'
-        + ' Over 65 years Pop %: ' + props.Over_65pop + '<br>'
-        + ' Property Crime Raw Rate: ' + props.PCRIMERT15 + '<br>'
-        + ' Violent Crime Raw Rate: ' + props.VCRIMERT15 + '<br>'
+        + ' <h5> Demographics, Race & Ethnicity </h5> '   
+        + ' Population in 2014: ' + props.Pop2014  + '<br>'  
+        + ' 0-5 Years Pop %: ' + props.Less5_popP + '<br>'     
+        + ' White %: ' + props.Wht14P + '<br>'
+        + ' Black %: ' + props.Blk14P + '<br>'
+        + ' Asian %: ' + props.AS14P + '<br>'               
+        + ' Hispanic & Latino %: ' + props.Hisp14P + '<br>'
+        + ' <h5> Socioeconomic Factors </h5> '     
+        + ' Per Capita Income: $' + props.PerCInc14 + '<br>'             
+        + ' Poverty %: ' + props.Pov14Prc + '<br>'
+        + ' Childhood Poverty %: ' + props.ChldP_4Prc + '<br>'        
+        + ' Unemployed (in 2014): ' + props.UNEMPP + '<br>'
+        + ' Economic Hardship: ' + props.Hicat_ct + '<br>'
+        + ' Childhood Opportunity: ' + props.COI_cat_ct + '<br>'        
+
+        
+
+
+
 
 
 
@@ -459,7 +470,7 @@ var state = {
     "CommArea" : [false, false]
   },
   shapeFiles: {
-    "Tract" : "./data/ChiHealth",
+    "Tract" : "./data/ChiHealth_final",
     "Zipcode": "./data/CDPHTractsFinal_Clipped",
     "CommArea" : "./data/CommAreas"
   },
