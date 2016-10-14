@@ -137,6 +137,8 @@ var classColors = {
             "PCRSPRT15" : ['#88419d','#8c96c6','#b3cde3','#edf8fb', '#FFEDA0'],
                 "PCSEBS15" : ['#88419d','#8c96c6','#b3cde3','#edf8fb', '#FFEDA0'],
 
+    "YPLL_rate" : ['#7a0177','#c51b8a','#f768a1','#fbb4b9','#feebe2', '#FFEDA0'],            
+
   },
 
   "Fisher" : {
@@ -164,6 +166,7 @@ var classIntervals = {
     "VCSR15" :[0.0359, 0.0251, 0.0179, 0.00509],
     "VCSEBS15" :[0.82, -0.326, -0.634, -1.1],
 
+    "YPLL_rate" : [7882, 4825, 3467, 2390, 0]
 
   },
   "Fisher" : {
@@ -292,7 +295,10 @@ info.updateTract = function (props) {
         + ' Childhood Poverty %: ' + props.ChldP_4Prc + '<br>'        
         + ' Unemployed (in 2014): ' + props.UNEMPP + '<br>'
         + ' Economic Hardship: ' + props.Hicat_ct + '<br>'
-        + ' Childhood Opportunity: ' + props.COI_cat_ct + '<br>'        
+        + ' Childhood Opportunity: ' + props.COI_cat_ct + '<br>'       
+        + ' Property Crime (Count): ' + props.Property_C + '<br>'  
+        + ' Violent Crime (Count): ' + props.Violent_C + '<br>'  
+        + ' Premature Mortality Rate: ' + props.YPLL_rate 
 
         
 
