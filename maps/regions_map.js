@@ -137,7 +137,9 @@ var classColors = {
             "PCRSPRT15" : ['#88419d','#8c96c6','#b3cde3','#edf8fb', '#FFEDA0'],
                 "PCSEBS15" : ['#88419d','#8c96c6','#b3cde3','#edf8fb', '#FFEDA0'],
 
-    "YPLL_rate" : ['#7a0177','#c51b8a','#f768a1','#fbb4b9','#feebe2', '#FFEDA0'],            
+    "YPLL_rate" : ['#7a0177','#c51b8a','#f768a1','#fbb4b9','#feebe2', '#FFEDA0'],  
+
+    "Lit_Qrtl" : ['#238b45','#66c2a4','#b2e2e2','#edf8fb','#FFEDA0']          
 
   },
 
@@ -166,7 +168,9 @@ var classIntervals = {
     "VCSR15" :[0.0359, 0.0251, 0.0179, 0.00509],
     "VCSEBS15" :[0.82, -0.326, -0.634, -1.1],
 
-    "YPLL_rate" : [7882, 4825, 3467, 2390, 0]
+    "YPLL_rate" : [7882, 4825, 3467, 2390, 0],
+
+    "Lit_Qrtl" : [3,2,1,0]
 
   },
   "Fisher" : {
@@ -265,9 +269,9 @@ info.update = function (props) {
 
 
     // Data Dashboard Default -- when nothing is selected:
-    document.getElementById("dataDashboard").innerHTML = '<h4>Statistics & Visuzalizations </h4>' +  (props ?
+    document.getElementById("dataDashboard").innerHTML = '<h4>Statistics & Data Visuzalizations </h4>' +  (props ?
         '<b>' + props.COMMUNITY + ' (ID: ' + props.AREA_NUMBE + ')'
-        : 'Get information about a specific tract, zip code, or community area by hovering over it.') ;
+        : 'Get information about a specific areal unit (tract, zip, community) by hovering over it.') ;
 };
 
 
@@ -276,13 +280,14 @@ info.update = function (props) {
 
 // Data Dashboard when Hover is initiated
 info.updateTract = function (props) {
-    this._div.innerHTML = '<h4>Community Area ID: ' +  (props ?
-        '<b>' + props.COMMAREA + '</h4>'
+    this._div.innerHTML = '<h4> ' +  (props ?
+        '<b>' + '</h4>'
         : 'Hover over an area');
 
-    document.getElementById("dataDashboard").innerHTML = '<h4>Results for Selected Tract: </h4>' 
+    document.getElementById("dataDashboard").innerHTML = '<h3>Statistics & Data Visuzalizations </h3>'
+        + ' Information about each selected areal unit (tract, zip, or community) is shown here. <hr>' 
         +  (props ? '<p>'
-        + ' <h5> Demographics, Race & Ethnicity </h5> '   
+        + ' <h5> Demographics Factors </h5> '   
         + ' Population in 2014: ' + props.Pop2014  + '<br>'  
         + ' 0-5 Years Pop %: ' + props.Less5_popP + '<br>'     
         + ' White %: ' + props.Wht14P + '<br>'

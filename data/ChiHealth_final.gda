@@ -97,28 +97,19 @@
                 <var>VCSR15</var>
                 <var>VCER15</var>
                 <var>VCSEBS15</var>
+                <var>HealthLit</var>
+                <var>Lit_NAAL</var>
+                <var>Lit_Qrtl</var>
             </variable_order>
             <custom_classifications/>
-            <weights_entries>
-                <weights>
-                    <title>ChiHealth-R1</title>
-                    <default/>
-                    <meta_info>
-                        <weights_type>rook</weights_type>
-                        <order>1</order>
-                        <inc_lower_orders>true</inc_lower_orders>
-                        <path>ChiHealth-R1.gal</path>
-                        <id_variable>geoid10</id_variable>
-                    </meta_info>
-                </weights>
-            </weights_entries>
+            <weights_entries/>
             <default_vars>
                 <default_var>
-                    <name>Violent_C</name>
+                    <name>YPLL_rate</name>
                     <time_id>time 0</time_id>
                 </default_var>
                 <default_var>
-                    <name>Pop2014</name>
+                    <name/>
                     <time_id>time 0</time_id>
                 </default_var>
                 <default_var>
