@@ -439,6 +439,10 @@ info.addTo(map);
 ////////////////////////////////////////////////////////
 
 
+function loadClinics(){
+L.geoJSON(".data/Clinics").addTo(map);
+}
+
 
 
 var commAreas = {},
