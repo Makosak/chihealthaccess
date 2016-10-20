@@ -17,6 +17,7 @@
     <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js?2'></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
 
+
     <!-- Styles -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
@@ -80,93 +81,94 @@
         <!-- First Column -->
         <div class='col-md-3'>
 
-          <h2> Health Risk Indicators </h2>
-          Explore variables, scales, and data classifications.
-          <hr>
-          <p>
-          <div class="chart"> Add pic here</div>
+
+            <div class="well">
+
+                   <h2> Health Risk Indicators </h2>
+                   Explore variables, scales, and data classifications.
+                   <p>
+
+                   <h4> Socioeconomic </h4> 
+
+                   <a id="COI_ct-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('COI_ct')">
+                    Childhood Opportunity Index</a><p><p>   
+
+                   <a class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('Lit_Qrtl')"> 
+                    Health Literacy Index</a><p><p>
+
+                   <a id="HIS_ct-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" role="button" onclick="buttonClick('HIS_ct')" >
+                    Economic Hardship Index</a> 
+
+                   <p><p><p>
+
+
+                   <h4> Environment </h4>  
+                   <p><p>
+
+                    <a id="ViolentCrime-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" role="button" onclick="buttonClick('VCRIMERT15')" >
+                    Violent Crime Rate</a> <p><p>
+
+                    <a id="PropertyCrime-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" role="button" onclick="buttonClick('PCRIMERT15')" >
+                    Property Crime Rate</a> <p><p>
+
+<!--                <a id="ViolentCrime-button" class="btn btn-default">
+                    Violent Crime </a> 
+                   <p> 
+
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCRIMERT15')">Raw Rate</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCSR15')">Spatial Rate</label> <p><p>   -->
+
+<!--                <a id="PropertyCrime-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('PCRIMERT15')">
+                    Property Crime </a> 
+                   <p> 
+
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('PCRIMERT15')">Raw Rate</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('PCRSPRT15')">Spatial Rate</label> <p><p>  
+                     <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('PCREXR15')">Excess Risk</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('PCSEBS15')">Bayes Rate</label> <p> -->
+
+
+                   <h4> Outcomes </h4>  
+                   <a id="PreMort-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('YPLL_rate')">
+                    Premature Mortality Rate</a> 
+
+                    <hr>
+
+            </div>          
+
+        </div>
+
+        <!-- Second Column -->
+        <div class='col-md-3'>
+
+          <!-- <div class="chart"> Add pic here</div> -->
           <p><p><p>
           <div id="dataDashboard"></div>
 
         </div>
 
 
-
-        <!-- Second Column -->
-        <div class='col-md-9'>
+        <!-- Third Column -->
+        <div class='col-md-6'>
 
           <button type="button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="loadCommAreas()">Community Area Overlay </button>
           
 <!--           <button type="button" font-color="FFD180" class="btn btn-default" onlick='#'> About the Data </button> -->
 
 
-          <div class="btn-group">
-
-
+<!--      <div class="btn-group">
               <button type="button" class="btn btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Choose a variable to explore <span class="caret" >
-              </button>
-
-                   <ul class="dropdown-menu"> 
-                   <div class="well">
-
-                   <h4> Social </h4> 
-
-                   <a id="COI_ct-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('COI_ct')">
-                    Childhood Opportunity Index</a><p><p>   
-
-                   <a class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="#"> 
-                    Health Literacy Index</a><p><p>
-
-                   <a id="HIS_ct-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off" role="button" onclick="buttonClick('HIS_ct')" >
-                    Household Diversity Index</a> 
-
-                   <p><p><p>
-
-                   <h4> Economic </h4> 
-                   <a class="btn btn-default btn-default" role="button" onclick="#"  data-toggle="button" aria-pressed="false" autocomplete="off" > 
-                    Economic Hardship Index</a> 
-                   <br>
-                   <h4> Environment </h4>  
-                   <p><p>
-
-                   <a id="ViolentCrime-button" class="btn btn-default">
-                    Violent Crime </a> 
-                   <p> 
-
-                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCRIMERT15')">Raw Rate</label>
-                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCSR15')">Spatial Rate</label> <p><p>  
-                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCER15')">Excess Risk</label>
-                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('VCSEBS15')">Bayes Rate</label> <p> 
-
-                   <a id="PropertyCrime-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('PCRIMERT15')">
-                    Property Crime </a> 
-                   <p> 
-
-                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('PCRIMERT15')">Raw Rate</label>
-                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('PCRSPRT15')">Spatial Rate</label> <p><p>  
-                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('PCREXR15')">Excess Risk</label>
-                    <label class="radio-inline"><input type="radio" name="optradio" onclick="buttonClick('PCSEBS15')">Bayes Rate</label> <p> 
-
-
-                   <h4> Outcomes </h4>  
-                   <a id="PreMort-button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" onclick="buttonClick('PreMort')">
-                    Premature Mortality Rate</a> 
-
-                    <hr>
-
-                   </div>          
-                    </ul>
-
-          </div>
+              </button> 
+          </div>-->
           
-          <div class="btn-group">
+<!--           <div class="btn-group">
           <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Time <span class="caret"></span></button>
 
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">2015</a></li>
           </ul>
-          </div>          
+          </div>   -->        
 
           <div class="btn-group">
           <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Scale <span class="caret"></span></button>
@@ -174,13 +176,13 @@
           <ul class="dropdown-menu" role="menu">
 
             <li><a id="Tract-button" onclick="changeScale('Tract')" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" >Census Tract </a></li>
-            <li><a href="#">Zip Code</a></li>
+            <li><a id="Tract-button" onclick="changeScale('Tract')" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" >Zip Code</a></li>
             <li><a id="CommArea-button" onclick="changeScale('CommArea')" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" >Community Area</a></li>
           </ul>
           </div>
 
           <div class="btn-group">
-          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Data Classification <span class="caret"></span></button>
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"> Classification <span class="caret"></span></button>
           <ul class="dropdown-menu" role="menu">
             <li><a id="CDPH-button" onclick="classifyData('CDPH')" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"  role="button" >CDPH (Default) </a></li>
             <li><a onclick="classifyData('Quantile')" aria-pressed="false" autocomplete="off" >Quantile </a></li>
@@ -193,14 +195,18 @@
           <div class="btn-group">
           <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Resources <span class="caret"></span></button>
 
+
           <ul class="dropdown-menu" role="menu">
             <li><div class="checkbox"> 
-              <label><input type="checkbox"></label>
+              <label><input type="checkbox" onclick="loadClinics()"></label>
               Health Providers</div></li>
             <li><div class="checkbox"> 
               <label><input type="checkbox"></label>Community Groups</div></li>
             <li><div class="checkbox"> 
               <label><input type="checkbox"></label>Healthy Food Options</div></li>
+
+
+
           </ul>
           </div>
 

@@ -361,7 +361,6 @@ info.updateTract = function (props) {
 
     // Append a bar for each item provided as data and translate into x,y position
     var bar = svg.selectAll(".bar") // initiate data join by defining selection to which we join the data
-
         .data(data) // join the data
       .enter().append("g")
         .attr("class", "bar")

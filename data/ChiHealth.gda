@@ -72,15 +72,6 @@
                 <var>Pov185</var>
                 <var>Pov200</var>
                 <var>PovIndPc</var>
-                <var>COI_ct</var>
-                <var>COI_cat_ct</var>
-                <var>HIS_ct</var>
-                <var>Hicat_ct</var>
-                <var>SES_Div_In</var>
-                <var>Less_pop_1</var>
-                <var>YEARS_LOST</var>
-                <var>annualypll</var>
-                <var>YPLL_rate</var>
             </variable_order>
             <custom_classifications/>
             <weights_entries/>

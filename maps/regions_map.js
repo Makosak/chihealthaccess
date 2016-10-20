@@ -13,6 +13,7 @@ var CartoDB_Positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{
  }).addTo( map );
 
 
+
 ////////////////////////////////////////////////////////
 // Base layer is always on: City of Chicago Boundary
 ////////////////////////////////////////////////////////
@@ -54,13 +55,23 @@ $.ajax({
     map.fitBounds(testLayer.getBounds())
   });*/
 
-  // Test geojson to show the code is good
-  /*$.getJSON("./data/test.geojson", function(data){
+/*  // Test geojson to show the code is good
+  $.getJSON("./data/Boundaries - City.geojson", function(data){
     // data = JSON.parse(data);
     // add GeoJSON layer to the map once the file is loaded
-    var testLayer = L.geoJson(data, {style: commAreasStyle}).addTo(map);
-    map.fitBounds(testLayer.getBounds())
+    var testLayer = L.geoJson(data, {style: myStyle1}).addTo(map);
+    //map.fitBounds(testLayer.getBounds())
   });*/
+
+
+
+  // Test geojson to show the code is good
+  $.getJSON("./data/Boundaries - City.geojson", function(data){
+    // data = JSON.parse(data);
+    // add GeoJSON layer to the map once the file is loaded
+    var cityBoundary = L.geoJson(data, {style: myStyle1}).addTo(map);
+    //map.fitBounds(testLayer.getBounds())
+  });
 
 
 
@@ -127,6 +138,10 @@ var classColors = {
             "PCRSPRT15" : ['#88419d','#8c96c6','#b3cde3','#edf8fb', '#FFEDA0'],
                 "PCSEBS15" : ['#88419d','#8c96c6','#b3cde3','#edf8fb', '#FFEDA0'],
 
+    "YPLL_rate" : ['#7a0177','#c51b8a','#f768a1','#fbb4b9','#feebe2', '#FFEDA0'],  
+
+    "Lit_Qrtl" : ['#238b45','#66c2a4','#b2e2e2','#edf8fb','#FFEDA0']          
+
   },
 
   "Fisher" : {
@@ -154,6 +169,9 @@ var classIntervals = {
     "VCSR15" :[0.0359, 0.0251, 0.0179, 0.00509],
     "VCSEBS15" :[0.82, -0.326, -0.634, -1.1],
 
+    "YPLL_rate" : [7882, 4825, 3467, 2390, 0],
+
+    "Lit_Qrtl" : [3,2,1,0]
 
   },
   "Fisher" : {
@@ -252,9 +270,9 @@ info.update = function (props) {
 
 
     // Data Dashboard Default -- when nothing is selected:
-    document.getElementById("dataDashboard").innerHTML = '<h4>Statistics & Visuzalizations </h4>' +  (props ?
+    document.getElementById("dataDashboard").innerHTML = '<h4>Statistics & Data Visuzalizations </h4>' +  (props ?
         '<b>' + props.COMMUNITY + ' (ID: ' + props.AREA_NUMBE + ')'
-        : 'Get information about a specific tract, zip code, or community area by hovering over it.') ;
+        : 'Get information about a specific areal unit (tract, zip, community) by hovering over it.') ;
 };
 
 
@@ -263,20 +281,35 @@ info.update = function (props) {
 
 // Data Dashboard when Hover is initiated
 info.updateTract = function (props) {
-    this._div.innerHTML = '<h4>Community Area ID: ' +  (props ?
-        '<b>' + props.COMMAREA + '</h4>'
+    this._div.innerHTML = '<h4> ' +  (props ?
+        '<b>' + '</h4>'
         : 'Hover over an area');
 
-    document.getElementById("dataDashboard").innerHTML = '<h4>Results for Selected Tract: </h4>' 
+    document.getElementById("dataDashboard").innerHTML = '<h3>Statistics & Data Visuzalizations </h3>'
+        + ' Information about each selected areal unit (tract, zip, or community) is shown here. <hr>' 
         +  (props ? '<p>'
-        + ' Household Income Diversity Index: ' + props.Hicat_ct + '<br>'
-        + ' Childhood Opportunity Index: ' + props.COI_cat_ct + '<br>'
-        + ' Years Lost: ' + props.YEARS_LOST + '<br>'
-        + ' Population in 2012: ' + props.Pop2012 + '<br>'
-        + ' 0-5 Years Pop %: ' + props.Less_5pop + '<br>'
-        + ' Over 65 years Pop %: ' + props.Over_65pop + '<br>'
-        + ' Property Crime Raw Rate: ' + props.PCRIMERT15 + '<br>'
-        + ' Violent Crime Raw Rate: ' + props.VCRIMERT15 + '<br>'
+        + ' <h5> Demographics Factors </h5> '   
+        + ' Population in 2014: ' + props.Pop2014  + '<br>'  
+        + ' 0-5 Years Pop %: ' + props.Less5_popP + '<br>'     
+        + ' White %: ' + props.Wht14P + '<br>'
+        + ' Black %: ' + props.Blk14P + '<br>'
+        + ' Asian %: ' + props.AS14P + '<br>'               
+        + ' Hispanic & Latino %: ' + props.Hisp14P + '<br>'
+        + ' <h5> Socioeconomic Factors </h5> '     
+        + ' Per Capita Income: $' + props.PerCInc14 + '<br>'             
+        + ' Poverty %: ' + props.Pov14Prc + '<br>'
+        + ' Childhood Poverty %: ' + props.ChldP_4Prc + '<br>'        
+        + ' Unemployed (in 2014): ' + props.UNEMPP + '<br>'
+        + ' Economic Hardship: ' + props.Hicat_ct + '<br>'
+        + ' Childhood Opportunity: ' + props.COI_cat_ct + '<br>'       
+        + ' Property Crime (Count): ' + props.Property_C + '<br>'  
+        + ' Violent Crime (Count): ' + props.Violent_C + '<br>'  
+        + ' Premature Mortality Rate: ' + props.YPLL_rate 
+
+        
+
+
+
 
 
 
@@ -316,7 +349,7 @@ info.updateTract = function (props) {
           max = value;
       };
 
-      var formatCount = d3.format(",.0f");
+      //var formatCount = d3.format(",.0f");
 
       var margin = {top: 10, right: 30, bottom: 30, left: 30},
       // Use chart class width to determine chart width
@@ -407,6 +440,10 @@ info.addTo(map);
 ////////////////////////////////////////////////////////
 
 
+function loadClinics(){
+L.geoJSON(".data/Clinics").addTo(map);
+}
+
 
 
 var commAreas = {},
@@ -449,7 +486,7 @@ var state = {
     "CommArea" : [false, false]
   },
   shapeFiles: {
-    "Tract" : "./data/ChiHealth",
+    "Tract" : "./data/ChiHealth_final",
     "Zipcode": "./data/CDPHTractsFinal_Clipped",
     "CommArea" : "./data/CommAreas"
   },
@@ -458,9 +495,10 @@ var state = {
 };
 
 
-
 function load(attribute){
   if(!state.shapeLoaded[state.Scale][0]){
+    // Need to add reading from geojson directly here.
+    // tried shp -> $.getJSON but not reading, & no error.
     shp(state.shapeFiles[state.Scale]).then(function(geojson){
       state.shapeStore[state.Scale] = {};
       state.shapeStore[state.Scale][attribute] = {};
