@@ -13,6 +13,7 @@ var CartoDB_Positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{
  }).addTo( map );
 
 
+
 ////////////////////////////////////////////////////////
 // Base layer is always on: City of Chicago Boundary
 ////////////////////////////////////////////////////////
@@ -348,7 +349,7 @@ info.updateTract = function (props) {
           max = value;
       };
 
-      var formatCount = d3.format(",.0f");
+      //var formatCount = d3.format(",.0f");
 
       var margin = {top: 10, right: 30, bottom: 30, left: 30},
       // Use chart class width to determine chart width
